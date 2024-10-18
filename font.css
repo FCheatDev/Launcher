@@ -1,0 +1,23 @@
+@font-face {
+     font-family: 'Roboto-Bold';
+     src: url('font/Roboto-Bold.ttf') format('truetype');
+     font-weight: bold;
+     font-style: normal;
+ }
+ 
+ @font-face {
+     font-family: 'zh-bold';
+     src: url('font/zh-bold.otf') format('opentype');
+     font-weight: bold;
+     font-style: normal;
+ }
+ 
+ /* 應用字體 */
+ .Roboto-Bold {
+     font-family: 'Roboto-Bold', sans-serif;
+ }
+ 
+ .zh-bold {
+     font-family: 'zh-bold', sans-serif;
+ }
+ 

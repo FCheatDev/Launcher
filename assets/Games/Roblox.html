@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script and Executor Selection</title>
+     <style>
+          * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+}
+
+.container {
+    display: flex;
+    width: 1400px;
+    height: 1200px;
+}
+
+.section {
+    position: relative;
+    width: 50%;
+    overflow: hidden;
+}
+
+.section img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.section:hover img {
+    transform: scale(1.1);
+}
+
+.overlay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #fff;
+    font-size: 2rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}
+
+     </style>
+</head>
+<body>
+    <div id="window-controls" style="position: absolute; top: 10px; right: 10px;">
+        <button id="minimize-btn" style="background-color: transparent; border: none; cursor: pointer;">
+            <span style="font-size: 24px; color: white;">&#x2212;</span>
+        </button>
+        <button id="close-btn" style="background-color: transparent; border: none; cursor: pointer; margin-left: 10px;">
+            <span style="font-size: 24px; color: white;">&#x2716;</span>
+        </button>
+    </div>
+    <div class="container">
+        <div class="section" id="scripts">
+            <div class="overlay">
+                <h2>Script 1</h2>
+            </div>
+            <img src="../../images/script-bg.jpg" alt="Script Image">
+        </div>
+        <div class="section" id="executors">
+            <div class="overlay">
+                <h2>Executor 1</h2>
+            </div>
+            <img src="../../images/exec-bg.jpg" alt="Executor Image">
+        </div>
+    </div>
+        <!-- Scripts -->
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/browser.min.js"></script>
+    <script src="../js/breakpoints.min.js"></script>
+    <script src="../js/util.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/openlnk.js" defer></script>
+</body>
+</html>

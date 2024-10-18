@@ -1,0 +1,59 @@
+{
+  "name": "fclauncher",
+  "version": "1.0.8 ",
+  "description": "FCheatLauncher By AutoEZ_TW",
+  "main": "app-main.js",
+  "icon": "images/app-logo.ico",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^31.6.0",
+    "electron-builder": "^24.13.3",
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1"
+  },
+  "dependencies": {
+    "antd": "^5.20.0",
+    "bootstrap-icons": "^1.11.3",
+    "discord-rich-presence": "^0.0.8",
+    "discord-rpc": "^4.0.1",
+    "dotenv": "^16.4.5",
+    "electron-store": "^10.0.0",
+    "python": "^0.0.4",
+    "sudo-prompt": "^9.2.1",
+    "vue": "^3.4.31",
+    "vue-router": "^4.4.0"
+  },
+  "build": {
+    "appId": "com.fcheat.launcher",
+    "productName": "FCheatLauncher",
+    "directories": {
+      "output": "launcherOutput"
+    },
+"files": [
+    "images/**",
+    "launcher/**",       
+    "assets/**/*",      
+    "node_modules/**/*",  
+    "app-main.js",       
+    "preload.js",          
+    "launcher.html"      
+],
+
+    "win": {
+      "target": "nsis",
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}

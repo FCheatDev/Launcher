@@ -1,0 +1,5 @@
+node_modules/
+launcherOutput/
+UPD_CHECKER/
+.venv/
+output/
