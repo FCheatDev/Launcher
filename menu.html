@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>菜單視窗</title>
+    <style>
+        /* 設置可拖動區域 */
+        body {
+            -webkit-app-region: drag; /* 使空白區域可拖動 */
+            background-color: #333;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start; /* 按鈕靠左排列 */
+            height: 100vh;
+            user-select: none; /* 禁止選中文本 */
+        }
+
+        /* 菜單按鈕樣式 */
+        .menu-btn {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #555;
+            border: none;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            text-align: left; /* 使文本靠左对齐 */
+            -webkit-app-region: no-drag; /* 按鈕不應該可拖動 */
+        }
+
+        .menu-btn:hover {
+            background-color: #777;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 這個視窗本身即為下拉菜單的形式 -->
+    <button class="menu-btn">選項1</button>
+    <button class="menu-btn">選項2</button>
+    <button class="menu-btn">選項3</button>
+    <button class="menu-btn">選項4</button>
+</body>
+</html>

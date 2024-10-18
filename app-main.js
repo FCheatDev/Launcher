@@ -2,8 +2,12 @@ const { app, BrowserWindow, ipcMain, shell, globalShortcut } = require('electron
 const path = require('path');
 const fs = require('fs');
 
+let mainWindow;
+let menuWindow;
+
 function createWindow() {
-    const mainWindow = new BrowserWindow({
+    // 創建主視窗
+    mainWindow = new BrowserWindow({
         width: 1400,
         height: 1200,
         frame: false,
@@ -23,16 +27,13 @@ function createWindow() {
     mainWindow.loadFile('launcher.html').catch(err => {
         console.error('加载 HTML 文件时发生错误:', err);
     });
-    // 监听窗口最大化事件，强制取消最大化
+
+    // 禁止最大化
     mainWindow.on('maximize', () => {
         mainWindow.unmaximize();
     });
-    // 監聽縮小與關閉按鈕的事件
-    ipcMain.on('open-external-link', (event, url) => {
-        console.log('Received request to open external link:', url); // 确认是否接收到请求
-        shell.openExternal(url);
-    });
 
+    // 監聽縮小與關閉按鈕的事件
     ipcMain.on('minimize-window', () => {
         mainWindow.minimize();
     });
@@ -41,9 +42,41 @@ function createWindow() {
         mainWindow.close();
     });
 
+    // 創建菜單視窗
+    createMenuWindow();
+
     // 註冊全局快捷鍵
     globalShortcut.register('Control+Shift+I', () => {
         mainWindow.webContents.openDevTools({ mode: 'detach' });
+    });
+}
+
+// 创建菜單視窗
+function createMenuWindow() {
+    menuWindow = new BrowserWindow({
+        width: 100,
+        height: 100,
+        frame: false,
+        alwaysOnTop: true, // 菜單總是顯示在最上層
+        resizable: false,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        }
+    });
+
+    // 加载菜单 HTML 文件
+    menuWindow.loadFile('menu.html').catch(err => {
+        console.error('加载菜单文件时发生错误:', err);
+    });
+
+    // 在關閉時將 `menuWindow` 設置為 `null`
+    menuWindow.on('closed', () => {
+        menuWindow = null;
+    });
+    // 禁止最大化
+    mainWindow.on('maximize', () => {
+        mainWindow.unmaximize();
     });
 }
 
@@ -54,7 +87,6 @@ app.whenReady().then(() => {
     });
 });
 
-// 在應用退出時取消全局快捷鍵
 app.on('will-quit', () => {
     globalShortcut.unregisterAll();
 });
@@ -64,20 +96,17 @@ app.on('window-all-closed', () => {
 });
 
 // 確保文件夾存在，若不存在則創建
-const programFilesPath = process.env.PROGRAMFILES || process.env.ProgramFiles; // 获取 Program Files 路径
-const launcherDir = path.join(programFilesPath, 'FCheatLauncher'); // 文件夹路径
-const filePath = path.join(launcherDir, 'launcher_path.txt'); // 文件路径
+const programFilesPath = process.env.PROGRAMFILES || process.env.ProgramFiles;
+const launcherDir = path.join(programFilesPath, 'FCheatLauncher');
+const filePath = path.join(launcherDir, 'launcher_path.txt');
 
-// 创建文件夹
 if (!fs.existsSync(launcherDir)) {
     fs.mkdirSync(launcherDir, { recursive: true });
 }
 
-// 寻找可执行文件的正确路径
 const launcherPath = app.getPath('exe');
 
-// 将路径写入文件
-fs.promises.writeFile(filePath, launcherPath, 'utf-8') // 指定编码为 UTF-8
+fs.promises.writeFile(filePath, launcherPath, 'utf-8')
     .then(() => {
         console.log('File Save on:', filePath);
     })
