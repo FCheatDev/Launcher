@@ -8,27 +8,32 @@
         /* 設置可拖動區域 */
         body {
             -webkit-app-region: drag; /* 使空白區域可拖動 */
-            background-color: #333;
+            background-color: rgba(109, 109, 109, 0.8); /* 設置半透明背景 */
             color: white;
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start; /* 按鈕靠左排列 */
+            flex-direction: row; /* 菜單和按鈕水平排列 */
+            justify-content: flex-start;
+            align-items: center;
             height: 100vh;
-            user-select: none; /* 禁止選中文本 */
+            overflow: hidden; /* 禁用滾動條 */
         }
 
         /* 菜單按鈕樣式 */
         .menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             margin: 10px;
-            padding: 10px 20px;
+            font-size: 20px;
+            padding: 10px 10px;
             background-color: #555;
             border: none;
             color: white;
             cursor: pointer;
-            width: 100%;
+            width: 50%;
             text-align: left; /* 使文本靠左对齐 */
             -webkit-app-region: no-drag; /* 按鈕不應該可拖動 */
         }
@@ -37,13 +42,49 @@
             background-color: #777;
         }
 
+        /* 關閉按鈕樣式 */
+        #close-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin-left: auto; /* 將關閉按鈕放在最右邊 */
+            margin-right: 10px;
+            -webkit-app-region: no-drag; /* 關閉按鈕不應該可拖動 */
+        }
+
+        #close-btn span {
+            font-size: 24px;
+            color: white;
+        }
+        .transparent-button {
+            background-color: transparent; /* 設定背景為透明 */
+            border: none;                  /* 移除邊框 */
+            color: #fff;                   /* 按鈕文字顏色 */
+            cursor: pointer;               /* 鼠標移上去顯示指針 */
+        }
+
+        .transparent-button:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* 滑過時略顯背景色 */
+        }
+
     </style>
-</head>
+</head> 
 <body>
-    <!-- 這個視窗本身即為下拉菜單的形式 -->
-    <button class="menu-btn">選項1</button>
-    <button class="menu-btn">選項2</button>
-    <button class="menu-btn">選項3</button>
-    <button class="menu-btn">選項4</button>
+    <!-- 菜單按鈕 -->
+    <button class="menu-btn transparent-button">菜單</button>
+    
+    <!-- 關閉按鈕 -->
+    <button id="close-btn">
+        <span>&#x2716;</span>
+    </button>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+        
+        // 監聽關閉按鈕點擊事件
+        document.getElementById('close-btn').addEventListener('click', () => {
+            ipcRenderer.send('close-menu-window');
+        });
+    </script>
 </body>
 </html>

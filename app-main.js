@@ -54,9 +54,12 @@ function createWindow() {
 // 创建菜單視窗
 function createMenuWindow() {
     menuWindow = new BrowserWindow({
-        width: 100,
-        height: 100,
+        width: 150,
+        height: 50,
         frame: false,
+        transparent: true,
+        fullscreenable: false, 
+        maximizable: false,
         alwaysOnTop: true, // 菜單總是顯示在最上層
         resizable: false,
         webPreferences: {
@@ -68,6 +71,12 @@ function createMenuWindow() {
     // 加载菜单 HTML 文件
     menuWindow.loadFile('menu.html').catch(err => {
         console.error('加载菜单文件时发生错误:', err);
+    });
+    // 監聽關閉菜單窗口的請求
+    ipcMain.on('close-menu-window', () => {
+        if (menuWindow) {
+            menuWindow.close();
+        }
     });
 
     // 在關閉時將 `menuWindow` 設置為 `null`
