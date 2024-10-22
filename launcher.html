@@ -13,10 +13,10 @@
 <body class="is-preload" style="-webkit-app-region: drag;" >
     <div id="wrapper">
         <div id="window-controls" style="position: absolute; top: 10px; right: 10px;">
-            <button id="minimize-btn" style="background-color: transparent; border: none; cursor: pointer;">
+            <button id="minimize-btn" style="background-color: transparent; border: none; cursor: pointer;" aria-label="最小化窗口">
                 <span style="font-size: 24px; color: white;">&#x2212;</span>
             </button>
-            <button id="close-btn" style="background-color: transparent; border: none; cursor: pointer; margin-left: 10px;">
+            <button id="close-btn" style="background-color: transparent; border: none; cursor: pointer; margin-left: 10px;"  >
                 <span style="font-size: 24px; color: white;">&#x2716;</span>
             </button>
         </div>
@@ -34,6 +34,7 @@
                     <li><a href="assets/Games/games.html">遊戲</a></li>
                     <li><a href="assets/settings.html">設定</a></li>
                     <li><a href="assets/Account/account.html">帳號</a></li>
+                    <li><a href="#" id="openMenuBtn">開啟獨立菜單</a></li>
                 </ul>
             </nav>
         </header>
@@ -42,13 +43,20 @@
     </div>
     <div id="bg"></div>
 
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/jquery.min.js" defer></script>
+    <script src="assets/js/browser.min.js" defer></script>
+    <script src="assets/js/breakpoints.min.js" defer></script>
+    <script src="assets/js/util.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
     <script src="assets/js/openlnk.js" defer></script>
+    <script src="app-main.js" defer></script>
+    <script>
 
+    document.getElementById('openMenuBtn').addEventListener('click', () => {
+        window.electronAPI.menuWindow();
+    });
+
+      </script>
 
 </body>
 </html>

@@ -41,7 +41,11 @@
     "node_modules/**/*",  
     "app-main.js",       
     "preload.js",          
-    "launcher.html"      
+    "launcher.html",
+    "menu.html",
+    "menu-preload.js"
+
+
 ],
 
     "win": {

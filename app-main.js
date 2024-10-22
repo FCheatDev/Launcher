@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 let mainWindow;
-let menuWindow;
+let menuWindow = null;
 
 function createWindow() {
     // 創建主視窗
@@ -19,10 +19,12 @@ function createWindow() {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
             enableRemoteModule: false,
-            nodeIntegration: false
+            nodeIntegration: true
         },
     });
-
+    ipcMain.on('open-external-link', (event, url) => {
+        shell.openExternal(url);
+    });
     // 加载 HTML 文件
     mainWindow.loadFile('launcher.html').catch(err => {
         console.error('加载 HTML 文件时发生错误:', err);
@@ -51,18 +53,26 @@ function createWindow() {
     });
 }
 
+
+// 監聽按鈕點擊事件
+ipcMain.on('open-menu-window', () => {
+    if (!menuWindow) {  // 如果菜單窗口還未打開
+        createMenuWindow();
+    }
+});
 // 创建菜單視窗
 function createMenuWindow() {
     menuWindow = new BrowserWindow({
         width: 150,
-        height: 50,
+        height: 60,
         frame: false,
         transparent: true,
         fullscreenable: false, 
         maximizable: false,
-        alwaysOnTop: true, // 菜單總是顯示在最上層
+        alwaysOnTop: true,
         resizable: false,
         webPreferences: {
+            preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: true,
             contextIsolation: false
         }
