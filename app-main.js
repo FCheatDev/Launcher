@@ -63,8 +63,8 @@ ipcMain.on('open-menu-window', () => {
 // 创建菜單視窗
 function createMenuWindow() {
     menuWindow = new BrowserWindow({
-        width: 150,
-        height: 60,
+        width: 165,
+        height: 200,
         frame: false,
         transparent: true,
         fullscreenable: false, 
@@ -96,6 +96,9 @@ function createMenuWindow() {
     // 禁止最大化
     mainWindow.on('maximize', () => {
         mainWindow.unmaximize();
+    });
+    ipcMain.on('return-home', () => {
+        mainWindow.loadFile('launcher.html'); // 替换为您的首页路径
     });
 }
 
