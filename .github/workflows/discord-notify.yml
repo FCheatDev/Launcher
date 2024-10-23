@@ -1,9 +1,10 @@
+
 name: Notify Discord of Changes
 
 on:
   push:
     branches:
-      - main  # 可以改成你的主要分支名稱
+      - main  # 使用你的主要分支名稱
 
 jobs:
   notify:
@@ -15,4 +16,5 @@ jobs:
         with:
           url: 'https://discord.com/api/webhooks/1298592146684907528/Kw0UQNSFuijvnMDbLXsiEYKvlo21QLJQAkHS7r9Mi6en5v3BRlnGzTpEk8vj7Kyhqqps'  # 替換為你的 Webhook URL
           method: 'POST'
-          contentType: 'application/json' 
+          contentType: 'application/json'
+          data: '{"content": "檔案有變更已推送到主分支！"}'
