@@ -10,10 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Get latest commit message
         id: get_commit
-        run: |
-          echo "commit_message=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+        run: echo "commit_message=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
 
       - name: Discord notification
         env:
@@ -22,5 +24,5 @@ jobs:
         with:
           args: |
             > **[FCheatDev](https://github.com/FCheatDev)**\n
-            > [Version](https://github.com/FCheatDev/Launcher/commit/${{ github.sha }}) : `${{ github.sha }}`\n
+            > [Version](https://github.com/FCheatDev/Launcher/commit/${{ github.sha }}) : `${{ github.sha }}`
             > **Update Version** : `${{ env.commit_message }}`
