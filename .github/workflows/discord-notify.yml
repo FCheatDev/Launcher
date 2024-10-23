@@ -18,4 +18,4 @@ jobs:
           args: |
             > **[FCheatDev](https://github.com/FCheatDev)**
             > [Version](https://github.com/FCheatDev/Launcher/commit/${{ github.sha }}) : ${{ github.sha }}
-            > [Download Launcher](https://getfcheat.web.app/UpdateFile/n.rar)
+            > [Update Versoin](${{ github.event.head_commit.message }}) : ${{ github.event.head_commit.message }}
