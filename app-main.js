@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, shell, globalShortcut } = require('electron');
+const { app, BrowserWindow, ipcMain, shell, globalShortcut ,screen } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -104,9 +104,30 @@ function createMenuWindow() {
 
 app.whenReady().then(() => {
     createWindow();
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow();
-    });
+    // 獲取主顯示器資訊
+    const primaryDisplay = screen.getPrimaryDisplay();
+    // 每 0.1 秒偵測一次菜單窗口的位置並進行調整
+    setInterval(() => {
+        if (menuWindow) {
+            const { x, y } = menuWindow.getBounds();
+            const { width: screenWidth, height: screenHeight } = screen.getPrimaryDisplay().workAreaSize;
+
+            // 檢查菜單窗口是否超出顯示器的邊界
+            if (x + menuWindow.getBounds().width > screenWidth) {
+                menuWindow.setBounds({ x: x - 100, y });
+            }
+            if (y + menuWindow.getBounds().height > screenHeight) {
+                menuWindow.setBounds({ x, y: y - 100 });
+            }
+            if (x < 0) {
+                menuWindow.setBounds({ x: x + 100, y });
+            }
+            if (y < 0) {
+                menuWindow.setBounds({ y: y + 100, x });
+            }
+            //console.log(`Menu current position - X: ${x}, Y: ${y}`);
+        }
+    }, 100); // 每 0.1 秒更新一次
 });
 
 app.on('will-quit', () => {
@@ -116,6 +137,8 @@ app.on('will-quit', () => {
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
 });
+
+
 
 // 確保文件夾存在，若不存在則創建
 const programFilesPath = process.env.PROGRAMFILES || process.env.ProgramFiles;
