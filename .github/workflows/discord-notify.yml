@@ -12,8 +12,10 @@ jobs:
     steps:
       - name: Discord notification
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }} 
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}  # 確保這裡引用的是 GitHub Secrets
         uses: Ilshidur/action-discord@master
         with:
           args: |
-            ${{ github.actor }}\n[${{ github.repository }}:${{ github.ref }}] ${{ github.event.commits.length }} new commit(s)\n${{ github.sha }} (${{ github.event.head_commit.message }}) - ${{ github.actor }}
+            **${{ github.actor }}**\n
+            [${{ github.repository }}:${{ github.ref }}] **new commit(s)**\n
+            [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) (${ { github.event.head_commit.message } }) - **${{ github.actor }}**
