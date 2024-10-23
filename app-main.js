@@ -125,7 +125,7 @@ app.whenReady().then(() => {
             if (y < 0) {
                 menuWindow.setBounds({ y: y + 100, x });
             }
-            console.log(`Menu current position - X: ${x}, Y: ${y}`);
+            //console.log(`Menu current position - X: ${x}, Y: ${y}`);
         }
     }, 100); // 每 0.1 秒更新一次
 });
