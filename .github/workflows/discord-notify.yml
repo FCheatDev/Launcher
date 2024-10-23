@@ -16,6 +16,8 @@ jobs:
         uses: Ilshidur/action-discord@master
         with:
           args: |
-            **${{ github.actor }}**\n
-            [${{ github.repository }}:${{ github.ref }}] **new commit(s)**\n
+            **${{ github.actor }}**
+            [${{ github.repository }}:${{ github.ref }}] **new commit(s)**
             [${{ github.sha }}](https://github.com/FCheatDev/Launcher/commit/${{ github.sha }}) (${ { github.event.head_commit.message } }) - **${{ github.actor }}**
+            [Profile](https://github.com/FCheatDev)
+            
