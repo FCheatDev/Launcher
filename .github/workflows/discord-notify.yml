@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Discord notification
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}  # 確保在 GitHub Secrets 中設置此秘密
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }} 
         uses: Ilshidur/action-discord@master
         with:
           args: |
