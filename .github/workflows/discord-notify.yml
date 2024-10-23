@@ -17,5 +17,5 @@ jobs:
         with:
           args: |
             > **[FCheatDev](https://github.com/FCheatDev)**
-            > [Version: ${{ github.sha }}](https://github.com/FCheatDev/Launcher/commit/${{ github.sha }})
+            > [Version:] ${{ github.sha }}(https://github.com/FCheatDev/Launcher/commit/${{ github.sha }})
             > [Download Launcher](https://getfcheat.web.app/UpdateFile/n.rar)
