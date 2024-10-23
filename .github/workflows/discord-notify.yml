@@ -10,12 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get latest commit message
+        id: get_commit
+        run: |
+          echo "commit_message=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}  # 確保這裡引用的是 GitHub Secrets
         uses: Ilshidur/action-discord@master
         with:
           args: |
-            > **[FCheatDev](https://github.com/FCheatDev)**
-            > [Version](https://github.com/FCheatDev/Launcher/commit/${{ github.sha }}) : ${{ github.sha }}
-            > [Update Versoin](${{ github.event.head_commit.message }}) : ${{ github.event.head_commit.message }}
+            > **[FCheatDev](https://github.com/FCheatDev)**\n
+            > [Version](https://github.com/FCheatDev/Launcher/commit/${{ github.sha }}) : `${{ github.sha }}`\n
+            > **Update Version** : `${{ env.commit_message }}`
