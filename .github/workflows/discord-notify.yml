@@ -23,6 +23,6 @@ jobs:
         uses: Ilshidur/action-discord@master
         with:
           args: |
-            > **-----Launcher Update Log-----** 
-            > **Version: **[${{ github.sha }}](https://github.com/FCheatDev/Launcher/commit/${{ github.sha }})
-            > **Update Name: ** `${{ env.commit_message }}`
+            > **-----FCheat啟動器上傳日誌-----** 
+            > **版本: **[${{ github.sha }}](https://github.com/FCheatDev/Launcher/commit/${{ github.sha }})
+            > **上傳版本名稱: ** `${{ env.commit_message }}`
