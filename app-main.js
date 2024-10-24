@@ -106,6 +106,7 @@ app.whenReady().then(() => {
     createWindow();
     // 獲取主顯示器資訊
     const primaryDisplay = screen.getPrimaryDisplay();
+    console.log(primaryDisplay);
     // 每 0.1 秒偵測一次菜單窗口的位置並進行調整
     setInterval(() => {
         if (menuWindow) {
@@ -125,7 +126,7 @@ app.whenReady().then(() => {
             if (y < 0) {
                 menuWindow.setBounds({ y: y + 100, x });
             }
-            console.log(`Menu current position - X: ${x}, Y: ${y}`);
+            //console.log(`Menu current position - X: ${x}, Y: ${y}`); //Debug Menu
         }
     }, 100); // 每 0.1 秒更新一次
 });

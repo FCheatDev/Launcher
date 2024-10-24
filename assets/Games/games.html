@@ -4,121 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FCheat Launcher</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
 
+    <link rel="stylesheet" href="../css/games.css" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300italic,600italic,300,600" rel="stylesheet">
-    <link rel="stylesheet" href="../css/main.css" />
-    <noscript><link rel="stylesheet" href="../css/noscript.css" /></noscript>
 
-    <style>
-        body {
-            overflow: hidden; /* 隱藏滾動條 */
-            position: relative; /* 讓子元素相對定位 */
-            background-color: black;
-        }
-        .slide-button {
-            position: absolute; /* 使按鈕絕對定位 */
-            left: -250px; /* 初始位置在左邊外面 */
-            transform: translateY(-50%); /* 確保按鈕垂直居中 */
-            color: white; /* 按鈕文字顏色 */
-            border: none; /* 去掉邊框 */
-            padding: 10px 20px; /* 按鈕內邊距 */
-            border-radius: 5px; /* 圓角 */
-            transition: left 0.5s ease; /* 動畫效果 */
-            cursor: pointer; /* 鼠標變為指針 */
-            display: flex; /* 使用 Flexbox */
-            justify-content: center; /* 水平置中 */
-            align-items: center; /* 垂直置中 */
-            min-width: 150px; /* 最小寬度 */
-            font-size: 1.2em; /* 字體大小 */
-            padding: 10px; /* 改为统一的内边距 */
-            text-align: center; /* 文字居中 */
-        }
-        .slide-button.show {
-            left: 40px; /* 按鈕滑入後的位置 */
-        }
-        #slide-button-1 {
-            top: 10%; /* 第一個按鈕位置 */
-        }
-        #slide-button-2 {
-            top: 17%; /* 第二個按鈕位置 */
-        }
-        #slide-button-3 {
-            top: 24%; /* 第三個按鈕位置 */
-        }
-        #slide-button-4 {
-            top: 31%; /* 第四個按鈕位置 */
-        }
-        #slide-button-5 {
-            top: 38%; /* 第五個按鈕位置 */
-        }
-        #slide-button-6 {
-            top: 45%; /* 第六個按鈕位置 */
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 </head>
-<body class="is-preload" style="-webkit-app-region: drag;">
-    <div id="wrapper">
-        <div id="window-controls" style="position: absolute; top: 10px; right: 10px;">
-            <button id="minimize-btn" style="background-color: transparent; border: none; cursor: pointer;">
+<body style="-webkit-app-region: drag;">
+    <div >
+        <div style="position: absolute; top:10px; right:10px; z-index: 10000; -webkit-app-region: no-drag;">
+            <button id="minimize-btn" style="background-color: transparent; border: none; cursor: pointer; border: 3px solid #ffffff; width: 64.41px; height: 44px; border-radius: 8px;">
                 <span style="font-size: 24px; color: white;">&#x2212;</span>
             </button>
-            <button id="close-btn" style="background-color: transparent; border: none; cursor: pointer; margin-left: 10px;">
+            <button id="close-btn" style="background-color: transparent; border: none; cursor: pointer; margin-left: 10px; border: 3px solid #ffffff; width: 64.41px; height: 44px; border-radius: 8px;">
                 <span style="font-size: 24px; color: white;">&#x2716;</span>
             </button>
         </div>
-        <div>
-            <button style="-webkit-app-region: no-drag;" id="slide-button-1" class="slide-button">首頁</button> 
-            <button style="-webkit-app-region: no-drag;" id="slide-button-2" class="slide-button">設定</button>
-            <button style="-webkit-app-region: no-drag;" id="slide-button-3" class="slide-button">帳號</button> 
-            <button style="-webkit-app-region: no-drag;" id="slide-button-4" class="slide-button">Roblox</button> 
-            <button style="-webkit-app-region: no-drag;" id="slide-button-5" class="slide-button">Minecraft</button>
-            <button style="-webkit-app-region: no-drag;" id="slide-button-6" class="slide-button">Genshin Impact</button>  
-        </div>
+<!-- Sidebar for navigation -->
+  <div class="sidebar" style="-webkit-app-region: no-drag;">
+    <div class="logo-details">
+      <!-- Icon and logo name -->
+      <i class=" icon"><img src="../../images/app-logo-nobg.png" alt="Roblox Logo" style="width: 60px; height: 60px;"></i>
+      <div class="logo_name">FCheatUI</div>
+      <i class='bx bx-menu' id="btn"></i> <!-- Menu button to toggle sidebar -->
     </div>
-    <div id="game-bg"></div>
-    <!-- Scripts -->
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/browser.min.js"></script>
-    <script src="../js/breakpoints.min.js"></script>
-    <script src="../js/util.js"></script>
-    <script src="../js/main.js"></script>
-    <script src="../js/openlnk.js" defer></script>
+    <ul class="nav-list">
+      <!-- List of navigation items -->
+      <li>
+        <a href="#">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+        <span class="tooltip">Dashboard</span>
+      </li>
+      <!-- Additional navigation items -->
+      <li>
+        <a href="#">
+          <i class='bx bx-user'></i>
+          <span class="links_name">User</span>
+        </a>
+        <span class="tooltip">User</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-chat'></i>
+          <span class="links_name">Messages</span>
+        </a>
+        <span class="tooltip">Messages</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-pie-chart-alt-2'></i>
+          <span class="links_name">Analytics</span>
+        </a>
+        <span class="tooltip">Analytics</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-folder'></i>
+          <span class="links_name">File Manager</span>
+        </a>
+        <span class="tooltip">Files</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-cart-alt'></i>
+          <span class="links_name">Order</span>
+        </a>
+        <span class="tooltip">Order</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-heart'></i>
+          <span class="links_name">Saved</span>
+        </a>
+        <span class="tooltip">Saved</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-cog'></i>
+          <span class="links_name">Setting</span>
+        </a>
+        <span class="tooltip">Setting</span>
+      </li>
+    </ul>
+  </div>
+  <!-- Main content area -->
+  <section class="home-section">
+    <div class="text">Dashboard</div>
+  </section>
 
-    <script>
-        // 等待 DOM 加載完成
-        document.addEventListener("DOMContentLoaded", function() {
-            const buttons = document.querySelectorAll('.slide-button'); // 選擇所有帶有 slide-button 類的按鈕
+</div>
+<!-- Scripts -->
+<script src="../js/games.js" defer ></script>
+<script src="../js/openlnk.js" defer></script>
 
-            // 為每個按鈕添加點擊事件
-            buttons[0].onclick = () => { window.location.href = '../../launcher.html'; };
-            buttons[1].onclick = () => { window.location.href = '../settings.html'; };
-            buttons[2].onclick = () => { window.location.href = '../Account/account.html'; };
-            buttons[3].onclick = () => { window.location.href = 'roblox.html'; };
-            buttons[4].onclick = () => { window.location.href = 'minecraft.html'; };
-            buttons[5].onclick = () => { window.location.href = 'GenshinImpact.html'; };
-
-            // 添加定時器控制每個按鈕的滑入時間
-            setTimeout(() => {
-                buttons[0].classList.add('show'); // 滑入第一個按鈕
-            }, 100); 
-
-            setTimeout(() => {
-                buttons[1].classList.add('show'); // 滑入第二個按鈕
-            }, 300); 
-            setTimeout(() => {
-                buttons[2].classList.add('show'); // 滑入第三個按鈕
-            }, 500); 
-            setTimeout(() => {
-                buttons[3].classList.add('show'); // 滑入第四個按鈕
-            }, 700); 
-            setTimeout(() => {
-                buttons[4].classList.add('show'); // 滑入第五個按鈕
-            }, 900); 
-            setTimeout(() => {
-                buttons[5].classList.add('show'); // 滑入第六個按鈕
-            }, 1200); 
-        });
-    </script>
 </body>
 </html>
