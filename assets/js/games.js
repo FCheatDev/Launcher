@@ -1,28 +1,20 @@
-// Get the sidebar, close button, and search button elements
-let sidebar = document.querySelector(".sidebar");
-let closeBtn = document.querySelector("#btn");
-let searchBtn = document.querySelector(".bx-search");
-let navList = document.querySelector(".nav-list");
+// 獲取側邊欄、關閉按鈕和導航清單元素
+const sidebar = document.querySelector(".sidebar");
+const closeBtn = document.querySelector("#btn");
+const navList = document.querySelector(".nav-list");
 
-// Event listener for the menu button to toggle the sidebar open/close
+// 點擊關閉按鈕來切換側邊欄開關狀態
 closeBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("open"); // Toggle the sidebar's open state
-  navList.classList.toggle("scroll"); // Toggle scroll state
-  menuBtnChange(); // Call function to change button icon
+  sidebar.classList.toggle("open"); // 切換側邊欄的開啟狀態
+  navList.classList.toggle("scroll"); // 切換滾動狀態
+  menuBtnChange(); // 調用更換按鈕圖標的函數
 });
 
-// Event listener for the search button to open the sidebar
-searchBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("open");
-  navList.classList.toggle("scroll");
-  menuBtnChange(); // Call function to change button icon
-});
-
-// Function to change the menu button icon
+// 更改按鈕圖標以指示側邊欄狀態
 function menuBtnChange() {
   if (sidebar.classList.contains("open")) {
-    closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); // Change icon to indicate closing
+    closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); // 改變圖標以指示可關閉
   } else {
-    closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); // Change icon to indicate opening
+    closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); // 改變圖標以指示可開啟
   }
 }
