@@ -18,3 +18,15 @@ function menuBtnChange() {
     closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); // 改變圖標以指示可開啟
   }
 }
+document.addEventListener("DOMContentLoaded", function () {
+  // 獲取所有的 span 元素
+  const textElements = document.querySelectorAll(".fade-text");
+  let delay = 300; // 初始延遲時間為 1 秒（1000 毫秒）
+
+  textElements.forEach((span, index) => {
+      setTimeout(() => {
+          span.classList.add("fade-in");
+      }, delay);
+      delay += 100; // 每次延遲增加 0.1 秒（100 毫秒）
+  });
+});

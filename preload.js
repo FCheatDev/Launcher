@@ -11,3 +11,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
 contextBridge.exposeInMainWorld('electron', {
     openExternalLink: (url) => ipcRenderer.send('open-external-link', url),
 });
+ipcRenderer.on('log-update', (event, logMessage) => {
+    console.log("收到日誌：", logMessage);
+    // 將日誌顯示在界面上
+    const logElement = document.getElementById('logDisplay');
+    logElement.innerText += logMessage + "\n";
+});

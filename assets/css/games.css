@@ -13,6 +13,8 @@
 
 /* Sidebar container styling */
 .sidebar {
+  font-weight: bold;
+  color: #FFF;
   position: fixed;
   left: 0;
   top: 0;
@@ -98,8 +100,7 @@
   top: -20px;
   left: calc(100% + 15px);
   z-index: 3;
-  color: white;
-  background: #050505;
+  background: #000000;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
   padding: 6px 12px;
   border-radius: 4px;
@@ -199,7 +200,7 @@
 }
 .sidebar .bx-search:hover {
   background: #FFF; /* Hover background color */
-  color: #11101d; /* Hover text color */
+  color: #ffffff; /* Hover text color */
 }
 
 /* Profile section styling */
@@ -276,18 +277,50 @@
   width: 50px; /* Shrinks logout button */
   background: none;
 }
+.sidebar.open ~ .home-section {
+  left: 250px; /* Adjusts home section to sidebar width */
+  width: calc(100% - 250px);
+}
+
+
 .sidebar.open ~ .roblox-section {
   left: 250px; /* Adjusts home section to sidebar width */
   width: calc(100% - 250px);
 }
-/* Main content (home section) styling */
-.roblox-section {
+.sidebar.open ~ .minecraft-section {
+  left: 250px; /* Adjusts home section to sidebar width */
+  width: calc(100% - 250px);
+}
+.sidebar.open ~ .genshinimpact-section {
+  left: 250px; /* Adjusts home section to sidebar width */
+  width: calc(100% - 250px);
+}
+/* Home */
+.home-section {
   position: relative;
   background: #000000; /* Light background for main content */
   min-height: 100vh;
   top: 0;
   left: 78px;
   width: calc(100% - 78px); /* Adjusts width to fit next to sidebar */
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+.home-section .text {
+  display: inline-block;
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px;
+}
+/* Roblox */
+.roblox-section {
+  position: relative;
+  background: #000000; 
+  min-height: 100vh;
+  top: 0;
+  left: 78px;
+  width: calc(100% - 78px); 
   transition: all 0.5s ease;
   z-index: 2;
 }
@@ -298,20 +331,58 @@
   font-weight: 500;
   margin: 18px;
 }
+/* Minecraft */
 .minecraft-section {
   position: relative;
-  background: #000000; /* Light background for main content */
+  background: #000000; 
   min-height: 100vh;
   top: 0;
   left: 78px;
-  width: calc(100% - 78px); /* Adjusts width to fit next to sidebar */
+  width: calc(100% - 78px); 
   transition: all 0.5s ease;
   z-index: 2;
 }
 .minecraft-section .text {
   display: inline-block;
-  color: #fdfdff;
+  color: #ffffff;
   font-size: 25px;
   font-weight: 500;
   margin: 18px;
+}
+/* Genshin Impact */
+.genshinimpact-section {
+  position: relative;
+  background: #000000; 
+  min-height: 100vh;
+  top: 0;
+  left: 78px;
+  width: calc(100% - 78px); 
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+.genshinimpact-section .text {
+  display: inline-block;
+  color: #ffffff ;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px;
+}
+.no-install{
+  display: flex;
+  height: 100vh;
+  line-height: 1.5;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #ffffff; 
+  font-size: 25px; 
+}
+.fade-text {
+  opacity: 0;
+  transition: opacity 1s ease-in; /* 設置淡入效果持續時間為1秒 */
+}
+
+.fade-in {
+  opacity: 1;
 }
