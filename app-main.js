@@ -133,7 +133,12 @@ async function checkForUpdates() {
                 title: '發現新版本',
                 message: `新版本: ${latestVersion}`,
             });
-
+            await dialog.showMessageBox(mainWindow, {
+                type: 'info',
+                buttons: ['確定'],
+                title: 'INFO',
+                message: `請等待,APP正在更新....`,
+            });
             // 当用户点击“更新”按钮时执行下载逻辑
             if (result.response === 0) { // 0 表示“更新”按钮
                 await downloadAndUpdate(latestRelease);
