@@ -387,66 +387,70 @@
   opacity: 1;
 }
 
-
-
-.r-div[class*=r-box] {
-    height: 33.33%; 
-    width: 200px;
+.fc_container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.r-box-3 { background-color: #66A182; }
-
-.r-btn {
-    line-height: 50px;
-    height: 50px;
-    text-align: center;
-    width: 250px;
-    cursor: pointer;
+  flex-wrap: wrap; /* 允許換行 */
+  background-color: transparent;
+  justify-content: left; /* 卡片置左 */
 }
 
+.fc_games.card {
+  color: #ffffff;
+  width: 200px; /* 卡片的寬度 */
+  margin: 20px; /* 卡片之間的間距 */
+  background-color: #2a2a2a; /* 卡片背景顏色 */
+  border-radius: 10px; /* 卡片的圓角 */
+  overflow: hidden; /* 隱藏超出部分 */
+  box-shadow: 0 4px 20px rgba(116, 116, 121, 0.521); /* 陰影效果 */
+  display: flex; /* 使用 flex 來排列內容 */
+  flex-direction: column; /* 垂直排列 */
+  align-items: center; /* 水平置中 */
+  padding: 10px; /* 卡片內邊距 */
+}
 
+.fc_games.card img {
+  width: 200px; /* 圖片寬度固定為 200px */
+  height: 150px; /* 圖片高度固定為 200px */
+  padding: 5px; /* 圖片周圍留出 5px 的空間 */
+  box-sizing: border-box; /* 確保內邊距不影響圖片的大小 */
+  border-radius: 20px; /* 圖片的圓角 */
+}
 
-/* 
-========================
-      BUTTON THREE
-========================
-*/
-.r-btn-three {
-    color: #FFF;
-    transition: all 0.5s;
-    position: relative;
+.fc_games.card h3 {
+  margin: 10px 0; /* 標題的上下邊距 */
+  font-size: 14px; /* 標題大小 */
 }
-.r-btn-three::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    background-color: rgba(255,255,255,0.1);
-    transition: all 0.3s;
+
+.fc_games.card p {
+  margin: 5px 0; /* 文字的上下邊距 */
+  font-size: 12px; /* 文字大小 */
+  text-align: center; /* 文字置中 */
+  font-weight: bold;
 }
-.r-btn-three:hover::before {
-    opacity: 0 ;
-    transform: scale(0.5,0.5);
+
+.fc_games.card button {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 16px;
+  width: 200px;
+  height:35px;
+  background-color: #70fff8; /* 按鈕顏色 */
+  color: #1e1e1e; /* 按鈕文字顏色 */
+  border: none; /* 取消邊框 */
+  border-radius: 5px; /* 按鈕圓角 */
+  padding: 5px 10px; /* 按鈕內邊距 */
+  cursor: pointer; /* 鼠標樣式 */
+  margin-top: 10px; /* 按鈕與其他內容的間距 */
+  transition: background-color 0.3s; /* 背景顏色平滑過渡 */
 }
-.r-btn-three::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    opacity: 0;
-    transition: all 0.3s;
-    border: 1px solid rgba(255,255,255,0.5);
-    transform: scale(1.2,1.2);
+
+.fc_games.card button:hover {
+  background-color: #496afc; /* 懸停時改變顏色 */
 }
-.r-btn-three:hover::after {
-    opacity: 1;
-    transform: scale(1,1);
+.top-m{
+  width: 100%;
+  height: 60px;
+  display: flex;
+  background-color: transparent;
+  justify-content: flex-end;
 }

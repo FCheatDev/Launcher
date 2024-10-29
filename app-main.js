@@ -6,7 +6,6 @@ const fs = require('fs');
 const axios = require('axios');
 const { spawn } = require('child_process');
 const currentVersion = '0.0.0';  // 本地版本號
-const installPath = path.join(__dirname, 'install'); 
 let mainWindow;
 let menuWindow = null;
 
@@ -73,6 +72,7 @@ function createMenuWindow() {
 }
 
 // 設定 IPC 事件處理邏輯
+
 function setupIpcHandlers() {
     ipcMain.on('minimize-window', () => mainWindow.minimize());
     ipcMain.on('close-window', () => mainWindow.close());
@@ -85,6 +85,8 @@ function setupIpcHandlers() {
     ipcMain.on('return-home', () => mainWindow.loadFile('launcher.html'));
     ipcMain.on('open-external-link', (event, url) => shell.openExternal(url));
 }
+
+
 
 // 初始化並檢測菜單視窗的位置
 function monitorMenuPosition() {
@@ -100,7 +102,7 @@ function monitorMenuPosition() {
         }
     }, 100);
 }
-
+//-------------------------------------------------Start Wave Executor-------------------------------------------------
 
 /*-----------------------------------GET VERSION -------------------------------------------------*/ 
 // 获取本地版本号
