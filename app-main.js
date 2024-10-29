@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain, shell, globalShortcut, screen } = require('electron');
 const path = require('path');
 const fs = require('fs');
-
+require('electron-reload')(__dirname);
 let mainWindow;
 let menuWindow = null;
 

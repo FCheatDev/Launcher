@@ -1,6 +1,6 @@
 // preload.js
 const { contextBridge, ipcRenderer } = require('electron');
-
+const { version } = require('./package.json');
 // 暴露到渲染進程的 API
 contextBridge.exposeInMainWorld('electronAPI', {
     minimizeWindow: () => ipcRenderer.send('minimize-window'),
@@ -17,3 +17,7 @@ ipcRenderer.on('log-update', (event, logMessage) => {
     const logElement = document.getElementById('logDisplay');
     logElement.innerText += logMessage + "\n";
 });
+/*Get Version*/ 
+contextBridge.exposeInMainWorld('appInfo', {
+    version: version
+  });
