@@ -1,5 +1,4 @@
 const { app, BrowserWindow, ipcMain, shell, globalShortcut, screen, dialog } = require('electron');
-
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const fs = require('fs');
@@ -8,6 +7,9 @@ const { spawn } = require('child_process');
 const currentVersion = '0.0.0';  // 本地版本號
 let mainWindow;
 let menuWindow = null;
+let isUpdateAvailable = false;
+// 定义安装路径
+const installPath = path.join(app.getPath('userData'), 'updates'); // 设置您希望的路径
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -72,7 +74,6 @@ function createMenuWindow() {
 }
 
 // 設定 IPC 事件處理邏輯
-
 function setupIpcHandlers() {
     ipcMain.on('minimize-window', () => mainWindow.minimize());
     ipcMain.on('close-window', () => mainWindow.close());
@@ -85,8 +86,6 @@ function setupIpcHandlers() {
     ipcMain.on('return-home', () => mainWindow.loadFile('launcher.html'));
     ipcMain.on('open-external-link', (event, url) => shell.openExternal(url));
 }
-
-
 
 // 初始化並檢測菜單視窗的位置
 function monitorMenuPosition() {
@@ -102,9 +101,7 @@ function monitorMenuPosition() {
         }
     }, 100);
 }
-//-------------------------------------------------Start Wave Executor-------------------------------------------------
 
-/*-----------------------------------GET VERSION -------------------------------------------------*/ 
 // 获取本地版本号
 function getLocalVersion() {
     const packagePath = path.join(__dirname, 'package.json'); // 指定package.json路径
@@ -117,7 +114,8 @@ const localVersion = getLocalVersion();
 console.log(`Current Version: ${localVersion}`);
 
 
-/*-----------------------------------CHECK UPDATE -------------------------------------------------*/ 
+/*-----------------------------------DOWNLOAD AND UPDATE APP -------------------------------------------------*/
+// 检查更新的函数
 async function checkForUpdates() {
     try {
         const response = await axios.get('https://api.github.com/repos/FCheatDev/Launcher/releases/latest');
@@ -127,6 +125,7 @@ async function checkForUpdates() {
 
         if (remoteVersion > localVersion) {
             console.log(`There is a new version: ${latestVersion}, prompting user...`);
+            isUpdateAvailable = true; // 设置标志位为 true
 
             // 弹出对话框
             const result = await dialog.showMessageBox(mainWindow, {
@@ -135,12 +134,14 @@ async function checkForUpdates() {
                 title: '發現新版本',
                 message: `新版本: ${latestVersion}`,
             });
+
             await dialog.showMessageBox(mainWindow, {
                 type: 'info',
                 buttons: ['確定'],
                 title: 'INFO',
                 message: `請等待,APP正在更新....`,
             });
+
             // 当用户点击“更新”按钮时执行下载逻辑
             if (result.response === 0) { // 0 表示“更新”按钮
                 await downloadAndUpdate(latestRelease);
@@ -194,34 +195,16 @@ async function downloadAndUpdate(latestRelease) {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 // 初始化應用
-app.whenReady().then(() => {
-    createWindow();
-    setupIpcHandlers();
-    monitorMenuPosition();
-    checkForUpdates();
+app.whenReady().then(async () => {
+    await checkForUpdates(); // 等待更新检查完成
+
+    if (!isUpdateAvailable) { // 只有在没有更新的情况下才执行以下操作
+        createWindow();
+        setupIpcHandlers();
+        monitorMenuPosition();
+    }
 });
-
-
-
-
-
-
-
-
-
 // 註銷所有全局快捷鍵
 app.on('will-quit', () => {
     globalShortcut.unregisterAll();
@@ -230,4 +213,3 @@ app.on('will-quit', () => {
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
 });
-
