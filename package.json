@@ -1,6 +1,6 @@
 {
   "name": "FCheatlauncher",
-  "version": "1.0.9",
+  "version": "1.1.2",
   "description": "FCheatLauncher By AutoEZ_TW",
   "main": "app-main.js",
   "icon": "images/app-logo.ico",
@@ -21,6 +21,8 @@
     "antd": "^5.20.0",
     "axios": "^1.7.7",
     "bootstrap-icons": "^1.11.3",
+    "child_process": "^1.0.2",
+    "decompress": "^4.2.1",
     "dialog": "^0.3.1",
     "discord-rich-presence": "^0.0.8",
     "discord-rpc": "^4.0.1",

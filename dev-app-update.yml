@@ -1,0 +1,3 @@
+provider: "generic" 
+url: "https://getfcheat.web.app/latest.json" 
+channel: "latest"

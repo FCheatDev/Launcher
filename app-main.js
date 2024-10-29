@@ -1,7 +1,12 @@
-const { app, BrowserWindow, ipcMain, shell, globalShortcut, screen } = require('electron');
+const { app, BrowserWindow, ipcMain, shell, globalShortcut, screen, dialog } = require('electron');
+
+const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const fs = require('fs');
-require('electron-reload')(__dirname);
+const axios = require('axios');
+const { spawn } = require('child_process');
+const currentVersion = '0.0.0';  // 本地版本號
+const installPath = path.join(__dirname, 'install'); 
 let mainWindow;
 let menuWindow = null;
 
@@ -96,12 +101,119 @@ function monitorMenuPosition() {
     }, 100);
 }
 
+
+/*-----------------------------------GET VERSION -------------------------------------------------*/ 
+// 获取本地版本号
+function getLocalVersion() {
+    const packagePath = path.join(__dirname, 'package.json'); // 指定package.json路径
+    const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8')); // 读取并解析JSON
+    return packageJson.version; // 返回版本号
+}
+
+// 示例：获取本地版本号
+const localVersion = getLocalVersion();
+console.log(`Current Version: ${localVersion}`);
+
+
+/*-----------------------------------CHECK UPDATE -------------------------------------------------*/ 
+async function checkForUpdates() {
+    try {
+        const response = await axios.get('https://api.github.com/repos/FCheatDev/Launcher/releases/latest');
+        const latestRelease = response.data;
+        const latestVersion = latestRelease.tag_name; // 例如 '1.1.1'
+        const remoteVersion = latestVersion.replace('v', ''); // 去掉版本前的 'v'
+
+        if (remoteVersion > localVersion) {
+            console.log(`There is a new version: ${latestVersion}, prompting user...`);
+
+            // 弹出对话框
+            const result = await dialog.showMessageBox(mainWindow, {
+                type: 'info',
+                buttons: ['更新'],
+                title: '發現新版本',
+                message: `新版本: ${latestVersion}`,
+            });
+
+            // 当用户点击“更新”按钮时执行下载逻辑
+            if (result.response === 0) { // 0 表示“更新”按钮
+                await downloadAndUpdate(latestRelease);
+            }
+        } else {
+            console.log('No update available.');
+        }
+    } catch (error) {
+        console.error('Error checking for updates:', error);
+    }
+}
+
+// 下载和更新的逻辑提取到一个新的函数中
+async function downloadAndUpdate(latestRelease) {
+    const asset = latestRelease.assets.find(asset => asset.name.endsWith('.exe'));
+    if (asset) {
+        const downloadUrl = asset.browser_download_url;
+
+        if (!fs.existsSync(installPath)) {
+            fs.mkdirSync(installPath);
+        }
+
+        const filePath = path.join(installPath, asset.name);
+        const writer = fs.createWriteStream(filePath);
+
+        const response = await axios.get(downloadUrl, { responseType: 'stream' });
+        response.data.pipe(writer);
+
+        writer.on('finish', () => {
+            console.log('Download completed, start update...');
+
+            const updateProcess = spawn(filePath, { detached: true, shell: true });
+
+            updateProcess.on('error', (error) => {
+                console.error('Error launching the update:', error);
+            });
+
+            updateProcess.on('exit', (code) => {
+                console.log(`Update process exited with code: ${code}`);
+            });
+
+            updateProcess.unref(); // 允许主进程继续执行
+            app.quit(); // 结束主进程
+        });
+
+        writer.on('error', (error) => {
+            console.error('Download failed:', error);
+        });
+    } else {
+        console.log('No .exe file found in the latest release.');
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 // 初始化應用
 app.whenReady().then(() => {
     createWindow();
     setupIpcHandlers();
     monitorMenuPosition();
+    checkForUpdates();
 });
+
+
+
+
+
+
+
+
 
 // 註銷所有全局快捷鍵
 app.on('will-quit', () => {
@@ -111,3 +223,4 @@ app.on('will-quit', () => {
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
 });
+
