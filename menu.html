@@ -42,7 +42,9 @@
             left: 0px;
             top: 40px;
         }
-
+        .ad-set{
+            white-space: nowrap;
+        }
 
         /* 關閉按鈕樣式 */
         #close-btn {
@@ -96,11 +98,20 @@
     </div>
     <div>
         <button class="menu-btn transparent-button back-home" id="back-home-btn">返回首頁</button>
+        <button class="menu-btn transparent-button ad-set" id="toggleAdBlockButton">廣告攔截</button>
     </div> 
 
     <script>
         const { ipcRenderer } = require('electron');
-        
+        let adBlockEnabled = false; // 初始值
+    
+        document.getElementById('toggleAdBlockButton').addEventListener('click', () => {
+            adBlockEnabled = !adBlockEnabled; // 切換狀態
+            ipcRenderer.send('toggle-ad-blocking', adBlockEnabled); // 發送狀態到主進程
+            
+            // 更新按鈕文本
+            document.getElementById('toggleAdBlockButton').innerText = adBlockEnabled ? "禁用廣告攔截" : "啟用廣告攔截";
+        });
         document.addEventListener('DOMContentLoaded', () => {
             const backHomeBtn = document.getElementById('back-home-btn');
             backHomeBtn.addEventListener('click', () => {

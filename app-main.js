@@ -1,16 +1,25 @@
-const { app, BrowserWindow, ipcMain, shell, globalShortcut, screen, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, shell, globalShortcut, screen, dialog, webRequest, session } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const fs = require('fs');
 const axios = require('axios');
 const { spawn } = require('child_process');
-const currentVersion = '0.0.0';  // 本地版本號
+
+
+
+
+/*-----------------------------------參數 -------------------------------------------------*/ 
+const currentVersion = '0.0.0'; 
+let adBlockEnabled = false;
 let mainWindow;
 let menuWindow = null;
 let isUpdateAvailable = false;
-// 定义安装路径
-const installPath = path.join(app.getPath('userData'), 'updates'); // 设置您希望的路径
 
+
+
+const installPath = path.join(app.getPath('userData'), 'updates');
+
+/*-----------------------------------創建主視窗 -------------------------------------------------*/ 
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1400,
@@ -19,7 +28,7 @@ function createWindow() {
         movable: true,
         resizable: false,
         fullscreenable: false,
-        icon: path.join(__dirname, 'images/app-logo.ico'),
+        icon: path.join(__dirname, 'images/app-logo-nobg.ico'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
@@ -45,14 +54,14 @@ function createWindow() {
     // 建立菜單視窗
     createMenuWindow();
 }
-
-// 創建菜單視窗
+/*-----------------------------------創建菜單視窗 -------------------------------------------------*/ 
 function createMenuWindow() {
     menuWindow = new BrowserWindow({
         width: 165,
         height: 200,
         frame: false,
         transparent: true,
+        icon: path.join(__dirname, 'images/app-logo-nobg.ico'),
         fullscreenable: false,
         maximizable: false,
         alwaysOnTop: true,
@@ -72,8 +81,7 @@ function createMenuWindow() {
         menuWindow = null;
     });
 }
-
-// 設定 IPC 事件處理邏輯
+/*-----------------------------------設定 IPC 事件處理邏輯 -------------------------------------------------*/ 
 function setupIpcHandlers() {
     ipcMain.on('minimize-window', () => mainWindow.minimize());
     ipcMain.on('close-window', () => mainWindow.close());
@@ -85,9 +93,14 @@ function setupIpcHandlers() {
     });
     ipcMain.on('return-home', () => mainWindow.loadFile('launcher.html'));
     ipcMain.on('open-external-link', (event, url) => shell.openExternal(url));
+    ipcMain.on('toggle-ad-blocking', (event, shouldEnable) => {
+        adBlockEnabled = shouldEnable; // 更新狀態
+        setupAdBlock(); // 重新設置廣告攔截
+        const message = adBlockEnabled ? "廣告攔截已啟用" : "廣告攔截已禁用";
+        event.reply('ad-block-status', message); // 發送提示信息回前端
+    });
 }
-
-// 初始化並檢測菜單視窗的位置
+/*-----------------------------------初始化並檢測菜單視窗的位置 -------------------------------------------------*/ 
 function monitorMenuPosition() {
     setInterval(() => {
         if (menuWindow) {
@@ -101,21 +114,58 @@ function monitorMenuPosition() {
         }
     }, 100);
 }
-
-// 获取本地版本号
+/*-----------------------------------獲取版本號 -------------------------------------------------*/
 function getLocalVersion() {
     const packagePath = path.join(__dirname, 'package.json'); // 指定package.json路径
     const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8')); // 读取并解析JSON
     return packageJson.version; // 返回版本号
 }
-
-// 示例：获取本地版本号
 const localVersion = getLocalVersion();
 console.log(`Current Version: ${localVersion}`);
 
+/*-----------------------------------ADBLOCK -------------------------------------------------*/
+function setupAdBlock() {
+    const adBlockList = [
+        '*://*.doubleclick.net/*',
+        '*://*.googlesyndication.com/*',
+        '*://*.adservice.google.com/*',
+        '*://*.ads.yahoo.com/*',
+        '*://*.adnxs.com/*',
+        '*://*/*.ads/*',
+        '*://*/*popup*',
+        '*://*/*.ad',
+    ];
 
+    // 清除之前的攔截器，以免重複設置
+    session.defaultSession.webRequest.onBeforeRequest(null);
+
+    // 判斷廣告攔截是否啟用
+    if (adBlockEnabled) {
+        session.defaultSession.webRequest.onBeforeRequest({ urls: adBlockList }, (details, callback) => {
+            // 僅攔截廣告相關的外部連結請求
+            callback({ cancel: true }); // 取消匹配的請求
+        });
+
+        dialog.showMessageBoxSync({
+            type: 'info',
+            title: '廣告攔截器',
+            message: '廣告攔截已啟用'
+        });
+    } else {
+        dialog.showMessageBoxSync({
+            type: 'info',
+            title: '廣告攔截器',
+            message: '廣告攔截已禁用'
+        });
+    }
+}
+
+// 控制按鈕開關 adBlockEnabled 狀態，並重新加載攔截器
+function toggleAdBlock() {
+    adBlockEnabled = !adBlockEnabled;
+    setupAdBlock();
+}
 /*-----------------------------------DOWNLOAD AND UPDATE APP -------------------------------------------------*/
-// 检查更新的函数
 async function checkForUpdates() {
     try {
         const response = await axios.get('https://api.github.com/repos/FCheatDev/Launcher/releases/latest');
@@ -194,8 +244,7 @@ async function downloadAndUpdate(latestRelease) {
         console.log('No .exe file found in the latest release.');
     }
 }
-
-// 初始化應用
+/*-----------------------------------初始化應用 -------------------------------------------------*/
 app.whenReady().then(async () => {
     await checkForUpdates(); // 等待更新检查完成
 

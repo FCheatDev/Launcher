@@ -35,10 +35,10 @@
       <!-- Home items -->
       <li>
         <a href="games.html">
-          <i ><img src="../../images/home.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
-          <span class="links_name">Home</span>
+          <i ><img src="../../images/game-home.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+          <span class="links_name">Game Home</span>
         </a>
-        <span class="tooltip">Home</span>
+        <span class="tooltip">Game_Home</span>
       </li>
        <!-- Roblox Executor items -->
        <li>
@@ -76,12 +76,41 @@
   </div>
   <!-- Main content area -->
   <section class="roblox-section ">
-    <div class="text fade-text">ROBLOX COMING SOON....</div>
+    <div class="top-m"></div>
+    <div class="fc_container fade-text" style="-webkit-app-region: no-drag;">
+      <div class="fc_games card" >
+          <img src="../../images/scriptblox.jpg">
+          <h3>ScriptBlox</h3>
+          <button onclick="window.open('https://scriptblox.com/', '_blank');">前往</button>
+      </div>
+      <div class="fc_container fade-text" style="-webkit-app-region: no-drag;">
+        <div class="fc_games card" >
+            <img src="../../images/rscript.png">
+            <h3>Rscript</h3>
+            <button onclick="window.open('https://rscripts.net/', '_blank');">前往</button>
+        </div>
+        <div class="fc_games card" >
+          <img src="../../images/sakopt.jpg">
+          <h3>Sakopt</h3>
+          <button onclick="window.open('https://sakpot.com/', '_blank');">前往</button>
+      </div>
+      </div>
+    </div>
+
+
   </section>
 </div>
 <!-- Scripts -->
 <script src="../js/games.js" defer ></script>
 <script src="../js/openlnk.js" defer></script>
+<script>
+  let externalWindow; // 儲存外部窗口的引用
+
+  document.getElementById('openExternalButton').addEventListener('click', () => {
+      // 開啟外部連結並儲存窗口引用
+      externalWindow = window.open('https://rscripts.net/', '_blank');
+  });
+</script>
 
 </body>
 </html>
