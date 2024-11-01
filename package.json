@@ -58,6 +58,7 @@
     ],
     "win": {
       "target": "nsis",
+      "icon": "images/app-logo-nobg.ico",
       "requestedExecutionLevel": "requireAdministrator"
     },
     "nsis": {

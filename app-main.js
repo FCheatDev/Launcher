@@ -9,14 +9,14 @@ const { spawn } = require('child_process');
 
 
 /*-----------------------------------參數 -------------------------------------------------*/ 
-const currentVersion = '0.0.0'; 
+
 let adBlockEnabled = false;
 let mainWindow;
 let menuWindow = null;
 let isUpdateAvailable = false;
 
 
-
+const currentVersion = '0.0.0'; 
 const installPath = path.join(app.getPath('userData'), 'updates');
 
 /*-----------------------------------創建主視窗 -------------------------------------------------*/ 
@@ -24,10 +24,12 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1400,
         height: 1200,
+        minHeight: 912,
+        minWidth:1227,
         frame: false,
         movable: true,
-        resizable: false,
-        fullscreenable: false,
+        resizable:true,
+        fullscreenable: true, 
         icon: path.join(__dirname, 'images/app-logo-nobg.ico'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
@@ -40,10 +42,9 @@ function createWindow() {
     mainWindow.loadFile('launcher.html').catch(err => {
         console.error('Error loading HTML file:', err);
     });
-
-    // 禁止最大化
-    mainWindow.on('maximize', () => {
-        mainWindow.unmaximize();
+    mainWindow.on('resize', () => {
+        const { width, height } = mainWindow.getBounds();
+        //console.log(`Current window size: ${width}x${height}`);
     });
 
     // 註冊全局快捷鍵
@@ -85,20 +86,22 @@ function createMenuWindow() {
 function setupIpcHandlers() {
     ipcMain.on('minimize-window', () => mainWindow.minimize());
     ipcMain.on('close-window', () => mainWindow.close());
-    ipcMain.on('open-menu-window', () => {
-        if (!menuWindow) createMenuWindow();
-    });
-    ipcMain.on('close-menu-window', () => {
-        if (menuWindow) menuWindow.close();
-    });
+    ipcMain.on('open-menu-window', () => {if (!menuWindow) createMenuWindow();});
+    ipcMain.on('close-menu-window', () => {if (menuWindow) menuWindow.close();});
     ipcMain.on('return-home', () => mainWindow.loadFile('launcher.html'));
     ipcMain.on('open-external-link', (event, url) => shell.openExternal(url));
-    ipcMain.on('toggle-ad-blocking', (event, shouldEnable) => {
-        adBlockEnabled = shouldEnable; // 更新狀態
-        setupAdBlock(); // 重新設置廣告攔截
-        const message = adBlockEnabled ? "廣告攔截已啟用" : "廣告攔截已禁用";
-        event.reply('ad-block-status', message); // 發送提示信息回前端
-    });
+    ipcMain.on('toggle-ad-blocking', (event, shouldEnable) => {adBlockEnabled = shouldEnable;  setupAdBlock(); const message = adBlockEnabled ? "廣告攔截已啟用" : "廣告攔截已禁用";event.reply('ad-block-status', message); });
+    ipcMain.on('toggle-fullscreen', () => {if (mainWindow) {const isMaximized = mainWindow.isMaximized();if (!isMaximized) {mainWindow.setFullScreen(false);  mainWindow.setResizable(true); mainWindow.maximize();mainWindow.setMenuBarVisibility(false); } else { mainWindow.unmaximize();mainWindow.setMenuBarVisibility(true);}}}); 
+    mainWindow.on('resize', () => {const { width, height } = mainWindow.getBounds();/*console.log(`Current window size: ${width}x${height}`);*/mainWindow.webContents.send('window-resized', { width, height });});
+
+
+
+
+
+
+
+
+
 }
 /*-----------------------------------初始化並檢測菜單視窗的位置 -------------------------------------------------*/ 
 function monitorMenuPosition() {

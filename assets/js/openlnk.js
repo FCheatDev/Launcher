@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
             window.electron.openExternalLink(url); // 调用暴露的方法
         };
     }
-
+    document.getElementById('fullscreen-btn').addEventListener('click', () => {
+        window.electronAPI.fullscreenWindow();
+    });
     document.getElementById('minimize-btn').addEventListener('click', () => {
         window.electronAPI.minimizeWindow();
     });
