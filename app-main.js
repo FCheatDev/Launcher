@@ -15,7 +15,8 @@ let mainWindow;
 let menuWindow = null;
 let isUpdateAvailable = false;
 
-
+const GamesMainFolder = './Games';
+const GamesSubFolders = ['Roblox', 'GenshinImpact', 'Minecraft'];
 const currentVersion = '0.0.0'; 
 const installPath = path.join(app.getPath('userData'), 'updates');
 
@@ -88,12 +89,13 @@ function setupIpcHandlers() {
     ipcMain.on('close-window', () => mainWindow.close());
     ipcMain.on('open-menu-window', () => {if (!menuWindow) createMenuWindow();});
     ipcMain.on('close-menu-window', () => {if (menuWindow) menuWindow.close();});
+    ipcMain.on('minimize-menu-window', () => menuWindow.minimize());
+    
     ipcMain.on('return-home', () => mainWindow.loadFile('launcher.html'));
     ipcMain.on('open-external-link', (event, url) => shell.openExternal(url));
     ipcMain.on('toggle-ad-blocking', (event, shouldEnable) => {adBlockEnabled = shouldEnable;  setupAdBlock(); const message = adBlockEnabled ? "廣告攔截已啟用" : "廣告攔截已禁用";event.reply('ad-block-status', message); });
     ipcMain.on('toggle-fullscreen', () => {if (mainWindow) {const isMaximized = mainWindow.isMaximized();if (!isMaximized) {mainWindow.setFullScreen(false);  mainWindow.setResizable(true); mainWindow.maximize();mainWindow.setMenuBarVisibility(false); } else { mainWindow.unmaximize();mainWindow.setMenuBarVisibility(true);}}}); 
     mainWindow.on('resize', () => {const { width, height } = mainWindow.getBounds();/*console.log(`Current window size: ${width}x${height}`);*/mainWindow.webContents.send('window-resized', { width, height });});
-
 
 
 
@@ -117,6 +119,32 @@ function monitorMenuPosition() {
         }
     }, 100);
 }
+/*-----------------------------------初始化遊戲安裝資料夾 -------------------------------------------------*/ 
+
+function CreateGamesFolders(){
+    // 創建主資料夾 "Games"
+    console.log('----------- Create Games Folder Log-----------');
+    if (!fs.existsSync(GamesMainFolder)) {
+    fs.mkdirSync(GamesMainFolder);
+    console.log('Games Folder created');
+    } else {
+    console.log('Games folder already exists');
+    }
+
+    // 創建子資料夾
+    GamesSubFolders.forEach(subFolder => {
+    const GameSubFolderPath = path.join(GamesMainFolder, subFolder);
+    
+    if (!fs.existsSync(GameSubFolderPath)) {
+        fs.mkdirSync(GameSubFolderPath);
+        console.log(`${subFolder} Folder created`);
+    } else {
+        console.log(`${subFolder} folder already exists`);
+    }
+    });
+}
+
+
 /*-----------------------------------獲取版本號 -------------------------------------------------*/
 function getLocalVersion() {
     const packagePath = path.join(__dirname, 'package.json'); // 指定package.json路径
@@ -152,7 +180,7 @@ function setupAdBlock() {
         dialog.showMessageBoxSync({
             type: 'info',
             title: '廣告攔截器',
-            message: '廣告攔截已啟用'
+            message: '廣告攔截已啟用。此功能還在開發中,只能擋掉一小部分'
         });
     } else {
         dialog.showMessageBoxSync({
@@ -170,6 +198,7 @@ function toggleAdBlock() {
 }
 /*-----------------------------------DOWNLOAD AND UPDATE APP -------------------------------------------------*/
 async function checkForUpdates() {
+    console.log('-----------Checking updates Log-----------');
     try {
         const response = await axios.get('https://api.github.com/repos/FCheatDev/Launcher/releases/latest');
         const latestRelease = response.data;
@@ -255,7 +284,9 @@ app.whenReady().then(async () => {
         createWindow();
         setupIpcHandlers();
         monitorMenuPosition();
+        CreateGamesFolders();
     }
+    console.log('-----------Other Log-----------');
 });
 // 註銷所有全局快捷鍵
 app.on('will-quit', () => {

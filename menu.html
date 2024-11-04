@@ -45,7 +45,22 @@
         .ad-set{
             white-space: nowrap;
         }
+        /*縮小視窗*/
+        #minimize-btn {
+            margin: 10px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            position: absolute; /* 絕對定位，將關閉按鈕固定在右上角 */
+            right: 50px;
+            top: -13px;
+            -webkit-app-region: no-drag; /* 關閉按鈕不應該可拖動 */
+        }
 
+        #minimize-btn span {
+            font-size: 40px;
+            color: white;
+        }
         /* 關閉按鈕樣式 */
         #close-btn {
             margin: 10px;
@@ -92,6 +107,9 @@
 <body>
         <!-- 關閉按鈕 -->
      <div class="header">
+        <button id="minimize-btn">
+            <span>&#x2212;</span>
+        </button>
         <button id="close-btn">
             <span>&#x2716;</span>
         </button>
@@ -119,6 +137,10 @@
                 ipcRenderer.send('return-home');
             });
             // 監聽關閉按鈕點擊事件
+            document.getElementById('minimize-btn').addEventListener('click', () => {
+                ipcRenderer.send('minimize-menu-window');
+
+            });
             document.getElementById('close-btn').addEventListener('click', () => {
                 ipcRenderer.send('close-menu-window');
             });

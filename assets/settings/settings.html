@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FCheat Launcher</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline';">
 
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300italic,600italic,300,600" rel="stylesheet">
-    <link rel="stylesheet" href="../css/main.css" />
-    <noscript><link rel="stylesheet" href="../css/noscript.css" /></noscript>
+    <link rel="stylesheet" href="../css/settings.css" />
+
 </head>
-<body class="is-preload" style="-webkit-app-region: drag;">
-    <div id="wrapper">
+<body  style="-webkit-app-region: drag; color: #000;">
+    <div>
         <div id="window-controls" style="position: absolute; top: 10px; right: 10px;">
             <button id="minimize-btn" style="background-color: transparent; border: none; cursor: pointer; border: 2px solid #ffffff; border-radius: 8px; ">
                 <span style="font-size: 24px; color: white;">&#x2212;</span>
@@ -23,17 +23,8 @@
                 <span style="font-size: 24px; color: white;">&#x2716;</span>
             </button>
         </div>
-        
-        <footer id="footer"></footer>
     </div>
-     <div class="main">
-     </div>
     <!-- Scripts -->
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/browser.min.js"></script>
-    <script src="../js/breakpoints.min.js"></script>
-    <script src="../js/util.js"></script>
-    <script src="../js/main.js"></script>
     <script src="../js/openlnk.js" defer></script>
 
 </body>
