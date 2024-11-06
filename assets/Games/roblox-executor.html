@@ -85,36 +85,48 @@
           <img src="../images/wave-exec.jpg">
           <h3>Wave Executor</h3>
           <p>UNC: 100%<br/>僅在PC端使用</p>
-          <button id="find-wave">安裝</button>
+          <button id="find-wave">尋找</button>
       </div>
       <div class="fc_games card">
           <img src="../images/solara-exec.jpg">
           <h3>Solara Executor</h3>
           <p>UNC: 64%<br/>僅在PC端使用</p>
-          <button id="find-solara">安裝</button>
+          <button id="find-solara">尋找</button>
       </div>
       <div class="fc_games card">
           <img src="../images/zorara-exec.png" >
           <h3>Zorara Executor</h3>
           <p>UNC: 84%<br/>僅在PC端使用</p>
-          <button>安裝</button>
+          <button id="find-zorara">尋找</button>
       </div>
       <div class="fc_games card">
         <img src="../images/cloudy-exec.png" >
         <h3>Cloudy Executor</h3>
         <p>UNC: 86%<br/>僅在PC端使用</p>
-        <button>安裝</button>
+        <button>尋找</button>
       </div>
       <div class="fc_games card">
         <img src="../images/fcheat-exec.png" >
         <h3>FCheat Executor</h3>
         <p>UNC: XX%<br/>僅在PC端使用</p>
-        <button>安裝</button>
+        <button>尋找</button>
       </div>
   </div>
 
   </section>
 <!-- Scripts -->
+<script>
+  document.getElementById('find-solara').addEventListener('click', () => {
+      window.electronAPI.runFindSolara();
+  });
+  document.getElementById('find-wave').addEventListener('click', () => {
+      window.electronAPI.runFindWave();
+  });
+  document.getElementById('find-zorara').addEventListener('click', () => {
+      window.electronAPI.runFindZorara();
+  });
+</script>
+
 <script src="../js/games.js" defer ></script>
 <script src="../js/openlnk.js" defer></script>
 </body>

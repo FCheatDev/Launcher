@@ -9,7 +9,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
     menuWindow: () => ipcRenderer.send('open-menu-window'), 
     executePython: () => ipcRenderer.send('execute-python'),
     onPythonResponse: (callback) => ipcRenderer.on('execute-python-response', (event, response) => callback(response)),
-    fullscreenWindow: () => {console.log('Sending toggle-fullscreen event'); ipcRenderer.send('toggle-fullscreen');}
+    fullscreenWindow: () => {console.log('Sending toggle-fullscreen event'); ipcRenderer.send('toggle-fullscreen');},
+    runFindSolara: () => ipcRenderer.send('run-find-solara'),
+    runFindWave: () => ipcRenderer.send('run-find-wave'),
+    runFindZorara: () => ipcRenderer.send('run-find-zorar')
 });
 
 contextBridge.exposeInMainWorld('electron', {

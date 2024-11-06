@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const axios = require('axios');
 const { spawn } = require('child_process');
-
+const { execFile } = require('child_process');
 
 
 
@@ -20,7 +20,9 @@ const GamesMainFolder = './Games';
 const GamesSubFolders = ['Roblox', 'GenshinImpact', 'Minecraft'];
 const currentVersion = '0.0.0'; 
 const installPath = path.join(app.getPath('userData'), 'updates');
-
+const SearchSolara = path.join(__dirname, 'assets/get-files/roblox/get_solara_exec_path.exe');
+const SearchWave = path.join(__dirname, 'assets/get-files/roblox/get_wave_exec_path.exe');
+const SearchZorara = path.join(__dirname, 'assets/get-files/roblox/get_zorara_exec_path.exe');
 /*-----------------------------------創建主視窗 -------------------------------------------------*/ 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -97,7 +99,9 @@ function setupIpcHandlers() {
     ipcMain.on('toggle-ad-blocking', (event, shouldEnable) => {adBlockEnabled = shouldEnable;  setupAdBlock(); const message = adBlockEnabled ? "廣告攔截已啟用" : "廣告攔截已禁用";event.reply('ad-block-status', message); });
     ipcMain.on('toggle-fullscreen', () => {if (mainWindow) {const isMaximized = mainWindow.isMaximized();if (!isMaximized) {mainWindow.setFullScreen(false);  mainWindow.setResizable(true); mainWindow.maximize();mainWindow.setMenuBarVisibility(false); } else { mainWindow.unmaximize();mainWindow.setMenuBarVisibility(true);}}}); 
     mainWindow.on('resize', () => {const { width, height } = mainWindow.getBounds();/*console.log(`Current window size: ${width}x${height}`);*/mainWindow.webContents.send('window-resized', { width, height });});
-
+    ipcMain.on('run-find-solara', () => {execFile(SearchSolara, (error, stdout, stderr) => {if (error) {console.error(`Find Error(Solara): ${error}`);return;}console.log(`Output(Solara):  ${stdout}`);});});
+    ipcMain.on('run-find-wave', () => {execFile(SearchWave, (error, stdout, stderr) => {if (error) {console.error(`Find Error(Wave): ${error}`);return;}console.log(`Output(Wave):  ${stdout}`);});});
+    ipcMain.on('run-find-zorara', () => {execFile(SearchZorara, (error, stdout, stderr) => {if (error) {console.error(`Find Error(Zorara): ${error}`);return;}console.log(`Output(Zorara):  ${stdout}`);});});
 
 
 
@@ -120,6 +124,7 @@ function monitorMenuPosition() {
         }
     }, 100);
 }
+
 /*-----------------------------------初始化遊戲安裝資料夾 -------------------------------------------------*/ 
 function CreateGamesFolders(){
     // 創建主資料夾 "Games"
