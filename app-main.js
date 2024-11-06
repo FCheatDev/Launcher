@@ -15,6 +15,7 @@ let mainWindow;
 let menuWindow = null;
 let isUpdateAvailable = false;
 
+const ConfigMainFolder = path.join(__dirname, 'Config');
 const GamesMainFolder = './Games';
 const GamesSubFolders = ['Roblox', 'GenshinImpact', 'Minecraft'];
 const currentVersion = '0.0.0'; 
@@ -25,13 +26,13 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1400,
         height: 1200,
-        minHeight: 912,
-        minWidth:1227,
+        minHeight: 300,
+        minWidth:400,
         frame: false,
         movable: true,
         resizable:true,
         fullscreenable: true, 
-        icon: path.join(__dirname, 'images/app-logo-nobg.ico'),
+        icon: path.join(__dirname, 'assets/images/app-logo-nobg.ico'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
@@ -63,7 +64,7 @@ function createMenuWindow() {
         height: 200,
         frame: false,
         transparent: true,
-        icon: path.join(__dirname, 'images/app-logo-nobg.ico'),
+        icon: path.join(__dirname, 'assets/images/app-logo-nobg.ico'),
         fullscreenable: false,
         maximizable: false,
         alwaysOnTop: true,
@@ -120,7 +121,6 @@ function monitorMenuPosition() {
     }, 100);
 }
 /*-----------------------------------初始化遊戲安裝資料夾 -------------------------------------------------*/ 
-
 function CreateGamesFolders(){
     // 創建主資料夾 "Games"
     console.log('----------- Create Games Folder Log-----------');
@@ -143,17 +143,26 @@ function CreateGamesFolders(){
     }
     });
 }
-
-
+/*-----------------------------------初始化配置安裝資料夾 -------------------------------------------------*/ 
+function CreateConfigFolders() {
+    // 創建主資料夾 "Config"
+    console.log('----------- Create Config Folder Log -----------');
+    if (!fs.existsSync(ConfigMainFolder)) {
+        fs.mkdirSync(ConfigMainFolder, { recursive: true }); // 確保創建 Config 資料夾
+        console.log('Config Folder created');
+    } else {
+        console.log('Config folder already exists');
+    }
+}
 /*-----------------------------------獲取版本號 -------------------------------------------------*/
 function getLocalVersion() {
     const packagePath = path.join(__dirname, 'package.json'); // 指定package.json路径
     const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8')); // 读取并解析JSON
     return packageJson.version; // 返回版本号
 }
+console.log('-----------Version Log-----------');
 const localVersion = getLocalVersion();
 console.log(`Current Version: ${localVersion}`);
-
 /*-----------------------------------ADBLOCK -------------------------------------------------*/
 function setupAdBlock() {
     const adBlockList = [
@@ -190,7 +199,6 @@ function setupAdBlock() {
         });
     }
 }
-
 // 控制按鈕開關 adBlockEnabled 狀態，並重新加載攔截器
 function toggleAdBlock() {
     adBlockEnabled = !adBlockEnabled;
@@ -235,7 +243,6 @@ async function checkForUpdates() {
         console.error('Error checking for updates:', error);
     }
 }
-
 // 下载和更新的逻辑提取到一个新的函数中
 async function downloadAndUpdate(latestRelease) {
     const asset = latestRelease.assets.find(asset => asset.name.endsWith('.exe'));
@@ -285,6 +292,7 @@ app.whenReady().then(async () => {
         setupIpcHandlers();
         monitorMenuPosition();
         CreateGamesFolders();
+        CreateConfigFolders();
     }
     console.log('-----------Other Log-----------');
 });
