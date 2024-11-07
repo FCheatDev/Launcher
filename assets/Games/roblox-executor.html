@@ -1,18 +1,22 @@
 <!DOCTYPE HTML>
 <html lang="zh-Hant">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FCheat Launcher</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline';">
 
+    <link rel="stylesheet" href="../css/info.css" />
     <link rel="stylesheet" href="../css/games.css" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300italic,600italic,300,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 </head>
+
 <body style="-webkit-app-region: drag;">
     <div >
         <div style="position: absolute; top:10px; right:10px; z-index: 10000; -webkit-app-region: no-drag;">
@@ -110,9 +114,21 @@
         <h3>FCheat Executor</h3>
         <p>UNC: XX%<br/>僅在PC端使用</p>
         <button>尋找</button>
-      </div>
   </div>
-
+  <div class="info-wrapper "style="-webkit-app-region: no-drag;">
+    <div id="toast">
+      <div class="success-1">
+        <i class="fas fa-check-square"></i>
+      </div>
+      <div class="success-2">
+        <p>Success</p>
+        <p>Your changes are saved successfully.</p>
+      </div>
+      <button id="close" onclick="closeToast()">
+        &times;
+      </button>
+    </div>
+  </div>
   </section>
 <!-- Scripts -->
 <script>
@@ -128,6 +144,7 @@
 </script>
 
 <script src="../js/games.js" defer ></script>
+<script src="../js/info.js" ></script>
 <script src="../js/openlnk.js" defer></script>
 </body>
 </html>

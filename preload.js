@@ -12,7 +12,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     fullscreenWindow: () => {console.log('Sending toggle-fullscreen event'); ipcRenderer.send('toggle-fullscreen');},
     runFindSolara: () => ipcRenderer.send('run-find-solara'),
     runFindWave: () => ipcRenderer.send('run-find-wave'),
-    runFindZorara: () => ipcRenderer.send('run-find-zorar')
+    runFindZorara: () => ipcRenderer.send('run-find-zorara')
 });
 
 contextBridge.exposeInMainWorld('electron', {

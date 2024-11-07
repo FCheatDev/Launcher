@@ -52,6 +52,7 @@
       "assets/**/*",
       "node_modules/**/*",
       "app-main.js",
+      "renderer.js",
       "preload.js",
       "launcher.html",
       "menu.html",

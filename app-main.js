@@ -14,7 +14,14 @@ let adBlockEnabled = false;
 let mainWindow;
 let menuWindow = null;
 let isUpdateAvailable = false;
+let solaraInstances = 0;
+let waveInstances = 0;
+let zoraraInstances = 0;
 
+
+
+
+const maxInstances = 1; 
 const ConfigMainFolder = path.join(__dirname, 'Config');
 const GamesMainFolder = './Games';
 const GamesSubFolders = ['Roblox', 'GenshinImpact', 'Minecraft'];
@@ -99,17 +106,66 @@ function setupIpcHandlers() {
     ipcMain.on('toggle-ad-blocking', (event, shouldEnable) => {adBlockEnabled = shouldEnable;  setupAdBlock(); const message = adBlockEnabled ? "廣告攔截已啟用" : "廣告攔截已禁用";event.reply('ad-block-status', message); });
     ipcMain.on('toggle-fullscreen', () => {if (mainWindow) {const isMaximized = mainWindow.isMaximized();if (!isMaximized) {mainWindow.setFullScreen(false);  mainWindow.setResizable(true); mainWindow.maximize();mainWindow.setMenuBarVisibility(false); } else { mainWindow.unmaximize();mainWindow.setMenuBarVisibility(true);}}}); 
     mainWindow.on('resize', () => {const { width, height } = mainWindow.getBounds();/*console.log(`Current window size: ${width}x${height}`);*/mainWindow.webContents.send('window-resized', { width, height });});
-    ipcMain.on('run-find-solara', () => {execFile(SearchSolara, (error, stdout, stderr) => {if (error) {console.error(`Find Error(Solara): ${error}`);return;}console.log(`Output(Solara):  ${stdout}`);});});
-    ipcMain.on('run-find-wave', () => {execFile(SearchWave, (error, stdout, stderr) => {if (error) {console.error(`Find Error(Wave): ${error}`);return;}console.log(`Output(Wave):  ${stdout}`);});});
-    ipcMain.on('run-find-zorara', () => {execFile(SearchZorara, (error, stdout, stderr) => {if (error) {console.error(`Find Error(Zorara): ${error}`);return;}console.log(`Output(Zorara):  ${stdout}`);});});
+ ipcMain.on('run-find-solara', () => {
+    if (solaraInstances >= maxInstances) {
+        dialog.showMessageBoxSync({
+            type: 'error',
+            title: '外掛查找系統',
+            message: 'Solara Executror 查找過多,請等待當前查找系統查找完再執行'
+        });
+        return;
+    }
+    
+    const process = spawn(SearchSolara);
+    solaraInstances++; // 增加solara实例计数
 
+    process.on('exit', () => {
+        solaraInstances--; // 当进程退出时减少计数
+    });
+});
 
+ipcMain.on('run-find-wave', () => {
+    if (waveInstances >= maxInstances) {
+        dialog.showMessageBoxSync({
+            type: 'error',
+            title: '外掛查找系統',
+            message: 'Wave Executror 查找過多,請等待當前查找系統查找完再執行'
+        });
+        return;
+    }
+    
+    const process = spawn(SearchWave);
+    waveInstances++; // 增加wave实例计数
+
+    process.on('exit', () => {
+        waveInstances--; // 当进程退出时减少计数
+    });
+});
+
+ipcMain.on('run-find-zorara', () => {
+    if (zoraraInstances >= maxInstances) {
+        dialog.showMessageBoxSync({
+            type: 'error',
+            title: '外掛查找系統',
+            message: 'Zorara Executror 查找過多,請等待當前查找系統查找完再執行'
+        });
+        return;
+    }
+    
+    const process = spawn(SearchZorara);
+    zoraraInstances++; // 增加zorara实例计数
+
+    process.on('exit', () => {
+        zoraraInstances--; // 当进程退出时减少计数
+    });
+});
 
 
 
 
 
 }
+
 /*-----------------------------------初始化並檢測菜單視窗的位置 -------------------------------------------------*/ 
 function monitorMenuPosition() {
     setInterval(() => {
@@ -124,6 +180,7 @@ function monitorMenuPosition() {
         }
     }, 100);
 }
+
 
 /*-----------------------------------初始化遊戲安裝資料夾 -------------------------------------------------*/ 
 function CreateGamesFolders(){
