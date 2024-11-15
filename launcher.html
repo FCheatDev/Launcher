@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300italic,600italic,300,600" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/my-fonts.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
 
@@ -25,12 +26,12 @@
 
         </div>
         <!-- 不可拖動的 header -->
-        <header id="header" style="-webkit-app-region: no-drag;"> 
+        <header id="header" style="-webkit-app-region:drag;"> 
             <div class="content">
                 <div class="inner">
-                    <h1>FCheat Launcher</h1>
+                    <h1 class="ethnocentric-rg-it">FCheat Launcher</h1>
                     <h3>歡迎使用FCheat Launcher<br/>如果有任何問題,請去DC<br/>
-                    <a href="#" id="open-link">點我前往DC</a></h3>
+                    <a href="#" id="open-link"style="-webkit-app-region:no-drag;">點我前往DC</a></h3>
                     <h4 id="app-version"></h4>
                     <script>
                         document.addEventListener("DOMContentLoaded", () => {
@@ -40,7 +41,7 @@
                 </div>  
             </div>
             <nav>
-                <ul>
+                <ul style="-webkit-app-region:no-drag;">
                     <li><a href="assets/Games/games.html">遊戲</a></li>
                     <li><a href="assets/settings/settings.html">設定</a></li>
                     <li><a href="assets/Account/account.html">帳號</a></li>

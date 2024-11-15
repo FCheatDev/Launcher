@@ -1,0 +1,33 @@
+@font-face {
+     font-family: 'Nebula Futuristic';
+     src: url('../webfonts/Nebula-Regular.otf') format('opentype'); 
+     font-weight: normal;
+     font-style: normal;
+ }
+ 
+ .nebula-futuristic {
+     font-family: 'Nebula Futuristic', sans-serif;
+ }
+ 
+ @font-face {
+     font-family: 'ethnocentric rg';
+     src: url('../webfonts/ethnocentric rg.otf') format('opentype'); 
+     font-weight: normal;
+     font-style: normal;
+ }
+ 
+ .ethnocentric-rg{
+     font-family: 'ethnocentric rg', sans-serif;
+ }
+ 
+ @font-face {
+     font-family: 'ethnocentric rg it';
+     src: url('../webfonts/ethnocentric rg it.otf') format('opentype'); 
+     font-weight: normal;
+     font-style: normal;
+ }
+ 
+ .ethnocentric-rg-it{
+     font-family: 'ethnocentric rg it', sans-serif;
+ }
+ 

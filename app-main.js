@@ -125,7 +125,7 @@ function setupIpcHandlers() {
 });
 
 ipcMain.on('run-find-wave', () => {
-    if (waveInstances >= maxInstances) {
+    if (waveInstances >= maxInstances) { 
         dialog.showMessageBoxSync({
             type: 'error',
             title: '外掛查找系統',

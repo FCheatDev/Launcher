@@ -19,7 +19,7 @@
   left: 0;
   top: 0;
   height: 100%;
-  width: 78px; /* Default sidebar width */
+  width: 80px; /* Default sidebar width */
   background: #11101D; /* Dark background color for sidebar */
   padding: 6px 14px;
   z-index: 99; /* Ensures sidebar is on top */
@@ -244,7 +244,7 @@
 
 /* Expanded sidebar styles */
 .sidebar.open {
-  width: 250px; /* Expanded sidebar width */
+  width: 270px; /* Expanded sidebar width */
 }
 .sidebar.open .logo-details .icon {
   opacity: 1; /* Shows icon in expanded state */
