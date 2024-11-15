@@ -56,6 +56,72 @@ body, html {
     color: #656565;
     font-weight: 400;
 }
+.error-1 {
+    align-self: center;
+}
+
+.error-1 i {
+    font-size: 40px;
+    color: #ff0000;
+}
+
+.error-2 p:first-child {
+    color: #101020;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.error-2 p:last-child {
+    font-size: 12px;
+    color: #656565;
+    font-weight: 400;
+}
+
+.search-1 {
+    align-self: center;
+}
+
+.search-1 i {
+    font-size: 40px;
+    color: #5a5a59;
+}
+
+.search-2 p:first-child {
+    color: #101020;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.search-2 p:last-child {
+    font-size: 12px;
+    color: #656565;
+    font-weight: 400;
+}
+
+
+
+.default-1 {
+    align-self: center;
+}
+
+.default-1 i {
+    font-size: 40px;
+    color: #ffe600;
+}
+
+.default-2 p:first-child {
+    color: #101020;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.default-2 p:last-child {
+    font-size: 12px;
+    color: #656565;
+    font-weight: 400;
+}
+
+
 
 .toast button {
     align-self: flex-start;
