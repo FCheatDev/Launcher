@@ -271,7 +271,7 @@
   color: #FFF;
 }
 .sidebar.open li.profile {
-  width: 250px; /* Expands profile section */
+  width: 270px; /* Expands profile section */
 }
 .sidebar.open .profile #log_out {
   width: 50px; /* Shrinks logout button */

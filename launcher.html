@@ -1,74 +1,42 @@
-<!DOCTYPE HTML>
-<html lang="zh-Hant">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FCheat Launcher</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300italic,600italic,300,600" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/my-fonts.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <title>Fcheat Launcher</title>
+    <link rel="stylesheet" href="assets/css/launcher.css">
+    <link rel="stylesheet" href="assets/css/my-fonts.css">
+
+
+
 </head>
-
-<body class="is-preload" style="-webkit-app-region: drag; user-select: none;" >
-    <div id="wrapper">
-        <div id="window-controls" style="position: absolute; top: 10px; right: 10px;">
-            <button id="minimize-btn" style="background-color: transparent; border: none; cursor: pointer; border: 2px solid #ffffff; border-radius: 8px; ">
-                <span style="font-size: 24px; color: white;">&#x2212;</span>
-            </button>
-            <button id="fullscreen-btn"  style="background-color: transparent; border: none; cursor: pointer; margin-left: 10px; border: 2px solid #ffffff; border-radius: 8px;">
-                <span style="font-size: 24px; color: white;">&#x26F6;</span>
-            </button>
-            <button id="close-btn" style="background-color: transparent; border: none; cursor: pointer; margin-left: 10px; border: 2px solid #ffffff; border-radius: 8px;">
-                <span style="font-size: 24px; color: white;">&#x2716;</span>
-            </button>
-
+<body>  
+    <div class="launcher" style="-webkit-app-region: drag;">
+        <!-- 文字 Logo -->
+        <div class="logo-container">
+            <h1 class="logo-text ethnocentric-rg" id="logo">Fcheat Launcher</h1>
         </div>
-        <!-- 不可拖動的 header -->
-        <header id="header" style="-webkit-app-region:drag;"> 
-            <div class="content">
-                <div class="inner">
-                    <h1 class="ethnocentric-rg-it">FCheat Launcher</h1>
-                    <h3>歡迎使用FCheat Launcher<br/>如果有任何問題,請去DC<br/>
-                    <a href="#" id="open-link"style="-webkit-app-region:no-drag;">點我前往DC</a></h3>
-                    <h4 id="app-version"></h4>
-                    <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                          document.getElementById("app-version").innerText = `當前版本: ${window.appInfo.version}`;
-                        });
-                    </script>
-                </div>  
+        <div class="progress-container hidden" id="progress-container">
+            <div class="progress-wrapper">
+                <!-- 進度條的容器 -->
+                <div class="progress-bar-container">
+                    <!-- 已填充部分 -->
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <!-- 進度百分比 -->
+                <span class="progress-number" id="progress-number">0%</span>
             </div>
-            <nav>
-                <ul style="-webkit-app-region:no-drag;">
-                    <li><a href="assets/Games/games.html">遊戲</a></li>
-                    <li><a href="assets/settings/settings.html">設定</a></li>
-                    <li><a href="assets/Account/account.html">帳號</a></li>
-                    <li><a href="#" id="openMenuBtn">開啟獨立菜單</a></li>
-                </ul>
-            </nav>
-        </header>
-        
-        <footer id="footer"></footer>
+            <p class="progress-text" id="progress-text">初始化.....</p>
+        </div>
+        <!-- 版本顯示 -->
+        <h1 id="app-version" class="version"></h1>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              document.getElementById("app-version").innerText = `當前版本: ${window.appInfo.version}`;
+            });
+            
+        </script>
     </div>
-    <div id="logDisplay"></div>
-    <div id="bg"></div>
-    <script src="assets/js/jquery.min.js" ></script>
-    <script src="assets/js/browser.min.js" ></script>
-    <script src="assets/js/breakpoints.min.js" ></script>
-    <script src="assets/js/util.js" ></script>
-    <script src="assets/js/main.js" ></script>
-    <script src="assets/js/openlnk.js" defer></script>
-    <script src="app-main.js" ></script>
-    <script src="assets/search_/wave.js" ></script>
-    <script>
-
-    document.getElementById('openMenuBtn').addEventListener('click', () => {
-        window.electronAPI.menuWindow();
-    });
-
-      </script>
-
+    <script src="assets/js/launcher.js"></script>
 </body>
 </html>

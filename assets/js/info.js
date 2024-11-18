@@ -46,12 +46,12 @@ function showToast(status) {
                 </div>
                 <div class="error-2">
                     <p>查找錯誤</p>
-                    <p>請等待搜尋系統完成搜尋後再點擊:</p>
+                    <p>請等待搜尋系統完成搜尋後再點擊</p>
                 </div>
             `;
             borderColor = '#ff0000'; // 红色边框
             icon = 'fas fa-exclamation-triangle';
-            message = '请等待查找系统查找完毕再点击';
+            message = '請等待搜尋系統完成搜尋後再點擊';
             break;
         case 'success':
             toastContent = `
@@ -79,7 +79,7 @@ function showToast(status) {
             `;
             borderColor = '#ffe600'; // 默认黄色边框
             icon = 'fas fa-info-circle';
-            message = '未知狀態';
+            message = '資訊';
             break;
     }
 

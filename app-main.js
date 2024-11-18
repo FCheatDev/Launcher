@@ -342,12 +342,18 @@ async function downloadAndUpdate(latestRelease) {
             console.error('Download failed:', error);
         });
     } else {
+        await dialog.showMessageBox(mainWindow, {
+            type: 'info',
+            buttons: ['確定'],
+            title: 'INFO',
+            message: `未找到 .exe 發布版本`,
+        });
         console.log('No .exe file found in the latest release.');
     }
 }
 /*-----------------------------------初始化應用 -------------------------------------------------*/
 app.whenReady().then(async () => {
-    await checkForUpdates(); // 等待更新检查完成
+    await checkForUpdates();
 
     if (!isUpdateAvailable) { // 只有在没有更新的情况下才执行以下操作
         createWindow();

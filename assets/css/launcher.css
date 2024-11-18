@@ -1,0 +1,104 @@
+/* styles.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #181818; /* 黑色背景 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+}
+
+.launcher {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* 文字 Logo 樣式 */
+.logo-container {
+    position: absolute;
+    top: 35%; /* 偏上位置 */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: fade-in 2s ease-in forwards;
+}
+
+.logo-text {
+    font-size: 48px; /* Logo 文字大小 */
+    font-weight: bold;
+    color: #00ffcc; /* 亮色系 */
+    white-space: nowrap; /* 防止文字換行 */
+}
+
+/* 進度條樣式 */
+.progress-container {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 60%;
+}
+/* 背景條（未填充部分） */
+.progress-bar-container {
+     flex: 1;
+     height: 10px;
+     background-color: #444444; /* 灰色背景 */
+     border-radius: 5px;
+     overflow: hidden;
+     position: relative;
+ }
+.progress-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+}
+
+/* 填充條（已填充部分） */
+.progress-bar {
+     height: 100%;
+     background-color: #00ff00; /* 綠色填充部分 */
+     width: 0%; /* 初始為 0，動態更新 */
+     transition: width 0.5s ease; /* 平滑過渡 */
+ }
+
+/* 進度百分比 */
+.progress-number {
+     margin-left: 10px;
+     font-size: 14px;
+     color: #ffffff;
+ }
+
+/* 進度文字 */
+.progress-text {
+     margin-top: 10px;
+     font-size: 14px;
+     color: #cccccc;
+ }
+
+.hidden {
+    display: none;
+}
+
+/* 版本顯示 */
+.version {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 14px;
+    color: #aaaaaa;
+}
+
+/* 淡入效果動畫 */
+@keyframes fade-in {
+    to {
+        opacity: 1;
+    }
+}
