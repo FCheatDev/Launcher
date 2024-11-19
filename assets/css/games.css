@@ -284,16 +284,16 @@
 
 
 .sidebar.open ~ .roblox-section {
-  left: 250px; /* Adjusts home section to sidebar width */
-  width: calc(100% - 250px);
+  left: 270px; /* Adjusts home section to sidebar width */
+  width: calc(100% - 270px);
 }
 .sidebar.open ~ .minecraft-section {
-  left: 250px; /* Adjusts home section to sidebar width */
-  width: calc(100% - 250px);
+  left: 270px; /* Adjusts home section to sidebar width */
+  width: calc(100% - 270px);
 }
 .sidebar.open ~ .genshinimpact-section {
-  left: 250px; /* Adjusts home section to sidebar width */
-  width: calc(100% - 250px);
+  left: 270px; /* Adjusts home section to sidebar width */
+  width: calc(100% - 270px);
 }
 /* Home */
 .home-section {

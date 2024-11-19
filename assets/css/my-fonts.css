@@ -1,6 +1,6 @@
 @font-face {
      font-family: 'Nebula Futuristic';
-     src: url('../webfonts/Nebula-Regular.otf') format('opentype'); 
+     src: url('../fonts/Nebula-Regular.otf') format('opentype'); 
      font-weight: normal;
      font-style: normal;
  }
@@ -11,7 +11,7 @@
  
  @font-face {
      font-family: 'ethnocentric rg';
-     src: url('../webfonts/ethnocentric rg.otf') format('opentype'); 
+     src: url('../fonts/ethnocentric rg.otf') format('opentype'); 
      font-weight: normal;
      font-style: normal;
  }
@@ -22,7 +22,7 @@
  
  @font-face {
      font-family: 'ethnocentric rg it';
-     src: url('../webfonts/ethnocentric rg it.otf') format('opentype'); 
+     src: url('../fonts/ethnocentric rg it.otf') format('opentype'); 
      font-weight: normal;
      font-style: normal;
  }

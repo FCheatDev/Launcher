@@ -101,7 +101,7 @@ function setupIpcHandlers() {
     ipcMain.on('close-menu-window', () => {if (menuWindow) menuWindow.close();});
     ipcMain.on('minimize-menu-window', () => menuWindow.minimize());
     
-    ipcMain.on('return-home', () => mainWindow.loadFile('launcher.html'));
+    ipcMain.on('return-home', () => mainWindow.loadFile('assets/Games/games.html'));
     ipcMain.on('open-external-link', (event, url) => shell.openExternal(url));
     ipcMain.on('toggle-ad-blocking', (event, shouldEnable) => {adBlockEnabled = shouldEnable;  setupAdBlock(); const message = adBlockEnabled ? "廣告攔截已啟用" : "廣告攔截已禁用";event.reply('ad-block-status', message); });
     ipcMain.on('toggle-fullscreen', () => {if (mainWindow) {const isMaximized = mainWindow.isMaximized();if (!isMaximized) {mainWindow.setFullScreen(false);  mainWindow.setResizable(true); mainWindow.maximize();mainWindow.setMenuBarVisibility(false); } else { mainWindow.unmaximize();mainWindow.setMenuBarVisibility(true);}}}); 
