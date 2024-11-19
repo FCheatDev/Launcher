@@ -63,8 +63,7 @@ function createWindow() {
         mainWindow.webContents.openDevTools({ mode: 'detach' });
     });
 
-    // 建立菜單視窗
-    createMenuWindow();
+
 }
 /*-----------------------------------創建菜單視窗 -------------------------------------------------*/ 
 function createMenuWindow() {
@@ -93,6 +92,8 @@ function createMenuWindow() {
         menuWindow = null;
     });
 }
+module.exports = { createMenuWindow };
+
 /*-----------------------------------設定 IPC 事件處理邏輯 -------------------------------------------------*/ 
 function setupIpcHandlers() {
     ipcMain.on('minimize-window', () => mainWindow.minimize());

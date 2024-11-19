@@ -6,7 +6,7 @@ const { version } = require('./package.json');
 contextBridge.exposeInMainWorld('electronAPI', {
     minimizeWindow: () => ipcRenderer.send('minimize-window'),
     closeWindow: () => ipcRenderer.send('close-window'),
-    menuWindow: () => ipcRenderer.send('open-menu-window'), 
+    openMenuWindow: () => ipcRenderer.send('open-menu-window'), 
     executePython: () => ipcRenderer.send('execute-python'),
     onPythonResponse: (callback) => ipcRenderer.on('execute-python-response', (event, response) => callback(response)),
     fullscreenWindow: () => {console.log('Sending toggle-fullscreen event'); ipcRenderer.send('toggle-fullscreen');},

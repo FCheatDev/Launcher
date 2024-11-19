@@ -99,6 +99,7 @@
   position: absolute;
   top: -20px;
   left: calc(100% + 15px);
+  white-space: nowrap;
   z-index: 3;
   background: #000000;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);

@@ -43,6 +43,28 @@
         </a>
         <span class="tooltip">首頁</span>
       </li>
+            <!-- Account items -->
+      <li>
+        <a href="../Account/account.html">
+          <i><img src="../images/account.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+          <span class="links_name">帳號</span>
+        </a>
+        <span class="tooltip">帳號</span>
+      </li>
+           <!--Menu items -->
+      <li>
+        <a href="#" id="openMenu">
+          <i><img src="../images/menu-window.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+          <span class="links_name">小菜單</span>
+        </a>
+        <span class="tooltip">小菜單</span>
+        <script>
+          // 使用 Electron 提供的 API 開啟選單
+          document.getElementById('openMenu').addEventListener('click', () => {
+              window.electronAPI.openMenuWindow();
+          });
+      </script>
+      </li>
            <!-- Setting items -->
       <li>
         <a href="../Setting/setting.html">
@@ -51,14 +73,7 @@
         </a>
         <span class="tooltip">設置</span>
       </li>
-      <li>
-     <!-- Account items -->
-        <a href="../Account/account.html">
-          <i><img src="../images/account.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
-          <span class="links_name">帳號</span>
-        </a>
-        <span class="tooltip">帳號</span>
-      </li>
+
        <!-- Roblox Executor items -->
        <li>
         <a href="roblox-executor.html">
