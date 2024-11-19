@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111827;
+            font-family: Arial, sans-serif;
+            user-select: none;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        
+        .login-box {
+            background-color: #1F2937;
+            border-radius: 10px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .title {
+            color: #3B82F6;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .title-line {
+            height: 4px;
+            width: 120px;
+            background-color: #3B82F6;
+            margin: 0 auto 30px;
+            border-radius: 2px;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid #4B5563;
+            border-radius: 8px;
+            background-color: #374151;
+            color: #E5E7EB;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #3B82F6;
+        }
+
+        .input-field:hover {
+            border-color: #4B5563;
+        }
+        
+        .icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9CA3AF;
+        }
+        
+        .show-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #9CA3AF;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .show-password:hover {
+            color: #E5E7EB;
+        }
+        
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .remember-me {
+            color: #E5E7EB;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            margin-right: 8px;
+        }
+        
+        .forgot-password {
+            color: #3B82F6;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .login-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3B82F6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-button:hover {
+            background-color: #2563EB;
+        }
+
+        .login-button:active::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+
+        .login-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #9CA3AF;
+            font-size: 14px;
+        }
+        
+        .register-link a {
+            color: #3B82F6;
+            text-decoration: none;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .control-button {
+            background-color: transparent;
+            border: 2px solid #ffffff;
+            width: 64px;
+            height: 44px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            opacity: 0.7;
+        }
+
+        .control-button:hover {
+            opacity: 1;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        #close-btn:hover {
+            background-color: rgba(255, 0, 0, 0.2);
+            border-color: #ff0000;
+        }
+
+        .window-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10000;
+            display: flex;
+            -webkit-app-region: no-drag;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body style="-webkit-app-region: drag;">
+    <div class="window-controls">
+        <button id="minimize-btn" class="control-button">&#x2212;</button>
+        <button id="fullscreen-btn" class="control-button">&#x26F6;</button>
+        <button id="close-btn" class="control-button">&#x2716;</button>
+    </div>
+    
+    <div class="container">
+        <div class="login-box" style="-webkit-app-region: no-drag;">
+            <div class="title">登入帳號</div>
+            <div class="title-line"></div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <span class="icon">👤</span>
+                    <input type="text" class="input-field" placeholder="Username" id="username" required>
+                </div>
+                
+                <div class="input-group">
+                    <span class="icon">🔒</span>
+                    <input type="password" class="input-field" placeholder="Password" id="password" required>
+                    <span class="show-password" id="togglePassword">顯示</span>
+                </div>
+                
+                <div class="options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember">
+                        記住我
+                    </label>
+                    <span class="forgot-password">忘記密碼?</span>
+                </div>
+                
+                <button type="submit" class="login-button">登入</button>
+            </form>
+            
+            <div class="register-link">
+                沒有帳戶?<a href="#" id="registerLink">註冊</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 窗口控制
+        document.getElementById('minimize-btn').addEventListener('click', () => {
+            window.electronAPI.minimizeWindow();
+        });
+
+        document.getElementById('fullscreen-btn').addEventListener('click', () => {
+            window.electronAPI.fullscreenWindow();
+        });
+
+        document.getElementById('close-btn').addEventListener('click', () => {
+            window.electronAPI.closeWindow();
+        });
+
+        // 密碼顯示切換
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                this.textContent = '隱藏';
+            } else {
+                passwordInput.type = 'password';
+                this.textContent = '顯示';
+            }
+        });
+
+        // 登入表單處理
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            
+            const loginButton = document.querySelector('.login-button');
+            loginButton.disabled = true;
+            loginButton.textContent = '登入中...';
+
+            try {
+                // 這裡添加您的登錄邏輯
+                // 模擬登入成功
+                setTimeout(() => {
+                    loginButton.textContent = '成功!';
+                    window.electronAPI.openMenuWindow();
+                }, 2000);
+            } catch (error) {
+                loginButton.classList.add('shake');
+                loginButton.textContent = '登入失敗';
+                setTimeout(() => {
+                    loginButton.classList.remove('shake');
+                    loginButton.textContent = '登入';
+                    loginButton.disabled = false;
+                }, 1000);
+            }
+        });
+
+
+        // 註冊鏈接處理
+        document.getElementById('registerLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'register.html';
+        });
+
+        // 防止表單內容被拖動
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+            });
+        });
+    </script>
+</body>
+</html>

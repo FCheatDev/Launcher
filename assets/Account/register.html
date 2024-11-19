@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+    <title>Register</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111827;
+            font-family: Arial, sans-serif;
+            user-select: none;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        
+        .register-box {
+            background-color: #1F2937;
+            border-radius: 10px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .title {
+            color: #3B82F6;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .title-line {
+            height: 4px;
+            width: 120px;
+            background-color: #3B82F6;
+            margin: 0 auto 30px;
+            border-radius: 2px;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid #4B5563;
+            border-radius: 8px;
+            background-color: #374151;
+            color: #E5E7EB;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #3B82F6;
+        }
+
+        .input-field:hover {
+            border-color: #4B5563;
+        }
+        
+        .icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9CA3AF;
+        }
+        
+        .show-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #9CA3AF;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .show-password:hover {
+            color: #E5E7EB;
+        }
+
+        .control-button {
+            background-color: transparent;
+            border: 2px solid #ffffff;
+            width: 64px;
+            height: 44px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            opacity: 0.7;
+        }
+
+        .control-button:hover {
+            opacity: 1;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        #close-btn:hover {
+            background-color: rgba(255, 0, 0, 0.2);
+            border-color: #ff0000;
+        }
+
+        .window-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10000;
+            display: flex;
+            -webkit-app-region: no-drag;
+        }
+        
+        .register-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3B82F6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .register-button:hover {
+            background-color: #2563EB;
+        }
+
+        .register-button:active::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+
+        .register-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #9CA3AF;
+            font-size: 14px;
+        }
+        
+        .login-link a {
+            color: #3B82F6;
+            text-decoration: none;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .error-message {
+            color: #EF4444;
+            font-size: 14px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body style="-webkit-app-region: drag;">
+    <div class="window-controls">
+        <button id="minimize-btn" class="control-button">&#x2212;</button>
+        <button id="fullscreen-btn" class="control-button">&#x26F6;</button>
+        <button id="close-btn" class="control-button">&#x2716;</button>
+    </div>
+
+    <div class="container">
+        <div class="register-box" style="-webkit-app-region: no-drag;">
+            <div class="title">註冊帳號</div>
+            <div class="title-line"></div>
+            
+            <form id="registerForm">
+                <div class="input-group">
+                    <span class="icon">👤</span>
+                    <input type="text" class="input-field" placeholder="使用者名稱" id="username" required>
+                    <div class="error-message" id="username-error"></div>
+                </div>
+                
+                <div class="input-group">
+                    <span class="icon">📧</span>
+                    <input type="email" class="input-field" placeholder="Email" id="email" required>
+                    <div class="error-message" id="email-error"></div>
+                </div>
+                
+                <div class="input-group">
+                    <span class="icon">🔒</span>
+                    <input type="password" class="input-field" placeholder="密碼" id="password" required>
+                    <span class="show-password" id="togglePassword">顯示</span>
+                    <div class="error-message" id="password-error"></div>
+                </div>
+                
+                <div class="input-group">
+                    <span class="icon">🔒</span>
+                    <input type="password" class="input-field" placeholder="再次輸入密碼" id="confirmPassword" required>
+                    <span class="show-password" id="toggleConfirmPassword">顯示</span>
+                    <div class="error-message" id="confirm-password-error"></div>
+                </div>
+                
+                <button type="submit" class="register-button">註冊</button>
+            </form>
+            
+            <div class="login-link">
+                已擁有帳號?<a href="login.html" id="loginLink">登入</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 窗口控制
+        document.getElementById('minimize-btn').addEventListener('click', () => {
+            window.electronAPI.minimizeWindow();
+        });
+
+        document.getElementById('fullscreen-btn').addEventListener('click', () => {
+            window.electronAPI.fullscreenWindow();
+        });
+
+        document.getElementById('close-btn').addEventListener('click', () => {
+            window.electronAPI.closeWindow();
+        });
+
+        // 密碼顯示切換
+        function setupPasswordToggle(inputId, toggleId) {
+            document.getElementById(toggleId).addEventListener('click', function() {
+                const input = document.getElementById(inputId);
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.textContent = '隱藏';
+                } else {
+                    input.type = 'password';
+                    this.textContent = '顯示';
+                }
+            });
+        }
+
+        setupPasswordToggle('password', 'togglePassword');
+        setupPasswordToggle('confirmPassword', 'toggleConfirmPassword');
+
+        // 表單驗證和提交
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // 重置錯誤消息
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // 基本驗證
+            if (password !== confirmPassword) {
+                document.getElementById('confirm-password-error').textContent = '密碼不匹配';
+                document.getElementById('confirm-password-error').style.display = 'block';
+                return;
+            }
+
+            const registerButton = document.querySelector('.register-button');
+            registerButton.disabled = true;
+            registerButton.textContent = '註冊中...';
+
+            try {
+                // 這裡添加您的註冊邏輯
+                setTimeout(() => {
+                    // 模擬註冊成功
+                    registerButton.textContent = '註冊成功!';
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 1500);
+                }, 2000);
+            } catch (error) {
+                registerButton.classList.add('shake');
+                registerButton.textContent = '註冊失敗';
+                
+                if (error.field) {
+                    document.getElementById(`${error.field}-error`).textContent = error.message;
+                    document.getElementById(`${error.field}-error`).style.display = 'block';
+                }
+
+                setTimeout(() => {
+                    registerButton.classList.remove('shake');
+                    registerButton.textContent = '註冊';
+                    registerButton.disabled = false;
+                }, 1000);
+            }
+        });
+
+        // 登入鏈接處理
+        document.getElementById('loginLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'login.html';
+        });
+
+        // 防止表單內容被拖動
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+            });
+        });
+    </script>
+</body>
+</html>
