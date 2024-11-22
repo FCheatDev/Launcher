@@ -2,7 +2,7 @@
 const { ipcMain, shell, dialog } = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
-const CONFIG = require('../../config/config');
+const CONFIG = require('../../config/main');
 const logger = require('./logger');
 const windowManager = require('./WindowManager');
 const adBlockManager = require('./AdBlockManager');

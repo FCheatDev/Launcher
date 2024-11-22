@@ -1,7 +1,7 @@
 // assets/service/WindowManager.js
 const { BrowserWindow, screen } = require('electron');
 const path = require('path');
-const CONFIG = require('../../config/config');
+const CONFIG = require('../../config/main');
 const logger = require('./logger');
 
 class WindowManager {

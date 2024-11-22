@@ -2,21 +2,39 @@
 const winston = require('winston');
 const path = require('path');
 const fs = require('fs-extra');
-const CONFIG = require('../../config/config');
+const CONFIG = require('../../config/main');
 const { format } = winston;
 
 class Logger {
     constructor() {
         try {
-            // 先創建日誌目錄
-            fs.ensureDirSync(path.join(process.cwd(), 'logs'));
+            const logsDir = path.join(process.cwd(), 'logs');
+            
+            // 清空並重新創建日誌目錄
+            this.cleanLogDirectory(logsDir);
             
             // 初始化日誌系統
             this.initializeLogger();
         } catch (error) {
             console.error('Failed to initialize logger:', error);
-            // 使用基礎控制台日誌作為後備
             this.logger = console;
+        }
+    }
+
+    /**
+     * 清空並重新創建日誌目錄
+     */
+    cleanLogDirectory(logsDir) {
+        try {
+            // 如果目錄存在，先刪除它
+            if (fs.existsSync(logsDir)) {
+                fs.removeSync(logsDir);
+            }
+            // 重新創建日誌目錄
+            fs.ensureDirSync(logsDir);
+            console.log('Log directory cleaned and recreated');
+        } catch (error) {
+            console.error('Failed to clean log directory:', error);
         }
     }
 
@@ -40,15 +58,15 @@ class Logger {
                 // 錯誤日誌
                 new winston.transports.File({
                     filename: path.join(logsDir, 'error.log'),
-                    level: 'error',
-                    maxsize: 5242880, // 5MB
-                    maxFiles: 5
+                    level: 'error'
                 }),
                 // 所有日誌
                 new winston.transports.File({
-                    filename: path.join(logsDir, 'combined.log'),
-                    maxsize: 5242880,
-                    maxFiles: 5
+                    filename: path.join(logsDir, 'combined.log')
+                }),
+                // 系統日誌
+                new winston.transports.File({
+                    filename: path.join(logsDir, 'system.log')
                 })
             ]
         });

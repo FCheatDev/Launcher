@@ -3,13 +3,14 @@ const { app } = require('electron');
 const path = require('path');
 
 // 導入配置和服務
-const CONFIG = require('./config/config');
+const CONFIG = require('./config/main');
 const logger = require('./assets/service/logger');
 const windowManager = require('./assets/service/WindowManager');
 const updateManager = require('./assets/service/UpdateManager');
 const adBlockManager = require('./assets/service/AdBlockManager');
 const ipcHandler = require('./assets/service/IpcHandler');
 const folderManager = require('./assets/service/FolderManager');
+const dependencyChecker = require('./assets/service/DependencyChecker'); 
 
 /**
  * 應用初始化
@@ -42,7 +43,17 @@ async function initializeApp() {
     try {
         logger.system('Starting application initialization');
         
-        // 初始化文件夾結構
+        // 檢查管理員權限
+        if (!(await dependencyChecker.checkAdminRights())) {
+            return;
+        }
+
+        // 檢查必需的依賴項 - 修改這裡
+        if (!(await dependencyChecker.checkAllDependencies())) {
+            return; // 如果缺少依賴項，函數內部會處理下載和退出
+        }
+
+        // 如果所有依賴項都已安裝，繼續正常初始化
         await folderManager.initialize();
         logger.system('Folders initialized');
 
@@ -60,7 +71,9 @@ async function initializeApp() {
             logger.system('DevTools shortcuts initialized');
 
             // 初始化廣告攔截
-            // IpcHandler 會在導入時自動初始化
+            adBlockManager.initialize();
+            logger.system('Ad blocker initialized');
+
             logger.system('All systems initialized successfully');
         } else {
             logger.system('Update available, halting normal initialization');
@@ -68,7 +81,7 @@ async function initializeApp() {
 
     } catch (error) {
         logger.error('Failed to initialize application:', error);
-        await handleInitError(error);
+        await dependencyChecker.handleRuntimeError(error);
     }
 }
 
