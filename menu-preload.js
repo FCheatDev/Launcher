@@ -1,6 +1,12 @@
-const { ipcRenderer } = require('electron');
+// menu-preload.js
+const { contextBridge, ipcRenderer } = require('electron');
 
-// 暴露功能到渲染進程
-window.menuAPI = {
-    closeMenu: () => ipcRenderer.send('close-menu-window')
-};
+console.log('Menu preload script loaded');
+
+contextBridge.exposeInMainWorld('menuAPI', {
+    minimize: () => ipcRenderer.send('minimize-menu-window'),
+    close: () => ipcRenderer.send('close-menu-window'),
+    toggleAdBlock: (enabled) => ipcRenderer.send('toggle-ad-blocking', enabled),
+    returnHome: () => ipcRenderer.send('return-home'),
+    onAdBlockStatus: (callback) => ipcRenderer.on('ad-block-status', callback)
+});

@@ -1,23 +1,43 @@
-console.log('Preload script loaded');
 const { contextBridge, ipcRenderer } = require('electron');
 const { version } = require('./package.json');
 
-// 暴露到渲染進程的 API
 contextBridge.exposeInMainWorld('electronAPI', {
+    // 視窗控制
     minimizeWindow: () => ipcRenderer.send('minimize-window'),
     closeWindow: () => ipcRenderer.send('close-window'),
-    openMenuWindow: () => ipcRenderer.send('open-menu-window'), 
-    executePython: () => ipcRenderer.send('execute-python'),
-    onPythonResponse: (callback) => ipcRenderer.on('execute-python-response', (event, response) => callback(response)),
-    fullscreenWindow: () => {console.log('Sending toggle-fullscreen event'); ipcRenderer.send('toggle-fullscreen');},
-    
-    runFindSolara: () => ipcRenderer.send('run-find-solara'),
-    runFindWave: () => ipcRenderer.send('run-find-wave'),
-    runFindZorara: () => ipcRenderer.send('run-find-zorara')
+    fullscreenWindow: () => {
+        console.log('Sending toggle-fullscreen event'); 
+        ipcRenderer.send('toggle-fullscreen');
+    },
+    // 菜單視窗
+    openMenuWindow: () => {
+        console.log('Sending open-menu-window event');
+        ipcRenderer.send('open-menu-window');
+    },
+    // 菜單視窗控制
+    menuWindow: {
+        minimize: () => ipcRenderer.send('minimize-menu-window'),
+        close: () => ipcRenderer.send('close-menu-window')
+    },
+    adBlock: {
+        toggle: (enabled) => ipcRenderer.send('toggle-ad-blocking', enabled)
+    },
+    returnHome: () => ipcRenderer.send('return-home')
 });
 
+// 外部連結
 contextBridge.exposeInMainWorld('electron', {
-    openExternalLink: (url) => ipcRenderer.send('open-external-link', url),
+    openExternalLink: (url) => ipcRenderer.send('open-external-link', url)
+});
+
+// 日誌和版本信息
+contextBridge.exposeInMainWorld('appInfo', {
+    version: version
+});
+
+// 監聽事件
+ipcRenderer.on('menu-window-status', (event, status) => {
+    console.log('Menu window status:', status);
 });
 
 ipcRenderer.on('log-update', (event, logMessage) => {
@@ -25,12 +45,5 @@ ipcRenderer.on('log-update', (event, logMessage) => {
     const logElement = document.getElementById('logDisplay');
     if (logElement) {
         logElement.innerText += logMessage + "\n";
-    } else {
-        console.error("logDisplay element not found");
     }
-});
-
-/* Get Version */ 
-contextBridge.exposeInMainWorld('appInfo', {
-    version: version
 });

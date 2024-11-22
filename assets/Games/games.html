@@ -108,7 +108,33 @@
 </div>
 
 <!-- Scripts -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuButton = document.getElementById('openMenu');
+        if (!menuButton) {
+            console.error('Menu button not found!');
+            return;
+        }
 
+        menuButton.addEventListener('click', (event) => {
+            console.log('Menu button clicked');
+            if (!window.electronAPI) {
+                console.error('electronAPI not available');
+                return;
+            }
+            if (!window.electronAPI.openMenuWindow) {
+                console.error('openMenuWindow not available');
+                return;
+            }
+            try {
+                window.electronAPI.openMenuWindow();
+                console.log('openMenuWindow called successfully');
+            } catch (error) {
+                console.error('Error calling openMenuWindow:', error);
+            }
+        });
+    });
+</script>
 <script src="../js/games.js" defer ></script>
 <script src="../js/openlnk.js" defer></script>
 

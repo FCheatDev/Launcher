@@ -2,11 +2,13 @@
   "name": "FCheatlauncher",
   "version": "1.1.6",
   "description": "FCheatLauncher By AutoEZ_TW",
-  "main": "app-main.js",
+  "main": "main.js",
   "icon": "assets/images/app-logo-nobg.ico",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "author": "",
   "license": "ISC",
@@ -51,24 +53,32 @@
       "launcher/**",
       "assets/**/*",
       "node_modules/**/*",
+      "main.js",
       "app-main.js",
       "renderer.js",
       "preload.js",
       "launcher.html",
       "menu.html",
-      "menu-preload.js"
+      "menu-preload.js",
+      "services/**",
+      "config/**"
     ],
     "win": {
       "target": "nsis",
       "icon": "assets/images/app-logo-nobg.ico",
-      "requestedExecutionLevel": "requireAdministrator"
+      "requestedExecutionLevel": "requireAdministrator",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
     },
     "nsis": {
       "oneClick": true,
       "allowElevation": true,
       "allowToChangeInstallationDirectory": false,
       "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
-    }
+      "createStartMenuShortcut": true,
+      "shortcutName": "${productName}",
+      "installerIcon": "assets/images/app-logo-nobg.ico",
+      "uninstallerIcon": "assets/images/app-logo-nobg.ico"
+    },
+    "asar": true
   }
 }

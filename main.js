@@ -101,12 +101,13 @@ function setupIpcHandlers() {
     ipcMain.on('open-menu-window', () => {if (!menuWindow) createMenuWindow();});
     ipcMain.on('close-menu-window', () => {if (menuWindow) menuWindow.close();});
     ipcMain.on('minimize-menu-window', () => menuWindow.minimize());
-    
+
     ipcMain.on('return-home', () => mainWindow.loadFile('assets/Games/games.html'));
     ipcMain.on('open-external-link', (event, url) => shell.openExternal(url));
     ipcMain.on('toggle-ad-blocking', (event, shouldEnable) => {adBlockEnabled = shouldEnable;  setupAdBlock(); const message = adBlockEnabled ? "廣告攔截已啟用" : "廣告攔截已禁用";event.reply('ad-block-status', message); });
     ipcMain.on('toggle-fullscreen', () => {if (mainWindow) {const isMaximized = mainWindow.isMaximized();if (!isMaximized) {mainWindow.setFullScreen(false);  mainWindow.setResizable(true); mainWindow.maximize();mainWindow.setMenuBarVisibility(false); } else { mainWindow.unmaximize();mainWindow.setMenuBarVisibility(true);}}}); 
     mainWindow.on('resize', () => {const { width, height } = mainWindow.getBounds();/*console.log(`Current window size: ${width}x${height}`);*/mainWindow.webContents.send('window-resized', { width, height });});
+
  
     ipcMain.on('run-find-solara', () => {
     if (solaraInstances >= maxInstances) {
@@ -117,7 +118,7 @@ function setupIpcHandlers() {
         });
         return;
     }
-    
+
     const process = spawn(SearchSolara);
     solaraInstances++; // 增加solara实例计数
 
@@ -135,7 +136,7 @@ ipcMain.on('run-find-wave', () => {
         });
         return;
     }
-    
+
     const process = spawn(SearchWave);
     waveInstances++; // 增加wave实例计数
 
@@ -153,7 +154,7 @@ ipcMain.on('run-find-zorara', () => {
         });
         return;
     }
-    
+
     const process = spawn(SearchZorara);
     zoraraInstances++; // 增加zorara实例计数
 
@@ -198,7 +199,7 @@ function CreateGamesFolders(){
     // 創建子資料夾
     GamesSubFolders.forEach(subFolder => {
     const GameSubFolderPath = path.join(GamesMainFolder, subFolder);
-    
+
     if (!fs.existsSync(GameSubFolderPath)) {
         fs.mkdirSync(GameSubFolderPath);
         console.log(`${subFolder} Folder created`);
