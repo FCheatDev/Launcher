@@ -31,3 +31,12 @@
      font-family: 'ethnocentric rg it', sans-serif;
  }
  
+ @font-face {
+     font-family: 'Horizon.ttf';
+     src: url('../fonts/Horizon.ttf') format('opentype'); 
+ }
+ 
+ .Horizon{
+     font-family: 'Horizon.ttf', sans-serif;
+ }
+
