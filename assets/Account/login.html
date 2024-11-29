@@ -203,7 +203,6 @@
             right: 10px;
             z-index: 10000;
             display: flex;
-            -webkit-app-region: no-drag;
         }
 
         @keyframes shake {
@@ -218,7 +217,7 @@
     </style>
 </head>
 <body style="-webkit-app-region: drag; overflow: hidden;">
-    <div class="window-controls">
+    <div class="window-controls" style="-webkit-app-region: no-drag;">
         <button id="minimize-btn" class="control-button">&#x2212;</button>
         <button id="fullscreen-btn" class="control-button">&#x26F6;</button>
         <button id="close-btn" class="control-button">&#x2716;</button>

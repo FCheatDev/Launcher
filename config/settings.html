@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+    <title>FCheat Launcher</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111827;
+            font-family: Arial, sans-serif;
+            user-select: none;
+            color: #E5E7EB;
+        }
+
+        .settings-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3B82F6;
+        }
+
+        .settings-title {
+            color: #3B82F6;
+            font-size: 24px;
+            font-weight: bold;
+            flex-grow: 1;
+        }
+
+        .settings-section {
+            background-color: #1F2937;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: #3B82F6;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #374151;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            flex-grow: 1;
+        }
+
+        .setting-description {
+            font-size: 14px;
+            color: #9CA3AF;
+            margin-top: 5px;
+        }
+
+        /* 開關按鈕樣式 */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #374151;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #3B82F6;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        /* 下拉選單樣式 */
+        select {
+            background-color: #374151;
+            border: 1px solid #4B5563;
+            border-radius: 6px;
+            color: #E5E7EB;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #3B82F6;
+        }
+
+        /* 保存按鈕樣式 */
+        .save-button {
+            background-color: #3B82F6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-button:hover {
+            background-color: #2563EB;
+        }
+
+        .window-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10000;
+            display: flex;
+            -webkit-app-region: no-drag;
+        }
+
+        .control-button {
+            background-color: transparent;
+            border: 2px solid #ffffff;
+            width: 64px;
+            height: 44px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            opacity: 0.7;
+        }
+
+        .control-button:hover {
+            opacity: 1;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        #close-btn:hover {
+            background-color: rgba(255, 0, 0, 0.2);
+            border-color: #ff0000;
+        }
+    </style>
+</head>
+<body style="-webkit-app-region: drag;">
+    <div class="window-controls" style="-webkit-app-region: no-drag;">
+        <button id="minimize-btn" class="control-button">&#x2212;</button>
+        <button id="fullscreen-btn" class="control-button">&#x26F6;</button>
+        <button id="close-btn" class="control-button">&#x2716;</button>
+    </div>
+
+    <div class="settings-container" style="-webkit-app-region: no-drag;">
+        <div class="settings-header">
+            <div class="settings-title">設定</div>
+        </div>
+
+        <div class="settings-section">
+            <div class="section-title">
+               一般設定
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">
+                    語言
+                    <div class="setting-description">選擇您偏好的語言</div>
+                </div>
+                <select id="language">
+                    <option value="zh">中文</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <div class="section-title">
+               遊戲外掛設定
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">
+                    自動
+                    <div class="setting-description">啟動時自動登入上次的帳號</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="autoLogin">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+
+        <button class="save-button">保存設定</button>
+    </div>
+
+    <script>
+        // 窗口控制
+        document.getElementById('minimize-btn').addEventListener('click', () => {
+            window.electronAPI.minimizeWindow();
+        });
+
+        document.getElementById('fullscreen-btn').addEventListener('click', () => {
+            window.electronAPI.fullscreenWindow();
+        });
+
+        document.getElementById('close-btn').addEventListener('click', () => {
+            window.electronAPI.closeWindow();
+        });
+
+    </script>
+</body>
+</html>
