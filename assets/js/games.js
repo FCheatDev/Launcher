@@ -1,32 +1,76 @@
-// 獲取側邊欄、關閉按鈕和導航清單元素
 const sidebar = document.querySelector(".sidebar");
 const closeBtn = document.querySelector("#btn");
 const navList = document.querySelector(".nav-list");
 
-// 點擊關閉按鈕來切換側邊欄開關狀態
 closeBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("open"); // 切換側邊欄的開啟狀態
-  navList.classList.toggle("scroll"); // 切換滾動狀態
-  menuBtnChange(); // 調用更換按鈕圖標的函數
+    sidebar.classList.toggle("open");
+    navList.classList.toggle("scroll");
+    menuBtnChange();
 });
 
-// 更改按鈕圖標以指示側邊欄狀態
 function menuBtnChange() {
-  if (sidebar.classList.contains("open")) {
-    closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); // 改變圖標以指示可關閉
-  } else {
-    closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); // 改變圖標以指示可開啟
-  }
+    if (sidebar.classList.contains("open")) {
+        closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+    } else {
+        closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+    }
 }
-document.addEventListener("DOMContentLoaded", function () {
-  // 獲取所有的 span 元素
-  const textElements = document.querySelectorAll(".fade-text");
-  let delay = 300; // 初始延遲時間為 1 秒（1000 毫秒）
 
-  textElements.forEach((span, index) => {
-      setTimeout(() => {
-          span.classList.add("fade-in");
-      }, delay);
-      delay += 100; // 每次延遲增加 0.1 秒（100 毫秒）
-  });
+// 執行器處理功能
+async function handleExecutorAction(type) {
+    try {
+        const button = document.getElementById(`find-${type}`);
+        if (!button) return;
+
+        button.disabled = true;
+        button.textContent = "搜尋中...";
+        button.style.backgroundColor = "#496afc";
+        
+        showToast('search');
+
+        const isFound = await window.gameAPI.checkInstalled(type);
+        
+        if (isFound) {
+            showToast('success');
+            setTimeout(() => {
+                button.textContent = "啟動";
+                button.style.backgroundColor = "#70fff8";
+                button.disabled = false;
+            }, 1000);
+        } else {
+            showToast('error');
+            setTimeout(() => {
+                button.textContent = "尋找";
+                button.style.backgroundColor = "#70fff8";
+                button.disabled = false;
+            }, 1000);
+        }
+    } catch (error) {
+        console.error(`Error handling ${type}:`, error);
+        showToast('default');
+        button.textContent = "尋找";
+        button.style.backgroundColor = "#70fff8";
+        button.disabled = false;
+    }
+}
+
+// 淡入效果
+function initializeFadeEffects() {
+    const textElements = document.querySelectorAll(".fade-text");
+    let delay = 300;
+
+    textElements.forEach((element) => {
+        setTimeout(() => {
+            element.classList.add("fade-in");
+        }, delay);
+        delay += 100;
+    });
+}
+
+// 頁面載入初始化
+document.addEventListener('DOMContentLoaded', () => {
+    initializeFadeEffects();
 });
+
+// 導出函數
+window.handleExecutorAction = handleExecutorAction;

@@ -40,6 +40,28 @@ ipcRenderer.on('menu-window-status', (event, status) => {
     console.log('Menu window status:', status);
 });
 
+contextBridge.exposeInMainWorld('gameAPI', {
+    checkInstalled: (gameId) => ipcRenderer.invoke('check-game-installed', gameId),
+    launch: (gameId) => ipcRenderer.invoke('launch-game', gameId)
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ipcRenderer.on('log-update', (event, logMessage) => {
     console.log("收到日誌：", logMessage);
     const logElement = document.getElementById('logDisplay');

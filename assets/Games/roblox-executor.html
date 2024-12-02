@@ -116,23 +116,23 @@
   <section class="roblox-section">
     <div class="top-m"></div>
     <div class="fc_container fade-text" style="-webkit-app-region: no-drag;">
-      <div class="fc_games card" >
+      <div class="fc_games card">
           <img src="../images/wave-exec.jpg">
           <h3>Wave Executor</h3>
           <p>UNC: 100%<br/>僅在PC端使用</p>
-          <button id="find-wave" onclick="showToast()">尋找</button>
+          <button id="find-wave" onclick="handleExecutorAction('wave')">檢查中...</button>
       </div>
       <div class="fc_games card">
           <img src="../images/solara-exec.jpg">
           <h3>Solara Executor</h3>
           <p>UNC: 64%<br/>僅在PC端使用</p>
-          <button id="find-solara" onclick="showToast()">尋找</button>
+          <button id="find-solara" onclick="handleExecutorAction('solara')">檢查中...</button>
       </div>
       <div class="fc_games card">
-          <img src="../images/zorara-exec.png" >
+          <img src="../images/zorara-exec.png">
           <h3>Zorara Executor</h3>
           <p>UNC: 84%<br/>僅在PC端使用</p>
-          <button id="find-zorara" onclick="showToast()">尋找</button>
+          <button id="find-zorara" onclick="handleExecutorAction('zorara')">檢查中...</button>
       </div>
       <div class="fc_games card">
         <img src="../images/cloudy-exec.png" >
@@ -157,20 +157,60 @@
   </section>
 <!-- Scripts -->
 <script>
-  document.getElementById('find-solara').addEventListener('click', () => {
-      window.electronAPI.runFindSolara();
+  async function handleExecutorAction(type) {
+      try {
+          const button = document.getElementById(`find-${type}`);
+          const isInstalled = await window.gameAPI.checkInstalled(type);
+          
+          if (isInstalled) {
+              // 如果已安裝，則執行
+              try {
+                  button.textContent = "執行中...";
+                  await window.gameAPI.launch(type);
+                  showToast('success', `${type} 執行成功！`);
+                  button.textContent = "執行";
+              } catch (error) {
+                  showToast('error', '執行失敗：' + error.message);
+                  button.textContent = "執行";
+              }
+          } else {
+              // 如果未安裝，使用原來的搜尋功能
+              window.electronAPI[`runFind${type.charAt(0).toUpperCase() + type.slice(1)}`]();
+          }
+      } catch (error) {
+          console.error(`Error handling ${type}:`, error);
+          // 發生錯誤時回退到原有功能
+          window.electronAPI[`runFind${type.charAt(0).toUpperCase() + type.slice(1)}`]();
+      }
+  }
+  
+  // 頁面載入時檢查執行器狀態
+  document.addEventListener('DOMContentLoaded', async () => {
+      const executors = ['wave', 'solara', 'zorara'];
+      
+      for (const type of executors) {
+          try {
+              const button = document.getElementById(`find-${type}`);
+              if (button) {
+                  const isInstalled = await window.gameAPI.checkInstalled(type);
+                  button.textContent = isInstalled ? "執行" : "尋找";
+              }
+          } catch (error) {
+              console.error(`Error checking ${type}:`, error);
+              // 如果檢查失敗，顯示"尋找"
+              const button = document.getElementById(`find-${type}`);
+              if (button) {
+                  button.textContent = "尋找";
+              }
+          }
+      }
   });
-  document.getElementById('find-wave').addEventListener('click', () => {
-      window.electronAPI.runFindWave();
-  });
-  document.getElementById('find-zorara').addEventListener('click', () => {
-      window.electronAPI.runFindZorara();
-  });
-</script>
-
-<script src="../js/games.js" defer ></script>
-<script src="../js/info.js" ></script>
-<script src="../js/openlnk.js" defer></script>
+  </script>
+  
+  <!-- 保留其他腳本引用 -->
+  <script src="../js/games.js" defer></script>
+  <script src="../js/info.js"></script>
+  <script src="../js/openlnk.js" defer></script>
 </body>
 </html>
 

@@ -6,6 +6,7 @@ const CONFIG = require('../../config/main');
 const logger = require('./logger');
 const windowManager = require('./WindowManager');
 const adBlockManager = require('./AdBlockManager');
+const gameManager = require('./GameManager');
 
 class IpcHandler {
     constructor() {
@@ -33,6 +34,9 @@ class IpcHandler {
         // 廣告攔截事件
         this._setupAdBlockHandlers();
 
+        // 遊戲處理器
+        this._setupGameHandlers();
+        
         logger.ipc('IPC handlers initialized');
     }
 
@@ -104,7 +108,30 @@ class IpcHandler {
             });
         });
     }
-
+    /**
+     * 設置遊戲處理器
+     */
+    _setupGameHandlers() {
+        ipcMain.handle('check-game-installed', async (event, gameId) => {
+            try {
+                const gameManager = require('./GameManager');
+                return await gameManager.checkGameInstalled(gameId);
+            } catch (error) {
+                logger.error('Failed to check game installation:', error);
+                throw error;
+            }
+        });
+    
+        ipcMain.handle('launch-game', async (event, gameId) => {
+            try {
+                const gameManager = require('./GameManager');
+                return await gameManager.launchGame(gameId);
+            } catch (error) {
+                logger.error('Failed to launch game:', error);
+                throw error;
+            }
+        });
+    }
     /**
      * 處理執行器搜索
      * @param {string} type - 執行器類型
