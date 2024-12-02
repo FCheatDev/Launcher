@@ -22,29 +22,43 @@ async function handleExecutorAction(type) {
         const button = document.getElementById(`find-${type}`);
         if (!button) return;
 
+        // 如果按鈕文字是"啟動"，代表是已安裝狀態
+        if (button.textContent === "啟動") {
+            button.disabled = true;
+            button.textContent = "啟動中...";
+            
+            try {
+                await window.gameAPI.launch(type);
+                showToast('success');
+            } catch (error) {
+                showToast('error');
+            }
+            
+            button.textContent = "啟動";
+            button.disabled = false;
+            return;
+        }
+
+        // 執行尋找流程
         button.disabled = true;
         button.textContent = "搜尋中...";
-        button.style.backgroundColor = "#496afc";
         
+        // 顯示搜尋中提示
         showToast('search');
 
-        const isFound = await window.gameAPI.checkInstalled(type);
+        const result = await window.gameAPI.checkInstalled(type);
         
-        if (isFound) {
-            showToast('success');
-            setTimeout(() => {
-                button.textContent = "啟動";
-                button.style.backgroundColor = "#70fff8";
-                button.disabled = false;
-            }, 1000);
+        if (result.exists) {
+            showToast('success', result.path); // 傳入路徑
+            button.textContent = "啟動";
+            button.style.backgroundColor = "#70fff8";
         } else {
             showToast('error');
-            setTimeout(() => {
-                button.textContent = "尋找";
-                button.style.backgroundColor = "#70fff8";
-                button.disabled = false;
-            }, 1000);
+            button.textContent = "尋找";
+            button.style.backgroundColor = "#70fff8";
         }
+        button.disabled = false;
+
     } catch (error) {
         console.error(`Error handling ${type}:`, error);
         showToast('default');
@@ -53,7 +67,6 @@ async function handleExecutorAction(type) {
         button.disabled = false;
     }
 }
-
 // 淡入效果
 function initializeFadeEffects() {
     const textElements = document.querySelectorAll(".fade-text");
@@ -65,6 +78,18 @@ function initializeFadeEffects() {
         }, delay);
         delay += 100;
     });
+}
+// 初始化按鈕外觀
+function initializeExecutors() {
+  const executors = ['wave', 'solara', 'zorara'];
+  
+  for (const type of executors) {
+      const button = document.getElementById(`find-${type}`);
+      if (button) {
+          button.textContent = "尋找";
+          button.style.backgroundColor = "#70fff8";
+      }
+  }
 }
 
 // 頁面載入初始化

@@ -117,38 +117,36 @@
     <div class="top-m"></div>
     <div class="fc_container fade-text" style="-webkit-app-region: no-drag;">
       <div class="fc_games card">
-          <img src="../images/wave-exec.jpg">
-          <h3>Wave Executor</h3>
-          <p>UNC: 100%<br/>僅在PC端使用</p>
-          <button id="find-wave" onclick="handleExecutorAction('wave')">檢查中...</button>
-      </div>
-      <div class="fc_games card">
-          <img src="../images/solara-exec.jpg">
-          <h3>Solara Executor</h3>
-          <p>UNC: 64%<br/>僅在PC端使用</p>
-          <button id="find-solara" onclick="handleExecutorAction('solara')">檢查中...</button>
-      </div>
-      <div class="fc_games card">
-          <img src="../images/zorara-exec.png">
-          <h3>Zorara Executor</h3>
-          <p>UNC: 84%<br/>僅在PC端使用</p>
-          <button id="find-zorara" onclick="handleExecutorAction('zorara')">檢查中...</button>
-      </div>
+        <img src="../images/wave-exec.jpg">
+        <h3>Wave Executor</h3>
+        <p>UNC: 100%<br/>僅在PC端使用</p>
+        <button id="find-wave" onclick="handleExecutorAction('wave')">尋找</button>
+    </div>
+    
+    <div class="fc_games card">
+        <img src="../images/solara-exec.jpg">
+        <h3>Solara Executor</h3>
+        <p>UNC: 64%<br/>僅在PC端使用</p>
+        <button id="find-solara" onclick="handleExecutorAction('solara')">尋找</button>
+    </div>
+    
+    <div class="fc_games card">
+        <img src="../images/zorara-exec.png">
+        <h3>Zorara Executor</h3>
+        <p>UNC: 84%<br/>僅在PC端使用</p>
+        <button id="find-zorara" onclick="handleExecutorAction('zorara')">尋找</button>
+    </div>
       <div class="fc_games card">
         <img src="../images/cloudy-exec.png" >
         <h3>Cloudy Executor</h3>
         <p>UNC: 86%<br/>僅在PC端使用</p>
-        <button onclick="showToast()">尋找</button>
+        <button id="find-cloudy" onclick="showToast('cloudy')">尋找</button>
       </div>
       <div class="fc_games card">
         <img src="../images/fcheat-exec.png" >
         <h3>FCheat Executor</h3>
         <p>UNC: XX%<br/>僅在PC端使用</p>
-        <button id="find-wave" onclick="showToast('search')">尋找</button>
-        <button id="find-solara" onclick="showToast('error')">尋找</button>
-        <button id="find-zorara" onclick="showToast('success')">尋找</button>
-
-        <button onclick="showToast()">尋找</button>
+        <button id="find-fcheatexec" onclick="showToast('fcheat-executor')">尋找</button>
   </div>
   <div class="info-wrapper "style="-webkit-app-region: no-drag;">
     <div id="toast">

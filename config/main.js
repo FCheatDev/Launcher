@@ -23,19 +23,24 @@ const CONFIG = {
         LOGS: path.join(ROOT_PATH, 'logs'),
         ASSETS: path.join(ROOT_PATH, 'assets')
     },
-
-    PATHS: {
-        SEARCH_TOOLS: {
-            SOLARA: app.isPackaged
-                ? path.join(process.resourcesPath, 'assets/get-files/roblox/get_solara_exec_path.exe')
-                : path.join(__dirname, '..', 'assets/get-files/roblox/get_solara_exec_path.exe'),
-            WAVE: app.isPackaged
-                ? path.join(process.resourcesPath, 'assets/get-files/roblox/get_wave_exec_path.exe')
-                : path.join(__dirname, '..', 'assets/get-files/roblox/get_wave_exec_path.exe'),
-            ZORARA: app.isPackaged
-                ? path.join(process.resourcesPath, 'assets/get-files/roblox/get_zorara_exec_path.exe')
-                : path.join(__dirname, '..', 'assets/get-files/roblox/get_zorara_exec_path.exe')
+    EXECUTORS: {
+        WAVE: {
+            name: 'Wave Executor',
+            exePath: path.join(process.env.LOCALAPPDATA, 'Programs', 'Wave', 'Wave.exe'),
+            installDir: path.join(process.env.LOCALAPPDATA, 'Programs', 'Wave')
         },
+        SOLARA: {
+            name: 'Solara Executor',
+            exePath: path.join(process.env.LOCALAPPDATA, 'Programs', 'Solara', 'Solara.exe'),
+            installDir: path.join(process.env.LOCALAPPDATA, 'Programs', 'Solara')
+        },
+        ZORARA: {
+            name: 'Zorara Executor',
+            exePath: path.join(process.env.LOCALAPPDATA, 'Programs', 'Zorara', 'Zorara.exe'),
+            installDir: path.join(process.env.LOCALAPPDATA, 'Programs', 'Zorara')
+        }
+    },
+    PATHS: {
         UPDATES: path.join(ROOT_PATH, 'updates'),
         PACKAGE: app.isPackaged
             ? path.join(process.resourcesPath, 'app.asar/package.json')
