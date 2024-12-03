@@ -50,7 +50,6 @@
       "output": "launcherOutput"
     },
     "files": [
-      "images/**",
       "launcher/**",
       "assets/**/*",
       "node_modules/**/*",

@@ -34,9 +34,9 @@ function showToast(status, filePath = '') {
                     <i class="fas fa-check-square"></i>
                 </div>
                 <div class="success-2">
-                    <p>查找成功</p>
+                    <p>檔案位置</p>
                     <p style="word-break: break-all; font-size: 11px; line-height: 1.2; margin-top: 2px;">
-                        檔案位置在: ${displayPath}
+                         ${displayPath}
                     </p>
                 </div>
             `;
@@ -51,13 +51,13 @@ function showToast(status, filePath = '') {
                     <i class="fas fa-exclamation-triangle"></i>
                 </div>
                 <div class="error-2">
-                    <p>查找錯誤</p>
-                    <p>請等待搜尋系統完成搜尋後再點擊</p>
+                    <p>錯誤</p>
+                    <p>檔案可能不存在</p>
                 </div>
             `;
             borderColor = '#ff0000';
             icon = 'fas fa-exclamation-triangle';
-            message = '請等待搜尋系統完成搜尋後再點擊';
+            message = '檔案可能不存在';
             break;
             
  

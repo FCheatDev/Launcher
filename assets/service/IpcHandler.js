@@ -2,12 +2,13 @@
 const { ipcMain, shell, dialog } = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
+const fs = require('fs-extra');      
+const axios = require('axios');      
 const CONFIG = require('../../config/main');
 const logger = require('./logger');
 const windowManager = require('./WindowManager');
 const adBlockManager = require('./AdBlockManager');
 const gameManager = require('./GameManager');
-
 class IpcHandler {
     constructor() {
         this.executorInstances = {
@@ -114,7 +115,6 @@ class IpcHandler {
     _setupGameHandlers() {
         ipcMain.handle('check-game-installed', async (event, gameId) => {
             try {
-                const gameManager = require('./GameManager');
                 return await gameManager.checkGameInstalled(gameId);
             } catch (error) {
                 logger.error('Failed to check game installation:', error);
@@ -124,10 +124,44 @@ class IpcHandler {
     
         ipcMain.handle('launch-game', async (event, gameId) => {
             try {
-                const gameManager = require('./GameManager');
                 return await gameManager.launchGame(gameId);
             } catch (error) {
                 logger.error('Failed to launch game:', error);
+                throw error;
+            }
+        });
+        ipcMain.handle('download-executor', async (event, gameId) => {
+            try {
+                const config = gameManager.executorConfigs[gameId.toUpperCase()];
+                if (!config || !config.downloadUrl) {
+                    throw new Error('Invalid executor or missing download URL');
+                }
+    
+                logger.system(`Starting download for ${config.name}...`);
+                
+                // 確保安裝目錄存在
+                await fs.ensureDir(config.installDir);
+    
+                const response = await axios({
+                    method: 'GET',
+                    url: config.downloadUrl,
+                    responseType: 'stream'
+                });
+    
+                const filePath = path.join(config.installDir, 'Bootstrapper.exe');
+                const writer = fs.createWriteStream(filePath);
+    
+                response.data.pipe(writer);
+    
+                await new Promise((resolve, reject) => {
+                    writer.on('finish', resolve);
+                    writer.on('error', reject);
+                });
+    
+                logger.system(`Download completed: ${filePath}`);
+                return filePath;
+            } catch (error) {
+                logger.error('Failed to download executor:', error);
                 throw error;
             }
         });

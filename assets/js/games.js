@@ -20,51 +20,63 @@ function menuBtnChange() {
 async function handleExecutorAction(type) {
     try {
         const button = document.getElementById(`find-${type}`);
-        if (!button) return;
+        if (!button || button.disabled) return;
 
-        // 如果按鈕文字是"啟動"，代表是已安裝狀態
-        if (button.textContent === "啟動") {
-            button.disabled = true;
-            button.textContent = "啟動中...";
-            
+        button.disabled = true;
+
+        if (type === 'solara') {
+            button.textContent = "下載中...";
             try {
+                const filePath = await window.gameAPI.downloadExecutor(type);
+                showToast('success', filePath);
                 await window.gameAPI.launch(type);
-                showToast('success');
+                button.textContent = "啟動";
             } catch (error) {
                 showToast('error');
+                button.textContent = "安裝";
             }
-            
-            button.textContent = "啟動";
             button.disabled = false;
             return;
         }
 
-        // 執行尋找流程
-        button.disabled = true;
-        button.textContent = "搜尋中...";
-        
-        // 顯示搜尋中提示
-        showToast('search');
-
+        // Wave 處理
         const result = await window.gameAPI.checkInstalled(type);
         
         if (result.exists) {
-            showToast('success', result.path); // 傳入路徑
+            showToast('success', result.path);
+            await window.gameAPI.launch(type);
             button.textContent = "啟動";
-            button.style.backgroundColor = "#70fff8";
         } else {
             showToast('error');
-            button.textContent = "尋找";
-            button.style.backgroundColor = "#70fff8";
+            button.textContent = "安裝";
         }
+
+        button.style.backgroundColor = "#70fff8";
         button.disabled = false;
 
     } catch (error) {
         console.error(`Error handling ${type}:`, error);
         showToast('default');
-        button.textContent = "尋找";
+        button.textContent = type === 'solara' ? "安裝" : "尋找";
         button.style.backgroundColor = "#70fff8";
         button.disabled = false;
+    }
+}
+
+function initializeExecutors() {
+    const executors = ['wave', 'solara', 'zorara'];
+    
+    for (const type of executors) {
+        const button = document.getElementById(`find-${type}`);
+        if (button) {
+            // Solara 特殊處理
+            if (type === 'solara') {
+                button.textContent = "安裝";
+            } else {
+                button.textContent = "尋找";
+            }
+            button.style.backgroundColor = "#70fff8";
+        }
     }
 }
 // 淡入效果

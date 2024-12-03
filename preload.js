@@ -42,9 +42,9 @@ ipcRenderer.on('menu-window-status', (event, status) => {
 
 contextBridge.exposeInMainWorld('gameAPI', {
     checkInstalled: (gameId) => ipcRenderer.invoke('check-game-installed', gameId),
-    launch: (gameId) => ipcRenderer.invoke('launch-game', gameId)
+    launch: (gameId) => ipcRenderer.invoke('launch-game', gameId),
+    downloadExecutor: (gameId) => ipcRenderer.invoke('download-executor', gameId)
 });
-
 
 
 

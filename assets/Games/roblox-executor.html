@@ -120,33 +120,33 @@
         <img src="../images/wave-exec.jpg">
         <h3>Wave Executor</h3>
         <p>UNC: 100%<br/>僅在PC端使用</p>
-        <button id="find-wave" onclick="handleExecutorAction('wave')">尋找</button>
+        <button id="find-wave" onclick="handleExecutorAction('wave')">安裝</button>
     </div>
     
     <div class="fc_games card">
         <img src="../images/solara-exec.jpg">
         <h3>Solara Executor</h3>
         <p>UNC: 64%<br/>僅在PC端使用</p>
-        <button id="find-solara" onclick="handleExecutorAction('solara')">尋找</button>
+        <button id="find-solara" onclick="handleExecutorAction('solara')">安裝</button>
     </div>
     
     <div class="fc_games card">
         <img src="../images/zorara-exec.png">
         <h3>Zorara Executor</h3>
         <p>UNC: 84%<br/>僅在PC端使用</p>
-        <button id="find-zorara" onclick="handleExecutorAction('zorara')">尋找</button>
+        <button id="find-zorara" onclick="handleExecutorAction('zorara')">安裝</button>
     </div>
       <div class="fc_games card">
         <img src="../images/cloudy-exec.png" >
         <h3>Cloudy Executor</h3>
         <p>UNC: 86%<br/>僅在PC端使用</p>
-        <button id="find-cloudy" onclick="showToast('cloudy')">尋找</button>
+        <button id="find-cloudy" onclick="showToast('cloudy')">安裝</button>
       </div>
       <div class="fc_games card">
         <img src="../images/fcheat-exec.png" >
         <h3>FCheat Executor</h3>
         <p>UNC: XX%<br/>僅在PC端使用</p>
-        <button id="find-fcheatexec" onclick="showToast('fcheat-executor')">尋找</button>
+        <button id="find-fcheatexec" onclick="showToast('fcheat-executor')">安裝</button>
   </div>
   <div class="info-wrapper "style="-webkit-app-region: no-drag;">
     <div id="toast">
@@ -191,7 +191,7 @@
               const button = document.getElementById(`find-${type}`);
               if (button) {
                   const isInstalled = await window.gameAPI.checkInstalled(type);
-                  button.textContent = isInstalled ? "執行" : "尋找";
+                  button.textContent = isInstalled ? "安裝" : "尋找";
               }
           } catch (error) {
               console.error(`Error checking ${type}:`, error);

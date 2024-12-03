@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
                      fadeOutLauncher(); // 淡出啟動畫面
                  }, 1000);
              } else {
-                 progress += 1;
+                 progress += 2;
                  progressBar.style.width = `${progress}%`; // 更新填充條的寬度
                  progressNumber.textContent = `${progress}%`; // 更新數字
              }

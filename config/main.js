@@ -27,17 +27,19 @@ const CONFIG = {
         WAVE: {
             name: 'Wave Executor',
             exePath: path.join(process.env.LOCALAPPDATA, 'Programs', 'Wave', 'Wave.exe'),
-            installDir: path.join(process.env.LOCALAPPDATA, 'Programs', 'Wave')
+            installDir: path.join(process.env.LOCALAPPDATA, 'Programs', 'Wave'),
+
         },
         SOLARA: {
             name: 'Solara Executor',
-            exePath: path.join(process.env.LOCALAPPDATA, 'Programs', 'Solara', 'Solara.exe'),
-            installDir: path.join(process.env.LOCALAPPDATA, 'Programs', 'Solara')
+            exePath: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Solara', 'Bootstrapper.exe'),
+            installDir: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Solara'),
+            downloadUrl: 'https://f29cc861.solaraweb-alj.pages.dev/download/static/files/Bootstrapper.exe'
         },
         ZORARA: {
             name: 'Zorara Executor',
-            exePath: path.join(process.env.LOCALAPPDATA, 'Programs', 'Zorara', 'Zorara.exe'),
-            installDir: path.join(process.env.LOCALAPPDATA, 'Programs', 'Zorara')
+            exePath: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Zorara', 'Zorara.exe'),
+            installDir: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Zorara')
         }
     },
     PATHS: {
