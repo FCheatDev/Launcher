@@ -1,117 +1,132 @@
-let toastCount = 0;  // 当前显示的提示框数量
-let toastStack = []; // 用于记录所有当前显示的提示框
-let maxToasts = 3;   // 最大堆叠数
+// 定義錯誤類型映射
+const ERROR_TYPES = {
+    INSTALLATION_FAILED: {
+        message: '安裝失敗',
+        description: '無法完成安裝，請檢查權限或磁碟空間'
+    },
+    LAUNCH_FAILED: {
+        message: '啟動失敗',
+        description: '程序無法啟動，請檢查安裝是否完整'
+    },
+    FILE_NOT_FOUND: {
+        message: '檔案未找到',
+        description: '所需檔案不存在或已損壞'
+    }
+};
 
-// 这个函数将根据状态显示不同内容
-function showToast(status, filePath = '') {
-    // 创建新的提示框
+let toastCount = 0;
+let toastStack = [];
+let maxToasts = 3;
+
+function closeToast(toastId) {
+    const toast = document.getElementById(toastId);
+    if (toast) {
+        toast.style.transform = "translateX(400px)";
+        toastStack = toastStack.filter(item => item.id !== toastId);
+        toastCount--;
+        toast.addEventListener('transitionend', () => {
+            toast.remove();
+        });
+    }
+}
+
+async function showToast(status, filePath = '', messageInfo = '') {
+    if (status === 'pending') return;
+
     if (toastCount >= maxToasts) {
-        // 如果超过最大堆叠数，关闭最早的提示框
         closeToast(toastStack[0].id);
     }
 
-    const toastId = 'toast' + Date.now(); // 为每个提示框生成唯一 ID
+    const toastId = 'toast' + Date.now();
     const toast = document.createElement('div');
     toast.classList.add('toast');
     toast.id = toastId;
+    
     if (filePath) {
-        toast.classList.add('with-path'); 
+        toast.classList.add('with-path');
     }
-    // 增加提示框到堆栈
+
     toastStack.push({ id: toastId, element: toast });
 
-    // 根据状态设置提示框内容
     let toastContent;
     let borderColor;
-    let icon;
-    let message;
 
     switch (status) {
         case 'success':
-            const displayPath = filePath ? filePath.replace(/\\/g, '/') : '';
-            toastContent = `
-                <div class="success-1">
-                    <i class="fas fa-check-square"></i>
-                </div>
-                <div class="success-2">
-                    <p>檔案位置</p>
-                    <p style="word-break: break-all; font-size: 11px; line-height: 1.2; margin-top: 2px;">
-                         ${displayPath}
-                    </p>
-                </div>
-            `;
+            if (filePath) {
+                // 顯示安裝成功和檔案路徑
+                const displayPath = filePath.replace(/\\/g, '/');
+                toastContent = `
+                    <div class="success-1">
+                        <i class="fas fa-check-square"></i>
+                    </div>
+                    <div class="success-2">
+                        <p>安裝成功</p>
+                        <p style="word-break: break-all; font-size: 11px; line-height: 1.2; margin-top: 2px;">
+                             ${displayPath}
+                        </p>
+                    </div>
+                `;
+            } else if (messageInfo) {
+                // 顯示檔案檢驗信息
+                toastContent = `
+                    <div class="success-1">
+                        <i class="fas fa-check-square"></i>
+                    </div>
+                    <div class="success-2">
+                        <p>${messageInfo.title || '檔案檢驗'}</p>
+                        <p style="word-break: break-all; font-size: 11px; line-height: 1.2; margin-top: 2px;">
+                             ${messageInfo.message || '正在處理...'}
+                        </p>
+                    </div>
+                `;
+            }
             borderColor = '#5cb85c';
-            icon = 'fas fa-check-square';
-            message = '查找成功';
             break;
             
         case 'error':
+            const error = typeof messageInfo === 'string' 
+                ? ERROR_TYPES[messageInfo] 
+                : {
+                    message: messageInfo.title || '發生錯誤',
+                    description: messageInfo.message || '請稍後重試或聯繫支援'
+                };
+            
             toastContent = `
                 <div class="error-1">
                     <i class="fas fa-exclamation-triangle"></i>
                 </div>
                 <div class="error-2">
-                    <p>錯誤</p>
-                    <p>檔案可能不存在</p>
+                    <p>${error.message}</p>
+                    <div class="error-details">
+                        <p>${error.description}</p>
+                    </div>
                 </div>
             `;
             borderColor = '#ff0000';
-            icon = 'fas fa-exclamation-triangle';
-            message = '檔案可能不存在';
             break;
-            
- 
             
         default:
-            toastContent = `
-                <div class="default-1">
-                    <i class="fas fa-info-circle"></i>
-                </div>
-                <div class="default-2">
-                    <p>查找系統</p>
-                    <p>系統可能發生錯誤,請去Discord回饋</p>
-                </div>
-            `;
-            borderColor = '#ffe600';
-            icon = 'fas fa-info-circle';
-            message = '資訊';
-            break;
+            return;
     }
-    // 设置提示框内容和样式
+
     toast.innerHTML = `
         ${toastContent}
         <button class="close" onclick="closeToast('${toastId}')">×</button>
     `;
     toast.style.borderLeftColor = borderColor;
 
-    // 将新的提示框添加到页面中
     document.querySelector('.info-wrapper').appendChild(toast);
 
-    // 显示提示框
     setTimeout(() => {
         toast.style.transform = "translateX(0)";
     }, 100);
 
-    // 增加提示框计数
     toastCount++;
 
-    // 自动关闭提示框
     setTimeout(() => {
         closeToast(toastId);
-    }, 4000);  // 4秒后自动关闭
+    }, 3000);
 }
 
-function closeToast(toastId) {
-    const toast = document.getElementById(toastId);
-    if (toast) {
-        toast.style.transform = "translateX(400px)";
-        // 从堆栈中移除该提示框
-        toastStack = toastStack.filter(item => item.id !== toastId);
-        // 减少提示框计数
-        toastCount--;
-        // 从页面中移除提示框
-        toast.addEventListener('transitionend', () => {
-            toast.remove();
-        });
-    }
-}
+window.closeToast = closeToast;

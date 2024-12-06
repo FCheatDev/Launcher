@@ -3,7 +3,7 @@ const { app } = require('electron');
 const path = require('path');
 
 // 導入配置和服務
-const CONFIG = require('./config/main');
+const CONFIG = require('./config/app-cfg');
 const logger = require('./assets/service/logger');
 const windowManager = require('./assets/service/WindowManager');
 const updateManager = require('./assets/service/UpdateManager');
@@ -106,10 +106,9 @@ function setupAppEvents() {
 
     // 所有窗口關閉
     app.on('window-all-closed', () => {
-        logger.system('All windows closed');
-        if (process.platform !== 'darwin') {
-            app.quit();
-        }
+        logger.system('All windows closed, forcing app to quit');
+        // 強制結束所有子進程
+        process.exit(0);
     });
 
     // 應用激活（macOS）
@@ -123,7 +122,12 @@ function setupAppEvents() {
     // 應用退出前
     app.on('before-quit', () => {
         logger.system('Application is quitting');
+        // 清理資源
         updateManager.destroy();
+        // 強制結束所有渲染進程
+        if (windowManager.mainWindowInstance) {
+            windowManager.mainWindowInstance.webContents.forcefullyTerminateRenderer();
+        }
     });
 
     // 第二個實例啟動

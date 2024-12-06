@@ -28,18 +28,33 @@ const CONFIG = {
             name: 'Wave Executor',
             exePath: path.join(process.env.LOCALAPPDATA, 'Programs', 'Wave', 'Wave.exe'),
             installDir: path.join(process.env.LOCALAPPDATA, 'Programs', 'Wave'),
-
+            downloadUrl: 'https://cdn.getwave.gg/userinterface/Wave-Setup.exe'
         },
         SOLARA: {
             name: 'Solara Executor',
-            exePath: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Solara', 'Bootstrapper.exe'),
+            exePath: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Solara', 'Solara-Setup.exe'),
             installDir: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Solara'),
-            downloadUrl: 'https://f29cc861.solaraweb-alj.pages.dev/download/static/files/Bootstrapper.exe'
+            downloadUrl: 'https://f29cc861.solaraweb-alj.pages.dev/download/static/files/Bootstrapper.exe',
+            // 添加基礎域名配置
+            baseUrl: 'solaraweb-alj.pages.dev',
+            downloadPath: '/download/static/files/Bootstrapper.exe'
         },
         ZORARA: {
             name: 'Zorara Executor',
             exePath: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Zorara', 'Zorara.exe'),
             installDir: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Zorara')
+        },
+        CLOUDY: {
+            name: 'Cloudy Executor',
+            exePath: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Cloudy', 'Cloudy-Setup.exe'),
+            installDir: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Cloudy'),
+            downloadUrl: 'https://github.com/cloudyExecutor/webb/releases/download/alpha/CloudyBootstrapInstaller.exe'
+        },
+        LUNA: {
+            name: 'Luna Executor',
+            exePath: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Luna', 'Luna-Setup.exe'),
+            installDir: path.join(app.getPath('appData'), 'FCheatlauncher', 'Games', 'Roblox', 'Luna'),
+            downloadUrl: 'https://github.com/suffz/luna/raw/refs/heads/main/Bootstrapper.zip'
         }
     },
     PATHS: {

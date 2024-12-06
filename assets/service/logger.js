@@ -1,20 +1,21 @@
-// assets/service/logger.js
 const winston = require('winston');
 const path = require('path');
 const fs = require('fs-extra');
-const CONFIG = require('../../config/main');
+const { app } = require('electron');
+const CONFIG = require('../../config/app-cfg');
 const { format } = winston;
 
 class Logger {
     constructor() {
         try {
-            const logsDir = path.join(process.cwd(), 'logs');
+            // 使用 userData 路徑而不是 process.cwd()
+            const logsDir = path.join(app.getPath('userData'), 'logs');
             
-            // 清空並重新創建日誌目錄
-            this.cleanLogDirectory(logsDir);
+            // 確保日誌目錄存在並有正確權限
+            this.setupLogDirectory(logsDir);
             
             // 初始化日誌系統
-            this.initializeLogger();
+            this.initializeLogger(logsDir);
         } catch (error) {
             console.error('Failed to initialize logger:', error);
             this.logger = console;
@@ -22,25 +23,34 @@ class Logger {
     }
 
     /**
-     * 清空並重新創建日誌目錄
+     * 設置日誌目錄
      */
-    cleanLogDirectory(logsDir) {
+    setupLogDirectory(logsDir) {
         try {
-            // 如果目錄存在，先刪除它
-            if (fs.existsSync(logsDir)) {
-                fs.removeSync(logsDir);
-            }
-            // 重新創建日誌目錄
+            // 確保目錄存在
             fs.ensureDirSync(logsDir);
-            console.log('Log directory cleaned and recreated');
+            
+            // 在開發環境時清空日誌
+            if (process.env.NODE_ENV === 'development') {
+                // 只清除檔案，不刪除目錄
+                const files = fs.readdirSync(logsDir);
+                for (const file of files) {
+                    if (file.endsWith('.log')) {
+                        fs.unlinkSync(path.join(logsDir, file));
+                    }
+                }
+            }
+            
+            console.log('Log directory setup completed');
         } catch (error) {
-            console.error('Failed to clean log directory:', error);
+            console.error('Failed to setup log directory:', error);
+            // 如果無法設置，使用臨時目錄
+            return path.join(app.getPath('temp'), 'FCheatlauncher-logs');
         }
+        return logsDir;
     }
 
-    initializeLogger() {
-        const logsDir = path.join(process.cwd(), 'logs');
-
+    initializeLogger(logsDir) {
         // 創建自定義日誌格式
         const customFormat = format.combine(
             format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
@@ -58,15 +68,21 @@ class Logger {
                 // 錯誤日誌
                 new winston.transports.File({
                     filename: path.join(logsDir, 'error.log'),
-                    level: 'error'
+                    level: 'error',
+                    maxsize: 5 * 1024 * 1024, // 5MB
+                    maxFiles: 5
                 }),
                 // 所有日誌
                 new winston.transports.File({
-                    filename: path.join(logsDir, 'combined.log')
+                    filename: path.join(logsDir, 'combined.log'),
+                    maxsize: 5 * 1024 * 1024,
+                    maxFiles: 5
                 }),
                 // 系統日誌
                 new winston.transports.File({
-                    filename: path.join(logsDir, 'system.log')
+                    filename: path.join(logsDir, 'system.log'),
+                    maxsize: 5 * 1024 * 1024,
+                    maxFiles: 5
                 })
             ]
         });
@@ -82,7 +98,7 @@ class Logger {
         }
     }
 
-    // 基礎日誌方法
+    // 其餘方法保持不變...
     log(level, message, category = null, ...args) {
         try {
             let finalMessage = typeof message === 'string' ? message : JSON.stringify(message);
@@ -103,47 +119,16 @@ class Logger {
         }
     }
 
-    // 標準日誌級別
-    info(message, ...args) {
-        this.log('info', message, null, ...args);
-    }
-
-    error(message, ...args) {
-        this.log('error', message, null, ...args);
-    }
-
-    warn(message, ...args) {
-        this.log('warn', message, null, ...args);
-    }
-
-    debug(message, ...args) {
-        this.log('debug', message, null, ...args);
-    }
-
-    // 分類日誌方法
-    system(message, ...args) {
-        this.log('info', message, 'SYSTEM', ...args);
-    }
-
-    window(message, ...args) {
-        this.log('info', message, 'WINDOW', ...args);
-    }
-
-    update(message, ...args) {
-        this.log('info', message, 'UPDATE', ...args);
-    }
-
-    ipc(message, ...args) {
-        this.log('info', message, 'IPC', ...args);
-    }
-
-    adblock(message, ...args) {
-        this.log('info', message, 'ADBLOCK', ...args);
-    }
-
-    folder(message, ...args) {
-        this.log('info', message, 'FOLDER', ...args);
-    }
+    info(message, ...args) { this.log('info', message, null, ...args); }
+    error(message, ...args) { this.log('error', message, null, ...args); }
+    warn(message, ...args) { this.log('warn', message, null, ...args); }
+    debug(message, ...args) { this.log('debug', message, null, ...args); }
+    system(message, ...args) { this.log('info', message, 'SYSTEM', ...args); }
+    window(message, ...args) { this.log('info', message, 'WINDOW', ...args); }
+    update(message, ...args) { this.log('info', message, 'UPDATE', ...args); }
+    ipc(message, ...args) { this.log('info', message, 'IPC', ...args); }
+    adblock(message, ...args) { this.log('info', message, 'ADBLOCK', ...args); }
+    folder(message, ...args) { this.log('info', message, 'FOLDER', ...args); }
 }
 
 // 創建並導出單例

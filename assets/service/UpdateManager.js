@@ -4,7 +4,7 @@ const { spawn } = require('child_process');
 const axios = require('axios');
 const fs = require('fs-extra');
 const path = require('path');
-const CONFIG = require('../../config/main');
+const CONFIG = require('../../config/app-cfg');
 const logger = require('./logger');
 const windowManager = require('./WindowManager');
 

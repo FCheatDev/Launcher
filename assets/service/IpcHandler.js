@@ -1,10 +1,11 @@
 // assets/service/IpcHandler.js
 const { ipcMain, shell, dialog } = require('electron');
 const { spawn } = require('child_process');
+const decompress = require('decompress');
 const path = require('path');
 const fs = require('fs-extra');      
 const axios = require('axios');      
-const CONFIG = require('../../config/main');
+const CONFIG = require('../../config/app-cfg');
 const logger = require('./logger');
 const windowManager = require('./WindowManager');
 const adBlockManager = require('./AdBlockManager');
@@ -122,49 +123,143 @@ class IpcHandler {
             }
         });
     
+        async function launchExecutor(gameId, exePath) {
+            try {
+                const process = spawn(exePath, [], {
+                    detached: true,
+                    stdio: 'ignore'
+                });
+                
+                return new Promise((resolve, reject) => {
+                    process.on('error', (error) => {
+                        logger.error(`Error launching ${gameId}:`, error);
+                        reject(error);
+                    });
+        
+                    // 等待短暫時間確認進程啟動
+                    setTimeout(() => {
+                        if (!process.killed) {
+                            process.unref();
+                            resolve(true);
+                        } else {
+                            reject(new Error('進程啟動失敗'));
+                        }
+                    }, 1000);
+                });
+            } catch (error) {
+                logger.error(`Failed to launch ${gameId}:`, error);
+                throw error;
+            }
+        }
+        
         ipcMain.handle('launch-game', async (event, gameId) => {
             try {
-                return await gameManager.launchGame(gameId);
+                const config = gameManager.executorConfigs[gameId.toUpperCase()];
+                if (!config) {
+                    throw new Error('Invalid executor ID');
+                }
+        
+                const exists = await fs.pathExists(config.exePath);
+                if (!exists) {
+                    throw new Error('執行檔不存在');
+                }
+        
+                await launchExecutor(gameId, config.exePath);
+                logger.system(`${config.name} launched successfully`);
+                return true;
             } catch (error) {
-                logger.error('Failed to launch game:', error);
+                logger.error(`Failed to launch game:`, error);
                 throw error;
             }
         });
         ipcMain.handle('download-executor', async (event, gameId) => {
             try {
                 const config = gameManager.executorConfigs[gameId.toUpperCase()];
-                if (!config || !config.downloadUrl) {
-                    throw new Error('Invalid executor or missing download URL');
+                if (!config) {
+                    throw new Error('Invalid executor ID');
                 }
-    
-                logger.system(`Starting download for ${config.name}...`);
+        
+                // 獲取下載 URL
+                const downloadUrl = await gameManager.getLatestDownloadUrl(gameId);
+                logger.system(`Starting download for ${config.name} from ${downloadUrl}`);
                 
                 // 確保安裝目錄存在
                 await fs.ensureDir(config.installDir);
-    
+        
+                const isZip = downloadUrl.toLowerCase().endsWith('.zip');
+                const tempPath = path.join(config.installDir, isZip ? 'temp.zip' : 'temp.exe');
+        
+                // 下載文件
                 const response = await axios({
                     method: 'GET',
-                    url: config.downloadUrl,
-                    responseType: 'stream'
+                    url: downloadUrl,
+                    responseType: 'stream',
+                    timeout: 30000,
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0',
+                        'Accept': '*/*',
+                        'Referer': new URL(downloadUrl).origin
+                    }
                 });
-    
-                const filePath = path.join(config.installDir, 'Bootstrapper.exe');
-                const writer = fs.createWriteStream(filePath);
-    
-                response.data.pipe(writer);
-    
+        
+                if (response.status !== 200) {
+                    throw new Error(`下載失敗: HTTP ${response.status}`);
+                }
+        
+                // 寫入臨時文件
                 await new Promise((resolve, reject) => {
+                    const writer = fs.createWriteStream(tempPath);
+                    response.data.pipe(writer);
                     writer.on('finish', resolve);
                     writer.on('error', reject);
                 });
-    
-                logger.system(`Download completed: ${filePath}`);
-                return filePath;
+        
+                let finalPath;
+                if (isZip) {
+                    try {
+                        logger.system(`Extracting zip file for ${config.name}`);
+                        const tempExtractPath = path.join(config.installDir, 'temp_extract');
+                        await fs.ensureDir(tempExtractPath);
+                        
+                        // 解壓檔案
+                        await decompress(tempPath, tempExtractPath);
+                        
+                        // 查找 exe 文件
+                        const files = await fs.readdir(tempExtractPath, { recursive: true });
+                        const exeFile = files.find(file => file.toLowerCase().endsWith('.exe'));
+                        
+                        if (!exeFile) {
+                            throw new Error('找不到執行檔');
+                        }
+        
+                        // 移動到最終位置
+                        finalPath = path.join(config.installDir, path.basename(config.exePath));
+                        await fs.move(path.join(tempExtractPath, exeFile), finalPath, { overwrite: true });
+                        
+                        // 清理臨時文件
+                        await fs.remove(tempPath);
+                        await fs.remove(tempExtractPath);
+                    } catch (error) {
+                        // 清理臨時文件
+                        await fs.remove(tempPath).catch(() => {});
+                        await fs.remove(path.join(config.installDir, 'temp_extract')).catch(() => {});
+                        throw error;
+                    }
+                } else {
+                    finalPath = path.join(config.installDir, path.basename(config.exePath));
+                    await fs.move(tempPath, finalPath, { overwrite: true });
+                }
+        
+                logger.system(`Installation completed for ${config.name} at ${finalPath}`);
+                return finalPath;
+        
             } catch (error) {
-                logger.error('Failed to download executor:', error);
+                logger.error('Download failed:', error);
+                // 直接拋出原始錯誤訊息，不再包裝
                 throw error;
             }
         });
+        
     }
     /**
      * 處理執行器搜索
