@@ -7,6 +7,7 @@ const { format } = winston;
 
 class Logger {
     constructor() {
+        this.initialized = false;
         try {
             // 使用 userData 路徑而不是 process.cwd()
             const logsDir = path.join(app.getPath('userData'), 'logs');
@@ -16,9 +17,11 @@ class Logger {
             
             // 初始化日誌系統
             this.initializeLogger(logsDir);
+            this.initialized = true;
         } catch (error) {
             console.error('Failed to initialize logger:', error);
-            this.logger = console;
+            // 創建一個基本的 logger 代替 console
+            this.createFallbackLogger();
         }
     }
 
@@ -50,6 +53,19 @@ class Logger {
         return logsDir;
     }
 
+    /**
+     * 創建後備的基本 logger
+     */
+    createFallbackLogger() {
+        this.logger = winston.createLogger({
+            level: 'info',
+            format: format.simple(),
+            transports: [
+                new winston.transports.Console()
+            ]
+        });
+    }
+
     initializeLogger(logsDir) {
         // 創建自定義日誌格式
         const customFormat = format.combine(
@@ -60,59 +76,72 @@ class Logger {
             })
         );
 
-        // 配置 Winston
-        this.logger = winston.createLogger({
-            level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
-            format: customFormat,
-            transports: [
-                // 錯誤日誌
-                new winston.transports.File({
-                    filename: path.join(logsDir, 'error.log'),
-                    level: 'error',
-                    maxsize: 5 * 1024 * 1024, // 5MB
-                    maxFiles: 5
-                }),
-                // 所有日誌
-                new winston.transports.File({
-                    filename: path.join(logsDir, 'combined.log'),
-                    maxsize: 5 * 1024 * 1024,
-                    maxFiles: 5
-                }),
-                // 系統日誌
-                new winston.transports.File({
-                    filename: path.join(logsDir, 'system.log'),
-                    maxsize: 5 * 1024 * 1024,
-                    maxFiles: 5
-                })
-            ]
-        });
+        try {
+            // 配置 Winston
+            this.logger = winston.createLogger({
+                level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
+                format: customFormat,
+                transports: [
+                    // 錯誤日誌
+                    new winston.transports.File({
+                        filename: path.join(logsDir, 'error.log'),
+                        level: 'error',
+                        maxsize: 5 * 1024 * 1024, // 5MB
+                        maxFiles: 5
+                    }),
+                    // 所有日誌
+                    new winston.transports.File({
+                        filename: path.join(logsDir, 'combined.log'),
+                        maxsize: 5 * 1024 * 1024,
+                        maxFiles: 5
+                    }),
+                    // 系統日誌
+                    new winston.transports.File({
+                        filename: path.join(logsDir, 'system.log'),
+                        maxsize: 5 * 1024 * 1024,
+                        maxFiles: 5
+                    })
+                ]
+            });
 
-        // 在開發環境添加控制台輸出
-        if (process.env.NODE_ENV === 'development') {
-            this.logger.add(new winston.transports.Console({
-                format: format.combine(
-                    format.colorize(),
-                    customFormat
-                )
-            }));
+            // 在開發環境添加控制台輸出
+            if (process.env.NODE_ENV === 'development') {
+                this.logger.add(new winston.transports.Console({
+                    format: format.combine(
+                        format.colorize(),
+                        customFormat
+                    )
+                }));
+            }
+        } catch (error) {
+            console.error('Failed to initialize winston logger:', error);
+            this.createFallbackLogger();
         }
     }
 
-    // 其餘方法保持不變...
+    // 確保消息是字符串
+    formatMessage(message) {
+        if (typeof message === 'undefined') return 'undefined';
+        if (message === null) return 'null';
+        return typeof message === 'string' ? message : JSON.stringify(message);
+    }
+
     log(level, message, category = null, ...args) {
         try {
-            let finalMessage = typeof message === 'string' ? message : JSON.stringify(message);
+            let finalMessage = this.formatMessage(message);
             if (args.length > 0) {
-                finalMessage += ' ' + args.map(arg => 
-                    typeof arg === 'object' ? JSON.stringify(arg) : arg
-                ).join(' ');
+                finalMessage += ' ' + args.map(arg => this.formatMessage(arg)).join(' ');
             }
 
-            this.logger.log({
-                level,
-                message: finalMessage,
-                category
-            });
+            if (this.logger) {
+                this.logger.log({
+                    level: level || 'info',
+                    message: finalMessage,
+                    category: category || null
+                });
+            } else {
+                console.log(`${level}: ${finalMessage}`);
+            }
         } catch (error) {
             console.error('Logging failed:', error);
             console.log(`${level}: ${message}`);

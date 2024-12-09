@@ -1,4 +1,3 @@
-// config/config.js
 const { app } = require('electron');
 const path = require('path');
 
@@ -20,7 +19,6 @@ const CONFIG = {
             MAIN: path.join(ROOT_PATH, 'Games'),
             SUB: ['Roblox', 'GenshinImpact', 'Minecraft']
         },
-        LOGS: path.join(ROOT_PATH, 'logs'),
         ASSETS: path.join(ROOT_PATH, 'assets')
     },
     EXECUTORS: {
