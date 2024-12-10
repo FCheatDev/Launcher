@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FCheat Launcher</title>
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
-
+    <link rel="stylesheet" href="../css/window-btn.css" />
     <link rel="stylesheet" href="../css/games.css" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300italic,600italic,300,600" rel="stylesheet">
 
@@ -152,18 +152,17 @@
   }
 </style>
 <body style="-webkit-app-region: drag;">
-    <div >
-        <div style="position: absolute; top:10px; right:10px; z-index: 10000; -webkit-app-region: no-drag;">
-            <button id="minimize-btn" style="background-color: transparent; border: none; cursor: pointer; border: 3px solid #ffffff; width: 64.41px; height: 44px; border-radius: 8px;">
-                <span style="font-size: 24px; color: white;">&#x2212;</span>
-            </button>
-            <button id="fullscreen-btn" style="background-color: transparent; border: none; cursor: pointer; border: 3px solid #ffffff; width: 64.41px; height: 44px; border-radius: 8px; margin-left: 10px;">
-              <span style="font-size: 24px; color: white;">&#x26F6;</span>
-            </button>
-            <button id="close-btn" style="background-color: transparent; border: none; cursor: pointer; margin-left: 10px; border: 3px solid #ffffff; width: 64.41px; height: 44px; border-radius: 8px;">
-                <span style="font-size: 24px; color: white;">&#x2716;</span>
-            </button>
-        </div>
+  <div class="window-controls">
+    <button class="window-btn" id="minimize-btn">
+        <span>&#x2212;</span>
+    </button>
+    <button class="window-btn" id="fullscreen-btn">
+        <span>&#x26F6;</span>
+    </button>
+    <button class="window-btn" id="close-btn">
+        <span>&#x2716;</span>
+    </button>
+</div>
 <!-- Sidebar for navigation -->
   <div class="sidebar" style="-webkit-app-region: no-drag;">
     <div class="logo-details">

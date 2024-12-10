@@ -132,13 +132,13 @@ async function checkExecutorStatus(type, button) {
 // 淡入效果
 function initializeFadeEffects() {
     const textElements = document.querySelectorAll(".fade-text");
-    let delay = 300;
+    let delay = 20;
 
     textElements.forEach((element) => {
         setTimeout(() => {
             element.classList.add("fade-in");
         }, delay);
-        delay += 100;
+        delay += 20;
     });
 }
 

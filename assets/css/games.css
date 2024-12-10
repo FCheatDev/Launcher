@@ -381,7 +381,7 @@
 }
 .fade-text {
   opacity: 0;
-  transition: opacity 0.5s ease-in; /* 設置淡入效果持續時間為0.5秒 */
+  transition: opacity 0.1s ease-in; /* 設置淡入效果持續時間為0.5秒 */
 }
 
 .fade-in {
