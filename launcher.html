@@ -110,7 +110,7 @@
             if (index < text.length) {
                 typewriter.textContent += text[index];
                 index++;
-                setTimeout(type, 85);
+                setTimeout(type, 70);
             } else {
                 setTimeout(() => {
                     deleteText();
@@ -123,7 +123,7 @@
             const currentText = typewriter.textContent;
             if (currentText.length > 0) {
                 typewriter.textContent = currentText.slice(0, -1);
-                setTimeout(deleteText, 85);
+                setTimeout(deleteText, 70);
             } else {
                 setTimeout(() => {
                     container.classList.add('fade-out');
