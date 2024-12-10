@@ -12,7 +12,6 @@
             align-items: center;
             min-height: 100vh;
             background-color: #1a1a1a;
-            font-family: 'Horizon.ttf', sans-serif;
             overflow: hidden;
             -webkit-app-region: drag;
         }
@@ -60,7 +59,7 @@
 
         .typewriter {
             color: #4ade80;
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-family: 'Horizon.ttf', sans-serif;
         }
 
@@ -81,6 +80,14 @@
         .fade-out {
             animation: fadeOut 1s ease-out forwards;
         }
+        /* 版本顯示 */
+        .version {
+            position: fixed;
+            left: 5px;
+            bottom: 5px;
+            font-size: 20px;
+            color: #aaaaaa;
+        }
     </style>
 </head>
 <body>
@@ -92,10 +99,18 @@
                 <span class="cursor"></span>
             </div>
         </div>
-    </div>
 
+    </div>
+            <!-- 版本顯示 -->
+            <h1 id="app-version" class="version"></h1>
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    document.getElementById("app-version").innerText = `當前版本: ${window.appInfo.version}`;
+                });
+                 
+            </script>
     <script>
-        const text = 'F C h e a t  L a u n c h e r ';
+        const text = 'F C h e a t     L a u n c h e r ';
         const typewriter = document.querySelector('.typewriter');
         const container = document.querySelector('.container');
         let index = 0;

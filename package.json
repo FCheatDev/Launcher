@@ -1,6 +1,6 @@
 {
   "name": "FCheatlauncher",
-  "version": "1.1.7",
+  "version": "1.1.7.010a",
   "description": "FCheatLauncher By AutoEZ_TW",
   "main": "main.js",
   "icon": "assets/images/app-logo-nobg.ico",
@@ -21,6 +21,8 @@
     "stylelint": "^16.9.0",
     "stylelint-config-standard": "^36.0.1"
   },
+
+
   "dependencies": {
     "animate.css": "^4.1.1",
     "antd": "^5.20.0",

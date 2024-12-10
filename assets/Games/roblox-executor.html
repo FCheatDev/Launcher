@@ -16,7 +16,144 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 </head>
+<style>
+  .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      z-index: 10000;
+      -webkit-app-region: no-drag;
+  }
 
+  .modal-content {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      padding: 20px;
+      border-radius: 12px;
+      background: #1a1a1a;
+      color: white;
+      -webkit-app-region: drag;
+  }
+
+  .title {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 20px;
+  }
+
+  .input-group {
+      margin: 15px 0;
+      position: relative;
+  }
+
+  .input-group input {
+      width: 100%;
+      padding: 8px 35px;
+      background: #2a2a2a;
+      border: 1px solid #3a3a3a;
+      border-radius: 8px;
+      color: white;
+      font-size: 14px;
+  }
+  .input-group, button, a, .show-password, input[type="checkbox"] {
+      -webkit-app-region: no-drag;
+  }
+  .icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+  }
+
+  .show-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #4a9eff;
+      cursor: pointer;
+      font-size: 14px;
+      user-select: none;
+  }
+
+  .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+      font-size: 14px;
+  }
+
+  .remember-me {
+      display: flex;
+      align-items: center;
+  }
+
+  .remember-me input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      margin-right: 5px;
+  }
+
+  .forgot-password {
+      color: #4a9eff;
+      cursor: pointer;
+      text-decoration: none;
+  }
+
+  .auth-button {
+      width: 100%;
+      padding: 8px;
+      background: #4a9eff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      margin: 10px 0;
+  }
+
+  .auth-button:hover {
+      background: #3a8eef;
+  }
+
+  .auth-link {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+      -webkit-app-region: no-drag;
+  }
+
+  .auth-link a {
+      color: #4a9eff;
+      text-decoration: none;
+  }
+
+  @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+  }
+
+  @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+  }
+
+  .fade-in {
+      animation: fadeIn 0.3s ease-out;
+  }
+
+  .fade-out {
+      animation: fadeOut 0.3s ease-out;
+  }
+</style>
 <body style="-webkit-app-region: drag;">
     <div >
         <div style="position: absolute; top:10px; right:10px; z-index: 10000; -webkit-app-region: no-drag;">
@@ -109,8 +246,126 @@
         </a>
         <span class="tooltip">Genshin_Impact</span>
       </li>
-
     </ul>
+    <div id="authModal" class="modal">
+      <div class="modal-content">
+          <div id="loginBox">
+              <div class="title">登入帳號</div>
+              
+              <div class="input-group">
+                  <span class="icon">👤</span>
+                  <input type="text" placeholder="使用者名稱">
+              </div>
+  
+              <div class="input-group">
+                  <span class="icon">🔒</span>
+                  <input type="password" id="loginPassword" placeholder="密碼">
+                  <span id="toggleLoginPassword" class="show-password">顯示</span>
+              </div>
+  
+              <div class="options">
+                  <label class="remember-me">
+                      <input type="checkbox">
+                      <span>記住我</span>
+                  </label>
+                  <a href="#" class="forgot-password">忘記密碼?</a>
+              </div>
+  
+              <button class="auth-button" onclick="login()">登入</button>
+  
+              <div class="auth-link">
+                  沒有帳戶? <a href="#" onclick="switchToRegister()">註冊</a>
+              </div>
+          </div>
+  
+          <div id="registerBox" style="display: none;">
+              <div class="title">註冊帳號</div>
+              
+              <div class="input-group">
+                  <span class="icon">👤</span>
+                  <input type="text" placeholder="使用者名稱">
+              </div>
+  
+              <div class="input-group">
+                  <span class="icon">📧</span>
+                  <input type="email" placeholder="電子郵件">
+              </div>
+  
+              <div class="input-group">
+                  <span class="icon">🔒</span>
+                  <input type="password" id="registerPassword" placeholder="輸入密碼">
+                  <span id="toggleRegisterPassword" class="show-password">顯示</span>
+              </div>
+  
+              <div class="input-group">
+                  <span class="icon">🔒</span>
+                  <input type="password" id="confirmPassword" placeholder="再次輸入密碼">
+                  <span id="toggleConfirmPassword" class="show-password">顯示</span>
+              </div>
+  
+              <button class="auth-button" onclick="register()">註冊</button>
+  
+              <div class="auth-link">
+                  已擁有帳號? <a href="#" onclick="switchToLogin()">登入</a>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  <script>
+  function showModal() {
+      const modal = document.getElementById('authModal');
+      modal.style.display = 'block';
+      modal.querySelector('.modal-content').classList.add('fade-in');
+  }
+  
+  function hideModal() {
+      const modal = document.getElementById('authModal');
+      const content = modal.querySelector('.modal-content');
+      content.classList.remove('fade-in');
+      content.classList.add('fade-out');
+      setTimeout(() => {
+          modal.style.display = 'none';
+          content.classList.remove('fade-out');
+      }, 300);
+  }
+  
+  document.querySelector('[href="../Account/login.html"]').addEventListener('click', (e) => {
+      e.preventDefault();
+      showModal();
+  });
+  
+  document.getElementById('authModal').addEventListener('click', (e) => {
+      if (e.target.id === 'authModal') {
+          hideModal();
+      }
+  });
+  
+  function switchToRegister() {
+      document.getElementById('loginBox').style.display = 'none';  
+      document.getElementById('registerBox').style.display = 'block';
+  }
+  
+  function switchToLogin() {
+      document.getElementById('registerBox').style.display = 'none';
+      document.getElementById('loginBox').style.display = 'block';
+  }
+  
+  const togglePassword = (inputId, toggleId) => {
+      const input = document.getElementById(inputId);
+      const toggle = document.getElementById(toggleId);
+      
+      toggle.addEventListener('click', () => {
+          const type = input.type === 'password' ? 'text' : 'password';
+          input.type = type;
+          toggle.textContent = type === 'password' ? '顯示' : '隱藏';
+      });
+  };
+  
+  togglePassword('loginPassword', 'toggleLoginPassword');
+  togglePassword('registerPassword', 'toggleRegisterPassword');
+  togglePassword('confirmPassword', 'toggleConfirmPassword');
+  </script>
   </div>
   <!-- Main content area -->
   <section class="roblox-section">
