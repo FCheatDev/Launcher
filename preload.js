@@ -45,8 +45,32 @@ contextBridge.exposeInMainWorld('gameAPI', {
     launch: (gameId) => ipcRenderer.invoke('launch-game', gameId),
     downloadExecutor: (gameId) => ipcRenderer.invoke('download-executor', gameId)
 });
-
-
+contextBridge.exposeInMainWorld('themeAPI', {
+    // 發送主題變更事件
+    changeTheme: (theme) => ipcRenderer.send('theme-change', theme),
+    
+    // 註冊主題變更監聽器
+    onThemeChange: (callback) => {
+        const handler = (event, theme) => callback(theme);
+        ipcRenderer.on('theme-changed', handler);
+        // 返回清理函數
+        return () => ipcRenderer.removeListener('theme-changed', handler);
+    },
+    
+    // 獲取初始主題
+    getInitialTheme: async () => {
+        try {
+            const savedTheme = localStorage.getItem('fcheat-theme');
+            if (savedTheme) return savedTheme;
+            
+            // 如果本地沒有保存的主題，從主窗口獲取
+            return await ipcRenderer.invoke('get-initial-theme');
+        } catch (error) {
+            console.error('Failed to get initial theme:', error);
+            return 'dark'; // 默認主題
+        }
+    }
+});
 
 
 

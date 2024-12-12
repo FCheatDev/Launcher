@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
+    <link rel="stylesheet" href="../assets/css/window-btn.css">
+    <link rel="stylesheet" href="../assets/css/themes.css">
+    <style>
+ 
+
+
+
+
+
+
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            margin-top: 20px;
+            -webkit-app-region: no-drag;
+            max-width: none;
+            margin: 0;
+        }
+
+        .theme-card {
+            aspect-ratio: 16/9;
+            border: 2px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background-color: #000000 !important;
+            min-height: 135px;
+            max-height: 135px;
+            width: 100%;
+        }
+
+        .theme-card.selected {
+            border-color: #ff5722;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .theme-preview {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .theme-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px;
+            background: rgba(0,0,0,0.7);
+            color: #ffffff;
+            font-size: 14px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+
+
+ 
+
+        /* Theme preview backgrounds */
+        .theme-card[data-theme="dark"] .theme-preview {
+            background-color: #1a1a1a;
+        }
+
+        .theme-card[data-theme="light"] .theme-preview {
+            background-color: #ffffff;
+        }
+
+        .theme-card[data-theme="blue"] .theme-preview {
+            background-color: #1e3a8a;
+        }
+
+        .theme-card[data-theme="purple"] .theme-preview {
+            background-color: #5b21b6;
+        }
+
+        .theme-card[data-theme="red"] .theme-preview {
+            background-color: #991b1b;
+        }
+
+        .theme-card[data-theme="green"] .theme-preview {
+            background-color: #166534;
+        }
+    </style>
+</head>
+<body>
+    <div class="window-controls">
+        <button id="minimize-btn" class="window-btn">
+            <span>&#x2212;</span>
+        </button>
+        <button id="fullscreen-btn" class="window-btn">
+            <span>&#x26F6;</span>
+        </button>
+        <button id="close-btn" class="window-btn">
+            <span>&#x2716;</span>
+        </button>
+    </div>
+    
+    <div class="container">
+        <div class="sidebar">
+            <div class="category-title">一般</div>
+            <a href="settings.html" class="menu-item">
+                <i>⚙️</i>
+                <span>FCheat Launcher</span>
+            </a>
+            <a href="gameset.html" class="menu-item">
+                <i>🎮</i>
+                <span>遊戲設定</span>
+            </a>
+            <a href="language.html" class="menu-item">
+                <i>🌐</i>
+                <span>語言</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i>🎨</i>
+                <span>介面主題</span>
+            </a>
+        </div>
+
+        <div class="content">
+            <h2>主題設定</h2>
+            <div class="theme-grid">
+                <div class="theme-card selected" data-theme="dark">
+                    <div class="theme-preview theme-dark">
+                        <div class="theme-name">黑色</div>
+                    </div>
+                </div>
+                <div class="theme-card" data-theme="light">
+                    <div class="theme-preview theme-light">
+                        <div class="theme-name">白色</div>
+                    </div>
+                </div>
+                <div class="theme-card" data-theme="blue">
+                    <div class="theme-preview theme-blue">
+                        <div class="theme-name">藍色</div>
+                    </div>
+                </div>
+                <div class="theme-card" data-theme="purple">
+                    <div class="theme-preview theme-purple">
+                        <div class="theme-name">紫色</div>
+                    </div>
+                </div>
+                <div class="theme-card" data-theme="red">
+                    <div class="theme-preview theme-red">
+                        <div class="theme-name">紅色</div>
+                    </div>
+                </div>
+                <div class="theme-card" data-theme="green">
+                    <div class="theme-preview theme-green">
+                        <div class="theme-name">綠色</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+     let currentTheme = 'dark'; // 默認主題
+
+     // 應用主題到整個應用程式
+     function applyTheme(theme, isPermanent = false) {
+     // 移除所有主題相關的 class
+     document.body.classList.forEach(className => {
+          if (className.startsWith('theme-')) {
+               document.body.classList.remove(className);
+          }
+     });
+     
+     // 添加新主題
+     document.body.classList.add(`theme-${theme}`);
+     
+     // 如果是永久變更，更新 currentTheme 和儲存設定
+     if (isPermanent) {
+          currentTheme = theme;
+          localStorage.setItem('fcheat-theme', theme);
+          // 通知其他視窗主題變更
+          window.themeAPI.changeTheme(theme);
+     }
+     }
+
+     // 初始化主題
+     async function initializeTheme() {
+     try {
+          // 獲取初始主題
+          const initialTheme = await window.themeAPI.getInitialTheme();
+          currentTheme = initialTheme;
+          applyTheme(initialTheme, true);
+
+          // 如果在主題設定頁面，更新選中狀態
+          const selectedCard = document.querySelector(`[data-theme="${initialTheme}"]`);
+          if (selectedCard) {
+               selectedCard.classList.add('selected');
+          }
+     } catch (error) {
+          console.error('Failed to initialize theme:', error);
+     }
+     }
+
+     // 當頁面加載完成時初始化主題
+     window.addEventListener('load', initializeTheme);
+
+     // 監聽來自其他視窗的主題變更
+     window.themeAPI.onThemeChange((theme) => {
+     currentTheme = theme;
+     applyTheme(theme, false);
+     
+     // 更新主題卡片選中狀態（如果在主題設定頁面）
+     const themeCards = document.querySelectorAll('.theme-card');
+     themeCards.forEach(card => {
+          card.classList.toggle('selected', card.dataset.theme === theme);
+     });
+     });
+
+     // 如果是主題設定頁面，設置主題卡片事件
+     const themeCards = document.querySelectorAll('.theme-card');
+     if (themeCards.length > 0) {
+     themeCards.forEach(card => {
+          const theme = card.dataset.theme;
+          
+          // 懸停效果 - 預覽主題
+          card.addEventListener('mouseenter', () => {
+               themeCards.forEach(c => c.classList.remove('selected'));
+               card.classList.add('selected');
+               applyTheme(theme, false);
+          });
+
+          // 移開效果 - 恢復原主題
+          card.addEventListener('mouseleave', () => {
+               themeCards.forEach(c => c.classList.remove('selected'));
+               document.querySelector(`[data-theme="${currentTheme}"]`)?.classList.add('selected');
+               applyTheme(currentTheme, false);
+          });
+
+          // 點擊選擇主題 - 永久套用
+          card.addEventListener('click', () => {
+               themeCards.forEach(c => c.classList.remove('selected'));
+               card.classList.add('selected');
+               applyTheme(theme, true);
+          });
+     });
+     }
+    </script>
+    <script src="../assets/js/openlnk.js" defer></script>
+</body>
+</html>

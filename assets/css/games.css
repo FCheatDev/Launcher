@@ -67,7 +67,7 @@
 
 /* Sidebar navigation list styling */
 .sidebar .nav-list {
-  height: calc(100% - 140px); /* Leaves space for logo and profile */
+  height: calc(100% - 120px); /* Leaves space for logo and profile */
 }
 
 /* Scrollbar styles for sidebar */

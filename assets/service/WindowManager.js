@@ -197,6 +197,56 @@ class WindowManager {
     get menuWindowInstance() {
         return this.menuWindow;
     }
+
+
+    
+    /**
+     * 獲取所有活動的窗口
+     * @returns {BrowserWindow[]} 所有活動窗口的數組
+     */
+    getAllWindows() {
+        const windows = [];
+        if (this.mainWindow) windows.push(this.mainWindow);
+        if (this.menuWindow) windows.push(this.menuWindow);
+        return windows;
+    }
+
+    /**
+     * 廣播事件到所有窗口
+     * @param {string} channel - 事件名稱
+     * @param {...any} args - 事件參數
+     */
+    broadcastToAll(channel, ...args) {
+        const windows = this.getAllWindows();
+        windows.forEach(window => {
+            if (window && !window.isDestroyed()) {
+                window.webContents.send(channel, ...args);
+            }
+        });
+    }
+
+    /**
+     * 同步主題到所有窗口
+     * @param {string} theme - 主題名稱
+     */
+    syncTheme(theme) {
+        logger.window(`Syncing theme: ${theme} to all windows`);
+        this.broadcastToAll('theme-changed', theme);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 // 導出單例

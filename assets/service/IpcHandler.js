@@ -38,6 +38,9 @@ class IpcHandler {
 
         // 遊戲處理器
         this._setupGameHandlers();
+
+        // 主題處理器
+        this._setupThemeHandlers();
         
         logger.ipc('IPC handlers initialized');
     }
@@ -99,7 +102,29 @@ class IpcHandler {
             );
         });
     }
-
+    /*
+    * 主題
+    */ 
+    _setupThemeHandlers() {
+        ipcMain.on('theme-change', (event, theme) => {
+            logger.ipc(`Theme change requested: ${theme}`);
+            windowManager.syncTheme(theme);
+        });
+    
+        ipcMain.handle('get-initial-theme', async () => {
+            try {
+                const mainWindow = windowManager.mainWindowInstance;
+                if (mainWindow) {
+                    return await mainWindow.webContents.executeJavaScript(
+                        'localStorage.getItem("fcheat-theme")'
+                    );
+                }
+            } catch (error) {
+                logger.error('Failed to get initial theme:', error);
+            }
+            return 'dark'; // 默認主題
+        });
+    }
     /**
      * 設置執行器相關的處理器
      */

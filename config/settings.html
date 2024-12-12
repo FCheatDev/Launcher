@@ -1,57 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
+    <link rel="stylesheet" href="../assets/css/themes.css">
     <link rel="stylesheet" href="../assets/css/window-btn.css">
     <style>
-        * {
-            user-select: none;
-        }
 
 
-        body {
-            -webkit-app-region: drag;
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-        }
 
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
 
-        .sidebar {
-            width: 200px;
-            background-color: #1a1a1a;
-            padding: 20px;
-        }
 
-        .content {
-            flex: 1;
-            padding: 20px;
-            background-color: #1a1a1a;
-        }
 
-        .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            margin: 4px 0;
-            border-radius: 4px;
-            cursor: pointer;
-            -webkit-app-region: no-drag;
-            color: #e0e0e0;
-            text-decoration: none;
-        }
-
-        .menu-item:hover {
-            background-color: #333;
-        }
-
-        .menu-item i {
-            margin-right: 8px;
-        }
 
         .settings-section {
             background-color: #2a2a2a;
@@ -132,12 +91,6 @@
             border-radius: 4px;
             margin-top: 8px;
         }
-
-        .category-title {
-            color: #888;
-            font-size: 0.9em;
-            margin: 16px 0 8px 0;
-        }
     </style>
 </head>
 <body>
@@ -155,73 +108,86 @@
     <div class="container">
         <div class="sidebar">
             <div class="category-title">一般</div>
-            <a href="#" class="menu-item">
+            <a href="settings.html" class="menu-item">
                 <i>⚙️</i>
                 <span>FCheat Launcher</span>
             </a>
-            <a href="#" class="menu-item">
-                <i>📦</i>
-                <span>分組模式</span>
+            <a href="gameset.html" class="menu-item">
+                <i>🎮</i>
+                <span>遊戲設定</span>
             </a>
-            <a href="#" class="menu-item">
+            <a href="language.html" class="menu-item">
                 <i>🌐</i>
                 <span>語言</span>
             </a>
-            <a href="#" class="menu-item">
+            <a href="theme.html" class="menu-item">
                 <i>🎨</i>
-                <span>Themes</span>
+                <span>介面主題</span>
             </a>
         </div>
 
+
         <div class="content">
-            <h2>FCheat Launcher </h2>
+            <h2>FCheat Launcher 設定</h2>
             
             <div class="settings-section">
                 <div class="settings-group">
-                    <h3>我細部CurseForge時</h3>
+                    <h3>啟動設定</h3>
                     <div class="setting-item">
-                        <span>隱藏CurseForge</span>
+                        <span>開機時自動啟動 FCheat</span>
                         <label class="toggle-switch">
-                            <input type="checkbox" id="hideCurseForge">
+                            <input type="checkbox" id="autoStartFCheat">
                             <span class="slider"></span>
                         </label>
                     </div>
                     <div class="setting-item">
-                        <span>退出CurseForge4DOOverwolf</span>
+                        <span>最小化啟動</span>
                         <label class="toggle-switch">
-                            <input type="checkbox" id="exitCurseForge" checked>
+                            <input type="checkbox" id="startMinimized">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div>
 
                 <div class="settings-group">
-                    <h3>系統效果行為</h3>
+                    <h3>外掛程式設定</h3>
                     <div class="setting-item">
-                        <span>啟動時運行CurseForge</span>
+                        <span>自動檢查更新</span>
                         <label class="toggle-switch">
-                            <input type="checkbox" id="autoStart" checked>
+                            <input type="checkbox" id="autoCheckUpdates" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>遊戲啟動時自動注入外掛</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="autoInject" checked>
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div>
 
-                <div class="settings-group"style="-webkit-app-region: no-drag;">
-                    <h3>當CurseForge啟動時，啟動並重啟遊戲</h3>
-                    <select id="gameSelect" >
-                        <option>白朗 (CurseForge關閉時最後使用的遊戲)</option>
+                <div class="settings-group" style="-webkit-app-region: no-drag;">
+                    <h3>遊戲偵測設定</h3>
+                    <select id="gameDetectMode">
+                        <option>自動偵測遊戲進程</option>
+                        <option>手動選擇遊戲視窗</option>
+                        <option>指定遊戲路徑</option>
                     </select>
                 </div>
 
                 <div class="settings-group">
-                    <h3>日期格式</h3>
-                    <select id="dateFormat">
-                        <option>Default</option>
+                    <h3>更新頻道</h3>
+                    <select id="updateChannel">
+                        <option>穩定版本</option>
+                        <option>測試版本</option>
+                        <option>開發版本</option>
                     </select>
                 </div>
             </div>
         </div>
     </div>
+
 
     <script>
         // Window control buttons functionality
