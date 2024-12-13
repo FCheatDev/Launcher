@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const { app } = require('electron');
-const CONFIG = require('../../config/app-cfg');
+const CONFIG = require('./app-cfg');
 const logger = require('./logger');
 
 class FolderManager {

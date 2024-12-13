@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
-    <link rel="stylesheet" href="../assets/css/themes.css">
-    <link rel="stylesheet" href="../assets/css/window-btn.css">
+    <link rel="stylesheet" href="../css/settings.css">
+    <link rel="stylesheet" href="../css/window-btn.css">
     <style>
 
 
@@ -107,14 +107,21 @@
     </div>
     <div class="container">
         <div class="sidebar">
-            <div class="category-title">一般</div>
+            <div class="category-title"><a>一般</a>
+                <div class="nav-buttons">
+                    <button id="backButton" class="nav-button" disabled><span></span></button>
+                    <button id="forwardButton" class="nav-button" disabled><span></span></button>
+                </div>
+            
+            </div>
+
             <a href="settings.html" class="menu-item">
                 <i>⚙️</i>
                 <span>FCheat Launcher</span>
             </a>
-            <a href="gameset.html" class="menu-item">
-                <i>🎮</i>
-                <span>遊戲設定</span>
+            <a href="games.html" class="menu-item">
+                <i><img src="../images/home.png" style="width: 25px; height: 25px; display: inline-block; vertical-align: middle;"></i>
+                <span>返回初始畫面</span>
             </a>
             <a href="language.html" class="menu-item">
                 <i>🌐</i>
@@ -124,13 +131,23 @@
                 <i>🎨</i>
                 <span>介面主題</span>
             </a>
+            <br>
+            <div class="category-title">FCheat自訂</div>
+            <a href="#" class="menu-item">
+                <i><img src="../images/roblox.jpg" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                <span>Executor</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i><img src="../images/minecraft2a.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                <span>Client</span>
+            </a>
         </div>
 
 
-        <div class="content">
+        <div class="content fade-in">
             <h2>FCheat Launcher 設定</h2>
             
-            <div class="settings-section">
+            <div class="settings-section ">
                 <div class="settings-group">
                     <h3>啟動設定</h3>
                     <div class="setting-item">
@@ -220,6 +237,13 @@
 
         // Load saved settings
         window.addEventListener('load', () => {
+            const content = document.querySelector('.content');
+            if (content) {
+                // 使用 setTimeout 確保在 DOM 完全載入後再添加動畫
+                setTimeout(() => {
+                    content.classList.add('visible');
+                }, 50);
+            }
             document.querySelectorAll('.toggle-switch input').forEach(toggle => {
                 const savedValue = localStorage.getItem(toggle.id);
                 if (savedValue !== null) {
@@ -243,4 +267,4 @@
 </body>
 </html>
 
-<script src="../assets/js/openlnk.js" defer></script>
+<script src="../js/openlnk.js" defer></script>

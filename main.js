@@ -3,7 +3,7 @@ const { app } = require('electron');
 const path = require('path');
 
 // 導入配置和服務
-const CONFIG = require('./config/app-cfg');
+const CONFIG = require('./assets/service/app-cfg');
 const logger = require('./assets/service/logger');
 const windowManager = require('./assets/service/WindowManager');
 const updateManager = require('./assets/service/UpdateManager');

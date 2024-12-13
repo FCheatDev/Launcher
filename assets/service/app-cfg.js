@@ -9,7 +9,7 @@ const ROOT_PATH = app.isPackaged
 const CONFIG = {
     APP: {
         NAME: 'FCheat Launcher',
-        VERSION: '1.1.0',
+        VERSION: '1.0.0',
         ROOT_PATH
     },
 
@@ -59,10 +59,10 @@ const CONFIG = {
         UPDATES: path.join(ROOT_PATH, 'updates'),
         PACKAGE: app.isPackaged
             ? path.join(process.resourcesPath, 'app.asar/package.json')
-            : path.join(__dirname, '..', 'package.json'),
+            : path.join(__dirname, '../..', 'package.json'),
         PRELOAD: app.isPackaged
             ? path.join(process.resourcesPath, 'app.asar/preload.js')
-            : path.join(__dirname, '..', 'preload.js')
+            : path.join(__dirname, '../..', '/preload.js')
     },
 
     WINDOW: {
@@ -74,8 +74,8 @@ const CONFIG = {
                 minWidth: 400
             },
             ICON: app.isPackaged
-                ? path.join(process.resourcesPath, 'assets/images/app-logo-nobg.ico')
-                : path.join(__dirname, '..', 'assets/images/app-logo-nobg.ico')
+                ? path.join(process.resourcesPath, 'images/app-logo-nobg.ico')
+                : path.join(__dirname, '..', 'images/app-logo-nobg.ico')
         },
         MENU: {
             DEFAULT_SIZE: {
@@ -83,8 +83,8 @@ const CONFIG = {
                 height: 200
             },
             ICON: app.isPackaged
-                ? path.join(process.resourcesPath, 'assets/images/app-logo-nobg.ico')
-                : path.join(__dirname, '..', 'assets/images/app-logo-nobg.ico')
+                ? path.join(process.resourcesPath, 'images/app-logo-nobg.ico')
+                : path.join(__dirname, '..', 'images/app-logo-nobg.ico')
         }
     },
 

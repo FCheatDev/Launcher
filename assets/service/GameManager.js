@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const { spawn } = require('child_process');
 const axios = require('axios');
-const CONFIG = require('../../config/app-cfg');
+const CONFIG = require('./app-cfg');
 const logger = require('./logger');
 const { execFile } = require('child_process');
 

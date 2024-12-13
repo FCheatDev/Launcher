@@ -2,7 +2,7 @@ const winston = require('winston');
 const path = require('path');
 const fs = require('fs-extra');
 const { app } = require('electron');
-const CONFIG = require('../../config/app-cfg');
+const CONFIG = require('./app-cfg');
 const { format } = winston;
 
 class Logger {

@@ -1,5 +1,5 @@
 const { session, dialog } = require('electron');
-const CONFIG = require('../../config/app-cfg');
+const CONFIG = require('./app-cfg');
 const logger = require('./logger');
 const windowManager = require('./WindowManager');
 

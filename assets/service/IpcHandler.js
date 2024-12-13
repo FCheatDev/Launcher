@@ -5,7 +5,7 @@ const decompress = require('decompress');
 const path = require('path');
 const fs = require('fs-extra');      
 const axios = require('axios');      
-const CONFIG = require('../../config/app-cfg');
+const CONFIG = require('./app-cfg');
 const logger = require('./logger');
 const windowManager = require('./WindowManager');
 const adBlockManager = require('./AdBlockManager');
@@ -90,7 +90,7 @@ class IpcHandler {
             logger.ipc('Return to home requested');
             const mainWindow = windowManager.mainWindowInstance;
             if (mainWindow) {
-                mainWindow.loadFile(path.join('assets/Games/games.html'))
+                mainWindow.loadFile(path.join('assets/html/games.html'))
                     .catch(err => logger.error('Failed to load home page:', err));
             }
         });
