@@ -14,7 +14,6 @@ const CONFIG = {
     },
 
     FOLDERS: {
-        CONFIG: path.join(ROOT_PATH, 'Config'),
         GAMES: {
             MAIN: path.join(ROOT_PATH, 'Games'),
             SUB: ['Roblox', 'GenshinImpact', 'Minecraft']

@@ -1,6 +1,6 @@
 {
   "name": "FCheatlauncher",
-  "version": "1.1.8",
+  "version": "1.1.7",
   "description": "FCheatLauncher By AutoEZ_TW",
   "main": "main.js",
   "icon": "assets/images/app-logo-nobg.ico",
@@ -21,16 +21,14 @@
     "stylelint": "^16.9.0",
     "stylelint-config-standard": "^36.0.1"
   },
-
-
   "dependencies": {
     "animate.css": "^4.1.1",
     "antd": "^5.20.0",
     "axios": "^1.7.7",
     "bootstrap-icons": "^1.11.3",
+    "decompress": "^4.2.1",
     "dialog": "^0.3.1",
     "discord-rich-presence": "^0.0.8",
-    "decompress": "^4.2.1",
     "discord-rpc": "^4.0.1",
     "dotenv": "^16.4.5",
     "electron-log": "^5.2.0",
@@ -39,6 +37,7 @@
     "fs-extra": "^11.2.0",
     "node-unrar-js": "^2.0.2",
     "python": "^0.0.4",
+    "react": "^19.0.0",
     "sudo-prompt": "^9.2.1",
     "unrar": "^0.2.0",
     "unzipper": "^0.12.3",

@@ -463,6 +463,7 @@
   flex-wrap: wrap; /* 允許換行 */
   background-color: transparent;
   justify-content: left; /* 卡片置左 */
+  
 }
 
 .rbc_games.card {

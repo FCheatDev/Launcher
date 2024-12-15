@@ -123,6 +123,7 @@ class UpdateManager {
           } catch (error) {
               logger.error('Failed to check for updates:', { error });
               this._showError('檢查更新失敗', error.message);
+              app.quit();
           }
       }
   
@@ -150,6 +151,7 @@ class UpdateManager {
           } catch (error) {
               logger.error('Update process failed:', { error });
               this._showError('更新過程失敗', error.message);
+              app.quit();
           }
       }
   

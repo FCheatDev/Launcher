@@ -38,8 +38,24 @@
  #close-btn:hover {
      background-color: rgba(255, 0, 0, 0.2);
      border-color: #ff4444;
- }
+}
 
  #close-btn:hover span {
      color: #ff4444;
- }
+}
+
+#fullscreen-btn:hover{
+    background-color: rgba(255, 115, 0, 0.2);
+    border-color: #ff6600;
+}
+#fullscreen-btn:hover span {
+    color:  #ff6600;
+}
+
+#minimize-btn:hover{
+    background-color: rgba(0, 132, 255, 0.2);
+    border-color: #00ccff;
+}
+ #minimize-btn:hover span {
+    color:  #00ccff;
+}
