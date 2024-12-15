@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
+    <link rel="stylesheet" href="../css/settings.css">
+    <link rel="stylesheet" href="../css/window-btn.css">
+    <style>
+        .settings-section {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .settings-group {
+            margin-bottom: 24px;
+        }
+
+        .settings-group h3 {
+            margin-bottom: 16px;
+            color: #e0e0e0;
+        }
+
+        .language-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background-color: #333;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            -webkit-app-region: no-drag;
+        }
+
+        .language-option:hover {
+            background-color: #404040;
+        }
+
+        .language-option.selected {
+            background-color: #404040;
+        }
+
+        .language-option .radio-button {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #666;
+            border-radius: 50%;
+            margin-right: 12px;
+            position: relative;
+        }
+
+        .language-option.selected .radio-button:after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #ff5722;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+        }
+
+        .language-info {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .language-name {
+            color: #e0e0e0;
+        }
+
+        .language-native {
+            color: #808080;
+            margin-left: auto;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="window-controls">
+        <button id="minimize-btn" class="window-btn">
+            <span>&#x2212;</span>
+        </button>
+        <button id="fullscreen-btn" class="window-btn">
+            <span>&#x26F6;</span>
+        </button>
+        <button id="close-btn" class="window-btn">
+            <span>&#x2716;</span>
+        </button>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <div class="category-title">一般</div>
+            
+            <a href="settings.html" class="menu-item">
+                <i>⚙️</i>
+                <span>FCheat Launcher</span>
+            </a>
+            <a href="games.html" class="menu-item">
+                <i><img src="../images/home.png" style="width: 25px; height: 25px; display: inline-block; vertical-align: middle;"></i>
+                <span>返回初始畫面</span>
+            </a>
+            <a href="language.html" class="menu-item active">
+                <i>🌐</i>
+                <span>語言</span>
+            </a>
+            <a href="theme.html" class="menu-item">
+                <i>🎨</i>
+                <span>介面主題</span>
+            </a>
+            <br>
+            <div class="category-title">FCheat自訂</div>
+            <a href="fc_executorset.html" class="menu-item">
+                <i><img src="../images/roblox.jpg" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                <span>Executor</span>
+            </a>
+            <a href="fc_clientset.html" class="menu-item">
+                <i><img src="../images/minecraft2a.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                <span>Client</span>
+            </a>
+        </div>
+
+        <div class="content fade-in">
+            <h2>語言設定</h2>
+            
+            <div class="settings-section">
+                <div class="settings-group">
+                    <h3>選擇語言</h3>
+                    <div class="language-option" data-lang="en" data-native-en="English" data-native-zh="英文">
+                        <div class="language-info">
+                            <div class="radio-button"></div>
+                            <div class="language-name">English</div>
+                            <div class="language-native">英文</div>
+                        </div>
+                    </div>
+
+                    <div class="language-option selected" data-lang="zh-TW" data-native-en="Chinese" data-native-zh="中文">
+                        <div class="language-info">
+                            <div class="radio-button"></div>
+                            <div class="language-name">中文</div>
+                            <div class="language-native">中文</div>
+                        </div>
+                    </div>
+
+                    <div class="language-option" data-lang="ja" data-native-en="Japanese" data-native-zh="日文">
+                        <div class="language-info">
+                            <div class="radio-button"></div>
+                            <div class="language-name">日本語</div>
+                            <div class="language-native">日文</div>
+                        </div>
+                    </div>
+
+                    <div class="language-option" data-lang="ko" data-native-en="Korean" data-native-zh="韓文">
+                        <div class="language-info">
+                            <div class="radio-button"></div>
+                            <div class="language-name">한국어</div>
+                            <div class="language-native">韓文</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>語言設定說明</h3>
+                    <div style="color: #808080; font-size: 14px; line-height: 1.5;">
+                        變更語言設定後，需要重新啟動應用程式才能完全套用新的語言設定。
+                        部分內容可能不會立即更新。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Window control buttons functionality
+        document.getElementById('minimize-btn').addEventListener('click', () => {
+            console.log('Minimize window');
+        });
+
+        document.getElementById('fullscreen-btn').addEventListener('click', () => {
+            console.log('Toggle fullscreen');
+        });
+
+        document.getElementById('close-btn').addEventListener('click', () => {
+            console.log('Close window');
+        });
+
+        // Language selection functionality
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                document.querySelectorAll('.language-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Save selected language
+                const lang = this.getAttribute('data-lang');
+                localStorage.setItem('selectedLanguage', lang);
+
+                // Update native language text for all options
+                const nativeKey = lang === 'en' ? 'data-native-en' : 'data-native-zh';
+                document.querySelectorAll('.language-option').forEach(opt => {
+                    const nativeText = opt.getAttribute(nativeKey);
+                    opt.querySelector('.language-native').textContent = nativeText;
+                });
+            });
+        });
+
+        // Load saved language setting
+        window.addEventListener('load', () => {
+            const content = document.querySelector('.content');
+            if (content) {
+                setTimeout(() => {
+                    content.classList.add('visible');
+                }, 50);
+            }
+            
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'zh-TW';
+            const nativeKey = savedLanguage === 'en' ? 'data-native-en' : 'data-native-zh';
+            
+            document.querySelectorAll('.language-option').forEach(option => {
+                // Update selected state
+                if (option.getAttribute('data-lang') === savedLanguage) {
+                    option.classList.add('selected');
+                } else {
+                    option.classList.remove('selected');
+                }
+                
+                // Update native text
+                const nativeText = option.getAttribute(nativeKey);
+                option.querySelector('.language-native').textContent = nativeText;
+            });
+        });
+    </script>
+    <script src="../js/openlnk.js"></script>
+</body>
+</html>
