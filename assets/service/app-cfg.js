@@ -12,7 +12,6 @@ const CONFIG = {
         VERSION: '1.0.0',
         ROOT_PATH
     },
-
     FOLDERS: {
         GAMES: {
             MAIN: path.join(ROOT_PATH, 'Games'),
