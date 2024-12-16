@@ -27,7 +27,12 @@ body.theme-light {
  body.theme-light h2 {
      color: #000000;
  }
- 
+ body.theme-light .window-btn{
+    border: 3px solid #000000;
+}
+body.theme-light .window-btn span {
+    color: #000000;
+}
  body.theme-light .theme-grid {
      background-color: #ffffff;
  }
