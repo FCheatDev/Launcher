@@ -1,47 +1,7 @@
-/* 光亮主題 */
-body.theme-light {
-     background-color: #ffffff;
- }
+
  
- body.theme-light{
-     background-color: #f5f5f5;
-     border-color: #dddddd;
- }
- 
- body.theme-light .content {
-     background-color: #f5f5f5;
- }
- 
- body.theme-light .menu-item {
-     color: #000000;
- }
- 
- body.theme-light .menu-item:hover {
-     background-color: rgba(0, 0, 0, 0.1);
- }
- 
- body.theme-light .category-title {
-     color: #666666;
- }
- 
- body.theme-light h2 {
-     color: #000000;
- }
- body.theme-light .window-btn{
-    border: 3px solid #000000;
-}
-body.theme-light .window-btn span {
-    color: #000000;
-}
- body.theme-light .theme-grid {
-     background-color: #ffffff;
- }
- 
- /* 深色主題 */
- body.theme-dark {
-     background-color: #1a1a1a;
- }
- 
+ /* 深色主題 (預設) */
+
  body.theme-dark {
      background-color: #1a1a1a;
      border-color: #333;
@@ -71,11 +31,29 @@ body.theme-light .window-btn span {
      background-color: #2a2a2a;
  }
  
+
+
+/*啟動器黑色相關配置*/
+body.theme-dark .settings-section {
+    background-color: #2a2a2a;
+}
+
+body.theme-dark .setting-item span {
+    color: #e0e0e0;
+}
+
+body.theme-dark select {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+
+
+
+
+
  /* 藍色主題 */
- body.theme-blue {
-     background-color: #1e3a8a;
- }
- 
+
  body.theme-blue {
      background-color: #1e3a8a;
      border-color: #1e40af;
@@ -104,12 +82,43 @@ body.theme-light .window-btn span {
  body.theme-blue .theme-grid {
      background-color: #2563eb;
  }
- 
+ /*語言藍色相關配置*/
+ body.theme-blue .settings-section {
+    background-color: #04205c;
+}
+body.theme-blue .language-option{
+    background-color: #7897da;
+}
+
+body.theme-blue .language-name,
+body.theme-blue .language-native {
+    color: #ffffff;
+}
+
+
+
+
+
+/*啟動器藍色相關配置*/
+
+
+body.theme-blue .setting-item span {
+    color: #ffffff;
+}
+
+body.theme-blue select {
+    background-color: #4d5572;
+    color: #ffffff;
+}
+
+body.theme-blue .slider {
+    background-color: #1e40af;
+}
+
+
+
  /* 紫色主題 */
- body.theme-purple {
-     background-color: #5b21b6;
- }
- 
+
  body.theme-purple{
      background-color: #5b21b6;
      border-color: #6d28d9;
@@ -139,10 +148,37 @@ body.theme-light .window-btn span {
      background-color: #7c3aed;
  }
  
+
+
+  /*語言紫色相關配置*/
+body.theme-purple .settings-section {
+    background-color: #350344 !important;
+}
+body.theme-purple .language-option{
+    background-color: #b231e6 !important;
+}
+
+body.theme-purple .language-name,
+body.theme-purple .language-native {
+    color: #ffffff;
+}
+
+/*啟動器紫色相關配置*/
+
+
+body.theme-purple .setting-item span {
+    color: #ffffff;
+}
+
+body.theme-purple select {
+    background-color: #624d6e !important;
+    color: #ffffff;
+}
+
+
+
  /* 紅色主題 */
- body.theme-red {
-     background-color: #991b1b;
- }
+
  
  body.theme-red {
      background-color: #991b1b;
@@ -173,11 +209,36 @@ body.theme-light .window-btn span {
      background-color: #dc2626;
  }
  
- /* 綠色主題 */
- body.theme-green {
-     background-color: #166534;
- }
+
+  /*語言紅色相關配置*/
+  body.theme-red .settings-section {
+    background-color: #5c0101;
+}
+body.theme-red .language-option{
+    background-color: #961e1e;
+}
+
+body.theme-red .language-name,
+body.theme-red .language-native {
+    color: #ffffff;
+}
+
+
+/*啟動器紅色相關配置*/
+body.theme-red .setting-item span {
+    color: #ffffff;
+}
+
+body.theme-red select {
+    background-color: #774646;
+    color: #ffffff;
+}
+
+
+
+
  
+ /* 綠色主題 */
  body.theme-green {
      background-color: #166534;
      border-color: #15803d;
@@ -206,6 +267,32 @@ body.theme-light .window-btn span {
  body.theme-green .theme-grid {
      background-color: #22c55e;
  }
+
+  /*語言綠色相關配置*/
+  body.theme-green .settings-section {
+    background-color: #023502;
+}
+body.theme-green .language-option{
+    background-color: #1e961e;
+}
+
+body.theme-green .language-name,
+body.theme-green .language-native {
+    color: #ffffff;
+}
+
+
+
+/*啟動器綠色相關配置*/
+body.theme-green .setting-item span {
+    color: #ffffff;
+}
+
+body.theme-green select {
+    background-color: #496d56;
+    color: #ffffff;
+}
+
 
 
 
@@ -251,13 +338,16 @@ body {
      -webkit-app-region: drag;
  }
  .category-title {
-     color: #ffffff !important;
-     background-color: #333;
-
-     font-weight: bold;
-     font-size: 0.9em;
-     margin: 0px 0 8px 0px;
- }
+    color: #ffffff !important;
+    background-color: #333333;
+    font-weight: bold;
+    font-size: 0.9em;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+}
  .container {
      display: flex;
      min-height: 100vh;
@@ -266,7 +356,7 @@ body {
  .content {
      flex: 1;
      padding: 20px;
-     background-color: #1a1a1a;
+     background-color: #6d5a5a00;
  }
  h2 {
      margin-bottom: 20px;
@@ -297,6 +387,7 @@ body {
  }
 
  .menu-item i {
+
      margin-right: 8px;
  }
  .fade-in {
@@ -312,68 +403,18 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-.category-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 12px;
-    background-color: #333;
-    margin: 0;
-    font-weight: bold;
-}
-/* 確保 .nav-buttons 在 category-title 內的樣式正確 */
-.category-title .nav-buttons {
-    display: flex;
-    gap: 5px;
+.settings-group {
+    margin-bottom: 24px;
 }
 
-.nav-buttons {
-    display: flex;
-    gap: 8px; /* 增加間距 */
+.settings-group h3 {
+    margin-bottom: 16px;
+    color: #e0e0e0;
 }
 
-.nav-button {
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background: transparent;
-    color: #707070;
-    cursor: pointer;
-    -webkit-app-region: no-drag;
-    padding: 0;
-    transition: all 0.2s ease; /* 添加過渡效果 */
-}
 
-.nav-button:not(:disabled):hover {
-    color: #ffffff; /* 懸停時變白 */
-    background-color: rgba(255, 255, 255, 0.1); /* 添加微微發光效果 */
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2); /* 添加發光陰影 */
-}
 
-.nav-button:disabled {
-    opacity: 0.5;
-    cursor: default;
-}
 
-.nav-button span::before {
-    font-size: 20px;
-    font-weight: bold;
-}
-#backButton span::before {
-    content: "◀"; /* 使用細長箭頭 */
-}
 
-#forwardButton span::before {
-    content: "▶"; /* 使用細長箭頭 */
-}
+
+

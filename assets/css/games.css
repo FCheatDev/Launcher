@@ -9,6 +9,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif; /* Applying 'Poppins' font globally */
+  user-select: none;
 }
 
 /* Sidebar container styling */
@@ -32,6 +33,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  padding-left: 25px;
 }
 .sidebar .logo-details .icon {
   opacity: 0; /* Hidden by default, shows when sidebar is expanded */
@@ -318,12 +320,13 @@
 .roblox-section {
   position: relative;
   background: #000000; 
-  min-height: 100vh;
+  height: 100vh;
   top: 0;
   left: 78px;
   width: calc(100% - 78px); 
   transition: all 0.5s ease;
   z-index: 2;
+  overflow-y: auto;
 }
 .roblox-section .text {
   display: inline-block;

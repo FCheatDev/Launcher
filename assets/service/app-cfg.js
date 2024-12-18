@@ -68,8 +68,8 @@ const CONFIG = {
             DEFAULT_SIZE: {
                 width: 1400,
                 height: 1200,
-                minHeight: 300,
-                minWidth: 400
+                minHeight: 598,
+                minWidth: 753
             },
             ICON: app.isPackaged
                 ? path.join(process.resourcesPath, 'images/app-logo-nobg.ico')
