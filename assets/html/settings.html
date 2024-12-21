@@ -5,13 +5,6 @@
     <link rel="stylesheet" href="../css/settings.css">
     <link rel="stylesheet" href="../css/window-btn.css">
     <style>
-
-
-
-
-
-
-
         .settings-section {
             background-color: #2a2a2a;
             padding: 20px;
@@ -19,70 +12,81 @@
             margin-top: 20px;
         }
 
+        .path-group {
+            margin: 15px 0;
+        }
 
+        .path-row {
+            margin-bottom: 20px;
+        }
 
-        .setting-item {
+        .path-display {
+            background: #333;
+            padding: 12px;
+            border-radius: 6px;
+            color: #e0e0e0;
+            margin-bottom: 8px;
+            border: 1px solid #444;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .path-label {
+            color: #e0e0e0;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: #444;
+            margin: 20px 0;
+        }
+
+        .open-folder-btn {
+            background: #c5850e;
+            color: rgb(255, 255, 255);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.2s;
+            -webkit-app-region: no-drag;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .open-folder-btn:hover {
+            background: #d8963f;
+        }
+
+        .open-folder-btn i {
+            font-size: 16px;
+        }
+
+        .path-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 48px;
-            height: 24px;
-            -webkit-app-region: no-drag;
-        }
-
-        .toggle-switch input {
-            -webkit-app-region: no-drag;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #444;
-            transition: .4s;
-            border-radius: 24px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: #ff5722;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(24px);
-        }
-
-        select {
-            width: 100%;
-            padding: 8px;
-            background-color: #333;
-            color: #e0e0e0;
-            border: none;
-            border-radius: 4px;
-            margin-top: 8px;
+        .folder-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+            vertical-align: text-bottom;
         }
     </style>
 </head>
@@ -133,61 +137,62 @@
 
 
         <div class="content fade-in">
-            <h2>FCheat Launcher 設定</h2>
+            <h2 class="header-text">啟動器設定</h2>
             
-            <div class="settings-section ">
-                <div class="settings-group">
-                    <h3>啟動設定</h3>
-                    <div class="setting-item">
-                        <span>開機時自動啟動 FCheat</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="autoStartFCheat">
-                            <span class="slider"></span>
-                        </label>
+            <div class="settings-section">
+                <div class="path-group">
+                    <h3>啟動器安裝位置</h3>
+                    <div class="info-text">
+                        FCheat Launcher 主程式和相關檔案的安裝位置：
                     </div>
-                    <div class="setting-item">
-                        <span>最小化啟動</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="startMinimized">
-                            <span class="slider"></span>
-                        </label>
+                    <div class="path-display" id="launcher-path"></div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="path-group">
+                    <h3>遊戲檔案位置</h3>
+                    <div class="path-row">
+                        <div class="path-header">
+                            <label class="path-label">
+                                遊戲資料夾
+                            </label>
+                        </div>
+                        <div class="path-display" id="games-path"></div>
+                    </div>
+
+                    <div class="path-row">
+                        <div class="path-header">
+                            <label class="path-label">
+                                Minecraft 模組資料夾
+                            </label>
+                        </div>
+                        <div class="path-display" id="minecraft-path"></div>
+                    </div>
+                    
+                    <div class="path-row">
+                        <div class="path-header">
+                            <label class="path-label">
+                                Roblox Executor 資料夾
+                            </label>
+                        </div>
+                        <div class="path-display" id="roblox-path"></div>
                     </div>
                 </div>
 
-                <div class="settings-group">
-                    <h3>外掛程式設定</h3>
-                    <div class="setting-item">
-                        <span>自動檢查更新</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="autoCheckUpdates" checked>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                    <div class="setting-item">
-                        <span>遊戲啟動時自動注入外掛</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="autoInject" checked>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
+                <div class="section-divider"></div>
 
-                <div class="settings-group" style="-webkit-app-region: no-drag;">
-                    <h3>遊戲偵測設定</h3>
-                    <select id="gameDetectMode">
-                        <option>自動偵測遊戲進程</option>
-                        <option>手動選擇遊戲視窗</option>
-                        <option>指定遊戲路徑</option>
-                    </select>
-                </div>
-
-                <div class="settings-group">
-                    <h3>更新頻道</h3>
-                    <select id="updateChannel">
-                        <option>穩定版本</option>
-                        <option>測試版本</option>
-                        <option>開發版本</option>
-                    </select>
+                <div class="path-group">
+                    <div class="path-header">
+                        <h3>日誌檔案位置</h3>
+                        <button class="open-folder-btn" onclick="openLogsFolder()">
+                            開啟日誌資料夾
+                        </button>
+                    </div>
+                    <div class="info-text">
+                        啟動器的日誌檔案儲存位置：
+                    </div>
+                    <div class="path-display" id="logs-path"></div>
                 </div>
             </div>
         </div>
@@ -252,93 +257,58 @@
             });
         });
     </script>
-            <script>
-         let currentTheme = 'dark'; // 默認主題
-    
-         // 應用主題到整個應用程式
-         function applyTheme(theme, isPermanent = false) {
-         // 移除所有主題相關的 class
-         document.body.classList.forEach(className => {
-              if (className.startsWith('theme-')) {
-                   document.body.classList.remove(className);
-              }
-         });
-         
-         // 添加新主題
-         document.body.classList.add(`theme-${theme}`);
-         
-         // 如果是永久變更，更新 currentTheme 和儲存設定
-         if (isPermanent) {
-              currentTheme = theme;
-              localStorage.setItem('fcheat-theme', theme);
-              // 通知其他視窗主題變更
-              window.themeAPI.changeTheme(theme);
-         }
-         }
-    
-         // 初始化主題
-         async function initializeTheme() {
-         try {
-              // 獲取初始主題
-              const initialTheme = await window.themeAPI.getInitialTheme();
-              currentTheme = initialTheme;
-              applyTheme(initialTheme, true);
-    
-              // 如果在主題設定頁面，更新選中狀態
-              const selectedCard = document.querySelector(`[data-theme="${initialTheme}"]`);
-              if (selectedCard) {
-                   selectedCard.classList.add('selected');
-              }
-         } catch (error) {
-              console.error('Failed to initialize theme:', error);
-         }
-         }
-    
-         // 當頁面加載完成時初始化主題
-         window.addEventListener('load', initializeTheme);
-    
-         // 監聽來自其他視窗的主題變更
-         window.themeAPI.onThemeChange((theme) => {
-         currentTheme = theme;
-         applyTheme(theme, false);
-         
-         // 更新主題卡片選中狀態（如果在主題設定頁面）
-         const themeCards = document.querySelectorAll('.theme-card');
-         themeCards.forEach(card => {
-              card.classList.toggle('selected', card.dataset.theme === theme);
-         });
-         });
-    
-         // 如果是主題設定頁面，設置主題卡片事件
-         const themeCards = document.querySelectorAll('.theme-card');
-         if (themeCards.length > 0) {
-         themeCards.forEach(card => {
-              const theme = card.dataset.theme;
-              
-              // 懸停效果 - 預覽主題
-              card.addEventListener('mouseenter', () => {
-                   themeCards.forEach(c => c.classList.remove('selected'));
-                   card.classList.add('selected');
-                   applyTheme(theme, false);
-              });
-    
-              // 移開效果 - 恢復原主題
-              card.addEventListener('mouseleave', () => {
-                   themeCards.forEach(c => c.classList.remove('selected'));
-                   document.querySelector(`[data-theme="${currentTheme}"]`)?.classList.add('selected');
-                   applyTheme(currentTheme, false);
-              });
-    
-              // 點擊選擇主題 - 永久套用
-              card.addEventListener('click', () => {
-                   themeCards.forEach(c => c.classList.remove('selected'));
-                   card.classList.add('selected');
-                   applyTheme(theme, true);
-              });
-         });
-         }
-        </script>
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        function formatSize(bytes) {
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            if (bytes === 0) return '0 Byte';
+            const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+            return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+        }
+
+        async function openLogsFolder() {
+            await ipcRenderer.invoke('open-logs-folder');
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // 載入路徑資訊
+                const paths = await ipcRenderer.invoke('get-install-paths');
+                document.getElementById('launcher-path').textContent = paths.launcher;
+                document.getElementById('games-path').textContent = paths.games;
+                document.getElementById('minecraft-path').textContent = paths.minecraft;
+                document.getElementById('roblox-path').textContent = paths.roblox;
+                document.getElementById('logs-path').textContent = paths.logs;
+
+
+
+                // 視窗控制按鈕事件
+                document.getElementById('minimize-btn').addEventListener('click', () => {
+                    ipcRenderer.send('minimize-window');
+                });
+
+                document.getElementById('fullscreen-btn').addEventListener('click', () => {
+                    ipcRenderer.send('toggle-fullscreen');
+                });
+
+                document.getElementById('close-btn').addEventListener('click', () => {
+                    ipcRenderer.send('close-window');
+                });
+
+                // 淡入動畫
+                const content = document.querySelector('.content');
+                if (content) {
+                    setTimeout(() => {
+                        content.classList.add('visible');
+                    }, 50);
+                }
+            } catch (error) {
+                console.error('Failed to initialize:', error);
+            }
+        });
+    </script>
 </body>
 </html>
-
+<script src="../js/ThemeSave.js" defer></script>
 <script src="../js/openlnk.js" defer></script>

@@ -9,8 +9,11 @@
 
 
 
+        .theme-category {
+            color: #e0e0e0;
+            margin: 30px 0 15px 0;
 
-
+        }
 
 
         .theme-grid {
@@ -21,7 +24,7 @@
             background-color: #2a2a2a;
             border-radius: 8px;
             margin-top: 20px;
-            -webkit-app-region: no-drag;
+            -webkit-app-region: drag;
             max-width: none;
             margin: 0;
         }
@@ -38,6 +41,7 @@
             min-height: 135px;
             max-height: 135px;
             width: 100%;
+            -webkit-app-region: no-drag;
         }
 
         .theme-card.selected {
@@ -94,6 +98,41 @@
         .theme-card[data-theme="green"] .theme-preview {
             background-color: #166534;
         }
+        .theme-card[data-theme="space"] .theme-preview {
+            background: linear-gradient(to bottom, #1a1a1a, #2d3436);
+            position: relative;
+        }
+
+        .theme-card[data-theme="space"] .theme-preview::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(white 1px, transparent 1px);
+            background-size: 10px 10px;
+            opacity: 0.3;
+        }
+
+        .theme-card[data-theme="cyberpunk"] .theme-preview {
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            position: relative;
+        }
+
+        .theme-card[data-theme="cyberpunk"] .theme-preview::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(0, 0, 0, 0.1),
+                rgba(0, 0, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 10px
+            );
+        }
     </style>
 </head>
 <body>
@@ -143,38 +182,60 @@
             </a>
         </div>
 
-        <div class="content fade-in">
-            <h2>主題設定</h2>
-            <div class="theme-grid">
-                <div class="theme-card selected" data-theme="dark">
-                    <div class="theme-preview theme-dark">
-                        <div class="theme-name">黑色</div>
-                    </div>
-                </div>
-                <div class="theme-card" data-theme="blue">
-                    <div class="theme-preview theme-blue">
-                        <div class="theme-name">藍色</div>
-                    </div>
-                </div>
-                <div class="theme-card" data-theme="purple">
-                    <div class="theme-preview theme-purple">
-                        <div class="theme-name">紫色</div>
-                    </div>
-                </div>
-                <div class="theme-card" data-theme="red">
-                    <div class="theme-preview theme-red">
-                        <div class="theme-name">紅色</div>
-                    </div>
-                </div>
-                <div class="theme-card" data-theme="green">
-                    <div class="theme-preview theme-green">
-                        <div class="theme-name">綠色</div>
-                    </div>
-                </div>
-                
+<div class="content fade-in">
+    <h2 class="header-text">主題設定</h2>
+    <h3 class="theme-category">基本主題</h3>
+    <div class="theme-grid">
+        
+        
+        <!-- 基本主題卡片 -->
+        <div class="theme-card selected" data-theme="dark">
+            <div class="theme-preview theme-dark">
+                <div class="theme-name">黑色</div>
+            </div>
+        </div>
+
+        <div class="theme-card" data-theme="blue">
+            <div class="theme-preview theme-blue">
+                <div class="theme-name">藍色</div>
+            </div>
+        </div>
+
+        <div class="theme-card" data-theme="purple">
+            <div class="theme-preview theme-purple">
+                <div class="theme-name">紫色</div>
+            </div>
+        </div>
+
+        <div class="theme-card" data-theme="red">
+            <div class="theme-preview theme-red">
+                <div class="theme-name">紅色</div>
+            </div>
+        </div>
+
+        <div class="theme-card" data-theme="green">
+            <div class="theme-preview theme-green">
+                <div class="theme-name">綠色</div>
             </div>
         </div>
     </div>
+        <!-- 特別背景主題 -->
+        <h3 class="theme-category">特別主題</h3>
+        <div class="theme-grid">
+ 
+            <div class="theme-card" data-theme="space">
+                <div class="theme-preview theme-space">
+                    <div class="theme-name">太空</div>
+                </div>
+            </div>
+            <div class="theme-card" data-theme="cyberpunk">
+                <div class="theme-preview theme-cyberpunk">
+                    <div class="theme-name">賽博龐克</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <script>
@@ -189,91 +250,9 @@
         });
     }, 50); // 小延遲確保轉場效果順暢
 });
-     let currentTheme = 'dark'; // 默認主題
 
-     // 應用主題到整個應用程式
-     function applyTheme(theme, isPermanent = false) {
-     // 移除所有主題相關的 class
-     document.body.classList.forEach(className => {
-          if (className.startsWith('theme-')) {
-               document.body.classList.remove(className);
-          }
-     });
-     
-     // 添加新主題
-     document.body.classList.add(`theme-${theme}`);
-     
-     // 如果是永久變更，更新 currentTheme 和儲存設定
-     if (isPermanent) {
-          currentTheme = theme;
-          localStorage.setItem('fcheat-theme', theme);
-          // 通知其他視窗主題變更
-          window.themeAPI.changeTheme(theme);
-     }
-     }
-
-     // 初始化主題
-     async function initializeTheme() {
-     try {
-          // 獲取初始主題
-          const initialTheme = await window.themeAPI.getInitialTheme();
-          currentTheme = initialTheme;
-          applyTheme(initialTheme, true);
-
-          // 如果在主題設定頁面，更新選中狀態
-          const selectedCard = document.querySelector(`[data-theme="${initialTheme}"]`);
-          if (selectedCard) {
-               selectedCard.classList.add('selected');
-          }
-     } catch (error) {
-          console.error('Failed to initialize theme:', error);
-     }
-     }
-
-     // 當頁面加載完成時初始化主題
-     window.addEventListener('load', initializeTheme);
-
-     // 監聽來自其他視窗的主題變更
-     window.themeAPI.onThemeChange((theme) => {
-     currentTheme = theme;
-     applyTheme(theme, false);
-     
-     // 更新主題卡片選中狀態（如果在主題設定頁面）
-     const themeCards = document.querySelectorAll('.theme-card');
-     themeCards.forEach(card => {
-          card.classList.toggle('selected', card.dataset.theme === theme);
-     });
-     });
-
-     // 如果是主題設定頁面，設置主題卡片事件
-     const themeCards = document.querySelectorAll('.theme-card');
-     if (themeCards.length > 0) {
-     themeCards.forEach(card => {
-          const theme = card.dataset.theme;
-          
-          // 懸停效果 - 預覽主題
-          card.addEventListener('mouseenter', () => {
-               themeCards.forEach(c => c.classList.remove('selected'));
-               card.classList.add('selected');
-               applyTheme(theme, false);
-          });
-
-          // 移開效果 - 恢復原主題
-          card.addEventListener('mouseleave', () => {
-               themeCards.forEach(c => c.classList.remove('selected'));
-               document.querySelector(`[data-theme="${currentTheme}"]`)?.classList.add('selected');
-               applyTheme(currentTheme, false);
-          });
-
-          // 點擊選擇主題 - 永久套用
-          card.addEventListener('click', () => {
-               themeCards.forEach(c => c.classList.remove('selected'));
-               card.classList.add('selected');
-               applyTheme(theme, true);
-          });
-     });
-     }
     </script>
+    <script src="../js/ThemeSave.js" defer></script>
     <script src="../js/openlnk.js" defer></script>
 </body>
 </html>

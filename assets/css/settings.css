@@ -106,8 +106,8 @@ body.theme-blue .setting-item span {
     color: #ffffff;
 }
 
-body.theme-blue select {
-    background-color: #4d5572;
+body.theme-blue .path-display{
+    background-color: #202e5f;
     color: #ffffff;
 }
 
@@ -170,8 +170,8 @@ body.theme-purple .setting-item span {
     color: #ffffff;
 }
 
-body.theme-purple select {
-    background-color: #624d6e !important;
+body.theme-purple .path-display{
+    background-color: #46205f;
     color: #ffffff;
 }
 
@@ -229,11 +229,10 @@ body.theme-red .setting-item span {
     color: #ffffff;
 }
 
-body.theme-red select {
-    background-color: #774646;
+body.theme-red .path-display{
+    background-color: #5f2020;
     color: #ffffff;
 }
-
 
 
 
@@ -288,11 +287,10 @@ body.theme-green .setting-item span {
     color: #ffffff;
 }
 
-body.theme-green select {
-    background-color: #496d56;
+body.theme-green .path-display{
+    background-color: #255f20;
     color: #ffffff;
 }
-
 
 
 
@@ -354,21 +352,39 @@ body {
      overflow: hidden;
  }
  .content {
+    position: relative; 
      flex: 1;
-     padding: 20px;
+     padding: 0px 20px 20px 20px;
      background-color: #6d5a5a00;
+     -webkit-app-region: no-drag ; 
+     z-index: 1;
  }
- h2 {
-     margin-bottom: 20px;
-     color: #e0e0e0;
- }
- .window-controls {
-     position: fixed;
-     top: 10px;
-     right: 10px;
-     z-index: 1000;
-     -webkit-app-region: no-drag;
- }
+
+ .header-text {
+    position: relative; 
+    width: calc(100% - 220px);
+    margin-bottom: 20px;
+    color: #e0e0e0;
+    -webkit-app-region: drag;
+    display: block;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2; 
+    padding: 30px 0px 0px 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    position: relative; /* 添加定位 */
+    z-index: 1; /* 較低的層級 */
+}
+.window-controls {
+    position: fixed; /* 改為fixed定位 */
+
+    z-index: 9999; /* 使用更高的z-index確保在最上層 */
+    -webkit-app-region: no-drag;
+    background: transparent; /* 確保背景透明 */
+}
  .menu-item {
      display: flex;
      align-items: center;

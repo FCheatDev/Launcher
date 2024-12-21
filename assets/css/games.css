@@ -327,6 +327,7 @@
   transition: all 0.5s ease;
   z-index: 2;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 .roblox-section .text {
   display: inline-block;
