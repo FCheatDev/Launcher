@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
     <link rel="stylesheet" href="../css/window-btn.css">
     <link rel="stylesheet" href="../css/settings.css">
     <style>
- 
-
-
-
         .theme-category {
             color: #e0e0e0;
             margin: 30px 0 15px 0;
@@ -50,7 +48,7 @@
 
         .theme-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .theme-preview {
@@ -67,7 +65,7 @@
             left: 0;
             right: 0;
             padding: 12px;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             color: #ffffff;
             font-size: 14px;
             text-align: center;
@@ -76,7 +74,7 @@
 
 
 
- 
+
 
         /* Theme preview backgrounds */
         .theme-card[data-theme="dark"] .theme-preview {
@@ -98,6 +96,7 @@
         .theme-card[data-theme="green"] .theme-preview {
             background-color: #166534;
         }
+
         .theme-card[data-theme="space"] .theme-preview {
             background: linear-gradient(to bottom, #1a1a1a, #2d3436);
             position: relative;
@@ -125,16 +124,15 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: repeating-linear-gradient(
-                90deg,
-                rgba(0, 0, 0, 0.1),
-                rgba(0, 0, 0, 0.1) 1px,
-                transparent 1px,
-                transparent 10px
-            );
+            background: repeating-linear-gradient(90deg,
+                    rgba(0, 0, 0, 0.1),
+                    rgba(0, 0, 0, 0.1) 1px,
+                    transparent 1px,
+                    transparent 10px);
         }
     </style>
 </head>
+
 <body>
     <div class="window-controls">
         <button id="minimize-btn" class="window-btn">
@@ -147,10 +145,10 @@
             <span>&#x2716;</span>
         </button>
     </div>
-    
+
     <div class="container">
         <div class="sidebar">
-            <div class="category-title"><a>一般</a>      
+            <div class="category-title"><a>一般</a>
             </div>
 
             <a href="settings.html" class="menu-item">
@@ -158,7 +156,8 @@
                 <span>FCheat Launcher</span>
             </a>
             <a href="games.html" class="menu-item">
-                <i><img src="../images/home.png" style="width: 25px; height: 25px; display: inline-block; vertical-align: middle;"></i>
+                <i><img src="../images/home.png"
+                        style="width: 25px; height: 25px; display: inline-block; vertical-align: middle;"></i>
                 <span>返回初始畫面</span>
             </a>
             <a href="language.html" class="menu-item">
@@ -173,86 +172,89 @@
             <br>
             <div class="category-title">FCheat自訂</div>
             <a href="fc_executorset.html" class="menu-item">
-                <i><img src="../images/roblox.jpg" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                <i><img src="../images/roblox.jpg"
+                        style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
                 <span>Executor</span>
             </a>
             <a href="fc_clientset.html" class="menu-item">
-                <i><img src="../images/minecraft2a.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                <i><img src="../images/minecraft2a.png"
+                        style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
                 <span>Client</span>
             </a>
         </div>
 
-<div class="content fade-in">
-    <h2 class="header-text">主題設定</h2>
-    <h3 class="theme-category">基本主題</h3>
-    <div class="theme-grid">
-        
-        
-        <!-- 基本主題卡片 -->
-        <div class="theme-card selected" data-theme="dark">
-            <div class="theme-preview theme-dark">
-                <div class="theme-name">黑色</div>
-            </div>
-        </div>
+        <div class="content fade-in">
+            <h2 class="header-text">主題設定</h2>
+            <h3 class="theme-category">基本主題</h3>
+            <div class="theme-grid">
 
-        <div class="theme-card" data-theme="blue">
-            <div class="theme-preview theme-blue">
-                <div class="theme-name">藍色</div>
-            </div>
-        </div>
 
-        <div class="theme-card" data-theme="purple">
-            <div class="theme-preview theme-purple">
-                <div class="theme-name">紫色</div>
-            </div>
-        </div>
+                <!-- 基本主題卡片 -->
+                <div class="theme-card selected" data-theme="dark">
+                    <div class="theme-preview theme-dark">
+                        <div class="theme-name">黑色</div>
+                    </div>
+                </div>
 
-        <div class="theme-card" data-theme="red">
-            <div class="theme-preview theme-red">
-                <div class="theme-name">紅色</div>
-            </div>
-        </div>
+                <div class="theme-card" data-theme="blue">
+                    <div class="theme-preview theme-blue">
+                        <div class="theme-name">藍色</div>
+                    </div>
+                </div>
 
-        <div class="theme-card" data-theme="green">
-            <div class="theme-preview theme-green">
-                <div class="theme-name">綠色</div>
+                <div class="theme-card" data-theme="purple">
+                    <div class="theme-preview theme-purple">
+                        <div class="theme-name">紫色</div>
+                    </div>
+                </div>
+
+                <div class="theme-card" data-theme="red">
+                    <div class="theme-preview theme-red">
+                        <div class="theme-name">紅色</div>
+                    </div>
+                </div>
+
+                <div class="theme-card" data-theme="green">
+                    <div class="theme-preview theme-green">
+                        <div class="theme-name">綠色</div>
+                    </div>
+                </div>
+            </div>
+            <!-- 特別背景主題 -->
+            <h3 class="theme-category">特別主題</h3>
+            <div class="theme-grid">
+
+                <div class="theme-card" data-theme="space">
+                    <div class="theme-preview theme-space">
+                        <div class="theme-name">太空</div>
+                    </div>
+                </div>
+                <div class="theme-card" data-theme="cyberpunk">
+                    <div class="theme-preview theme-cyberpunk">
+                        <div class="theme-name">賽博龐克</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-        <!-- 特別背景主題 -->
-        <h3 class="theme-category">特別主題</h3>
-        <div class="theme-grid">
- 
-            <div class="theme-card" data-theme="space">
-                <div class="theme-preview theme-space">
-                    <div class="theme-name">太空</div>
-                </div>
-            </div>
-            <div class="theme-card" data-theme="cyberpunk">
-                <div class="theme-preview theme-cyberpunk">
-                    <div class="theme-name">賽博龐克</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
     <script>
-        window.addEventListener('load', function() {
-    // 獲取所有需要淡入的元素
-    const fadeElements = document.querySelectorAll('.fade-in');
-    
-    // 添加 visible class 來觸發動畫
-    setTimeout(() => {
-        fadeElements.forEach(element => {
-            element.classList.add('visible');
+        window.addEventListener('load', function () {
+            // 獲取所有需要淡入的元素
+            const fadeElements = document.querySelectorAll('.fade-in');
+
+            // 添加 visible class 來觸發動畫
+            setTimeout(() => {
+                fadeElements.forEach(element => {
+                    element.classList.add('visible');
+                });
+            }, 50); // 小延遲確保轉場效果順暢
         });
-    }, 50); // 小延遲確保轉場效果順暢
-});
 
     </script>
     <script src="../js/ThemeSave.js" defer></script>
     <script src="../js/openlnk.js" defer></script>
 </body>
+
 </html>

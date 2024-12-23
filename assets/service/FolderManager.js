@@ -18,14 +18,14 @@ class FolderManager {
     async initialize() {
         try {
             logger.folder('Starting folders initialization');
-            
+
             // 創建日誌目錄
             await fs.ensureDir(this.logsPath);
             logger.folder('Logs directory created/verified');
-            
+
             // 創建遊戲目錄
             await this._createGameDirectories();
-            
+
             this.initialized = true;
             logger.folder('Folders initialization completed');
         } catch (error) {
@@ -60,7 +60,7 @@ class FolderManager {
      */
     async validateDirectories() {
         const issues = [];
-        
+
         try {
             // 只檢查日誌和遊戲目錄
             const requiredDirs = [
@@ -100,14 +100,14 @@ class FolderManager {
     async recreateDirectories() {
         try {
             logger.folder('Starting directory recreation');
-            
+
             // 只刪除遊戲和日誌目錄
             await fs.remove(this.gamesPath);
             await fs.remove(this.logsPath);
-            
+
             // 重新創建必要目錄
             await this.initialize();
-            
+
             logger.folder('Directories recreated successfully');
         } catch (error) {
             logger.error('Failed to recreate directories:', error);

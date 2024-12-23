@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
     <link rel="stylesheet" href="../css/settings.css">
     <link rel="stylesheet" href="../css/window-btn.css">
     <style>
@@ -71,6 +73,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="window-controls">
         <button id="minimize-btn" class="window-btn">
@@ -86,13 +89,14 @@
     <div class="container">
         <div class="sidebar">
             <div class="category-title">一般</div>
-            
+
             <a href="settings.html" class="menu-item">
                 <i>⚙️</i>
                 <span>FCheat Launcher</span>
             </a>
             <a href="games.html" class="menu-item">
-                <i><img src="../images/home.png" style="width: 25px; height: 25px; display: inline-block; vertical-align: middle;"></i>
+                <i><img src="../images/home.png"
+                        style="width: 25px; height: 25px; display: inline-block; vertical-align: middle;"></i>
                 <span>返回初始畫面</span>
             </a>
             <a href="language.html" class="menu-item active">
@@ -106,18 +110,20 @@
             <br>
             <div class="category-title">FCheat自訂</div>
             <a href="fc_executorset.html" class="menu-item">
-                <i><img src="../images/roblox.jpg" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                <i><img src="../images/roblox.jpg"
+                        style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
                 <span>Executor</span>
             </a>
             <a href="fc_clientset.html" class="menu-item">
-                <i><img src="../images/minecraft2a.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                <i><img src="../images/minecraft2a.png"
+                        style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
                 <span>Client</span>
             </a>
         </div>
 
         <div class="content fade-in">
             <h2 class="header-text">語言設定</h2>
-            
+
             <div class="settings-section">
                 <div class="settings-group">
                     <h3>選擇語言</h3>
@@ -129,7 +135,8 @@
                         </div>
                     </div>
 
-                    <div class="language-option selected" data-lang="zh-TW" data-native-en="Chinese" data-native-zh="中文">
+                    <div class="language-option selected" data-lang="zh-TW" data-native-en="Chinese"
+                        data-native-zh="中文">
                         <div class="language-info">
                             <div class="radio-button"></div>
                             <div class="language-name">中文</div>
@@ -165,15 +172,15 @@
 
         // Language selection functionality
         document.querySelectorAll('.language-option').forEach(option => {
-            option.addEventListener('click', function() {
+            option.addEventListener('click', function () {
                 // Remove selected class from all options
                 document.querySelectorAll('.language-option').forEach(opt => {
                     opt.classList.remove('selected');
                 });
-                
+
                 // Add selected class to clicked option
                 this.classList.add('selected');
-                
+
                 // Save selected language
                 const lang = this.getAttribute('data-lang');
                 localStorage.setItem('selectedLanguage', lang);
@@ -195,10 +202,10 @@
                     content.classList.add('visible');
                 }, 50);
             }
-            
+
             const savedLanguage = localStorage.getItem('selectedLanguage') || 'zh-TW';
             const nativeKey = savedLanguage === 'en' ? 'data-native-en' : 'data-native-zh';
-            
+
             document.querySelectorAll('.language-option').forEach(option => {
                 // Update selected state
                 if (option.getAttribute('data-lang') === savedLanguage) {
@@ -206,7 +213,7 @@
                 } else {
                     option.classList.remove('selected');
                 }
-                
+
                 // Update native text
                 const nativeText = option.getAttribute(nativeKey);
                 option.querySelector('.language-native').textContent = nativeText;
@@ -216,4 +223,5 @@
     <script src="../js/ThemeSave.js" defer></script>
     <script src="../js/openlnk.js"></script>
 </body>
+
 </html>

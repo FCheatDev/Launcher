@@ -7,7 +7,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     minimizeWindow: () => ipcRenderer.send('minimize-window'),
     closeWindow: () => ipcRenderer.send('close-window'),
     fullscreenWindow: () => {
-        console.log('Sending toggle-fullscreen event'); 
+        console.log('Sending toggle-fullscreen event');
         ipcRenderer.send('toggle-fullscreen');
     },
     openMenuWindow: () => {

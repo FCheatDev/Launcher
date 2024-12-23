@@ -23,7 +23,7 @@ class GameManager {
             if (!config) {
                 throw new Error('無效的執行器');
             }
-    
+
             logger.system(`Checking for ${config.name}...`);
             const exists = fs.pathExistsSync(config.exePath);
             logger.system(`${config.name} ${exists ? 'found' : 'not found'} at ${config.exePath}`);
@@ -86,9 +86,9 @@ class GameManager {
                 logger.error(`Invalid executor ID: ${gameId}`);
                 throw new Error(`無效的執行器 ID: ${gameId}`);
             }
-    
+
             logger.system(`Getting download URL for ${gameId}`);
-    
+
             switch (gameId.toUpperCase()) {
                 case 'SOLARA':
                     return await this.getSolaraUrl();
@@ -106,7 +106,7 @@ class GameManager {
             throw new Error(error.message); // 直接傳遞原始錯誤信息
         }
     }
-    
+
     /**
      * 重命名執行器文件
      */
@@ -167,12 +167,12 @@ class GameManager {
             if (!config) {
                 throw new Error('Invalid executor ID');
             }
-    
+
             const checkResult = this.checkGameInstalled(gameId);
             if (!checkResult.exists) {
                 throw new Error('Executor not found');
             }
-    
+
             // 特別處理 Luna
             if (gameId.toUpperCase() === 'LUNA') {
                 return new Promise((resolve, reject) => {

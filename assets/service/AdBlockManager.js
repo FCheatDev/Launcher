@@ -74,16 +74,16 @@ class AdBlockManager {
     async _showStatusMessage(enabled) {
         // 保存當前菜單窗口的引用
         const menuWindow = windowManager.menuWindowInstance;
-        
+
         try {
             await dialog.showMessageBox(windowManager.mainWindowInstance, {
                 type: 'info',
                 title: '廣告攔截器',
-                message: enabled 
+                message: enabled
                     ? '廣告攔截已啟用。此功能還在開發中,只能擋掉一小部分'
                     : '廣告攔截已禁用'
             });
-            
+
             // 如果之前菜單窗口存在，則重新創建
             if (menuWindow) {
                 windowManager.createMenuWindow();

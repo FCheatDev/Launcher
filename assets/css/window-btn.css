@@ -1,64 +1,68 @@
 .window-btn {
-     background-color: transparent;
-     border: 3px solid #ffffff;
-     width: 64.41px;
-     height: 44px;
-     border-radius: 8px;
-     cursor: pointer;
-     transition: all 0.3s ease;
-     margin-left: 10px;
-     -webkit-app-region: no-drag;
+    background-color: transparent;
+    border: 3px solid #ffffff;
+    width: 64.41px;
+    height: 44px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    -webkit-app-region: no-drag;
     position: relative;
     z-index: 9999;
- }
-
- .window-btn:first-child {
-     margin-left: 0;
- }
-
- .window-btn span {
-     font-size: 24px;
-     color: white;
-     transition: all 0.3s ease;
- }
-
- .window-btn:hover {
-     background-color: rgba(255, 255, 255, 0.1);
-     transform: translateY(-2px);
-     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
- }
-
- .window-btn:active {
-     transform: translateY(0);
- }
- .window-controls {
-     position: absolute;
-     top: 10px;
-     right: 10px;
-     z-index: 10000;
-     -webkit-app-region: no-drag;
- }
- #close-btn:hover {
-     background-color: rgba(255, 0, 0, 0.2);
-     border-color: #ff4444;
 }
 
- #close-btn:hover span {
-     color: #ff4444;
+.window-btn:first-child {
+    margin-left: 0;
 }
 
-#fullscreen-btn:hover{
+.window-btn span {
+    font-size: 24px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.window-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.window-btn:active {
+    transform: translateY(0);
+}
+
+.window-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10000;
+    -webkit-app-region: no-drag;
+}
+
+#close-btn:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+    border-color: #ff4444;
+}
+
+#close-btn:hover span {
+    color: #ff4444;
+}
+
+#fullscreen-btn:hover {
     background-color: rgba(255, 115, 0, 0.2);
     border-color: #ff6600;
 }
+
 #fullscreen-btn:hover span {
-    color:  #ff6600;
+    color: #ff6600;
 }
 
-#minimize-btn:hover{
+#minimize-btn:hover {
     background-color: rgba(0, 132, 255, 0.2);
     border-color: #00ccff;
 }
- #minimize-btn:hover span {
-    color:  #00ccff;
+
+#minimize-btn:hover span {
+    color: #00ccff;
 }

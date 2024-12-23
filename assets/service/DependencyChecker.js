@@ -53,9 +53,9 @@ class DependencyChecker {
                     logger.system(`Dependency ${dependency.name} found through command: ${command}`);
                     return true;
                 } catch (error) {
-                    logger.system(`Command failed for ${dependency.name}:`, { 
-                        command, 
-                        error: error.message 
+                    logger.system(`Command failed for ${dependency.name}:`, {
+                        command,
+                        error: error.message
                     });
                     continue;
                 }
@@ -83,7 +83,7 @@ class DependencyChecker {
                     installed: isInstalled,
                     required: dep.required
                 });
-                
+
                 if (!isInstalled) {
                     missingDeps.push(dep);
                 }
@@ -161,7 +161,7 @@ class DependencyChecker {
                 logger.system('Administrator rights check failed:', {
                     error: error.message
                 });
-                
+
                 await dialog.showMessageBox({
                     type: 'warning',
                     title: '權限不足',
@@ -203,14 +203,14 @@ class DependencyChecker {
                 type: errorType,
                 message: error.message
             });
-            
+
             await dialog.showMessageBox({
                 type: 'error',
                 title: '運行錯誤',
                 message: `發生未知錯誤：${error.message}`,
                 buttons: ['確定']
             });
-            
+
             app.quit();
         }
     }

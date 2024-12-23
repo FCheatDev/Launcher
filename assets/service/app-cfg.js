@@ -2,7 +2,7 @@ const { app } = require('electron');
 const path = require('path');
 
 // 獲取應用根目錄 (在打包後使用 userData，開發時使用當前目錄)
-const ROOT_PATH = app.isPackaged 
+const ROOT_PATH = app.isPackaged
     ? path.join(app.getPath('userData'))
     : path.join(__dirname, '..');
 
@@ -109,7 +109,7 @@ const CONFIG = {
         MAX_FILE_SIZE: 5242880, // 5MB
         MAX_FILES: 5,
         DAYS_TO_KEEP: 30,
-        
+
         // 日誌類別
         CATEGORIES: {
             SYSTEM: 'SYSTEM',      // 系統相關日誌

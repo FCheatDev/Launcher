@@ -1,36 +1,34 @@
+/* 深色主題 (預設) */
 
- 
- /* 深色主題 (預設) */
+body.theme-dark {
+    background-color: #1a1a1a;
+    border-color: #333;
+}
 
- body.theme-dark {
-     background-color: #1a1a1a;
-     border-color: #333;
- }
- 
- body.theme-dark .content {
-     background-color: #1a1a1a;
- }
- 
- body.theme-dark .menu-item {
-     color: #e0e0e0;
- }
- 
- body.theme-dark .menu-item:hover {
-     background-color: #333;
- }
- 
- body.theme-dark .category-title {
-     color: #888;
- }
- 
- body.theme-dark h2 {
-     color: #e0e0e0;
- }
- 
- body.theme-dark .theme-grid {
-     background-color: #2a2a2a;
- }
- 
+body.theme-dark .content {
+    background-color: #1a1a1a;
+}
+
+body.theme-dark .menu-item {
+    color: #e0e0e0;
+}
+
+body.theme-dark .menu-item:hover {
+    background-color: #333;
+}
+
+body.theme-dark .category-title {
+    color: #888;
+}
+
+body.theme-dark h2 {
+    color: #e0e0e0;
+}
+
+body.theme-dark .theme-grid {
+    background-color: #2a2a2a;
+}
+
 
 
 /*啟動器黑色相關配置*/
@@ -52,41 +50,43 @@ body.theme-dark select {
 
 
 
- /* 藍色主題 */
+/* 藍色主題 */
 
- body.theme-blue {
-     background-color: #1e3a8a;
-     border-color: #1e40af;
- }
- 
- body.theme-blue .content {
-     background-color: #1e3a8a;
- }
- 
- body.theme-blue .menu-item {
-     color: #ffffff;
- }
- 
- body.theme-blue .menu-item:hover {
-     background-color: rgba(255, 255, 255, 0.1);
- }
- 
- body.theme-blue .category-title {
-     color: rgba(255, 255, 255, 0.7);
- }
- 
- body.theme-blue h2 {
-     color: #ffffff;
- }
- 
- body.theme-blue .theme-grid {
-     background-color: #2563eb;
- }
- /*語言藍色相關配置*/
- body.theme-blue .settings-section {
+body.theme-blue {
+    background-color: #1e3a8a;
+    border-color: #1e40af;
+}
+
+body.theme-blue .content {
+    background-color: #1e3a8a;
+}
+
+body.theme-blue .menu-item {
+    color: #ffffff;
+}
+
+body.theme-blue .menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-blue .category-title {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.theme-blue h2 {
+    color: #ffffff;
+}
+
+body.theme-blue .theme-grid {
+    background-color: #2563eb;
+}
+
+/*語言藍色相關配置*/
+body.theme-blue .settings-section {
     background-color: #04205c;
 }
-body.theme-blue .language-option{
+
+body.theme-blue .language-option {
     background-color: #7897da;
 }
 
@@ -106,7 +106,7 @@ body.theme-blue .setting-item span {
     color: #ffffff;
 }
 
-body.theme-blue .path-display{
+body.theme-blue .path-display {
     background-color: #202e5f;
     color: #ffffff;
 }
@@ -117,44 +117,45 @@ body.theme-blue .slider {
 
 
 
- /* 紫色主題 */
+/* 紫色主題 */
 
- body.theme-purple{
-     background-color: #5b21b6;
-     border-color: #6d28d9;
- }
- 
- body.theme-purple .content {
-     background-color: #5b21b6;
- }
- 
- body.theme-purple .menu-item {
-     color: #ffffff;
- }
- 
- body.theme-purple .menu-item:hover {
-     background-color: rgba(255, 255, 255, 0.1);
- }
- 
- body.theme-purple .category-title {
-     color: rgba(255, 255, 255, 0.7);
- }
- 
- body.theme-purple h2 {
-     color: #ffffff;
- }
- 
- body.theme-purple .theme-grid {
-     background-color: #7c3aed;
- }
- 
+body.theme-purple {
+    background-color: #5b21b6;
+    border-color: #6d28d9;
+}
+
+body.theme-purple .content {
+    background-color: #5b21b6;
+}
+
+body.theme-purple .menu-item {
+    color: #ffffff;
+}
+
+body.theme-purple .menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-purple .category-title {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.theme-purple h2 {
+    color: #ffffff;
+}
+
+body.theme-purple .theme-grid {
+    background-color: #7c3aed;
+}
 
 
-  /*語言紫色相關配置*/
+
+/*語言紫色相關配置*/
 body.theme-purple .settings-section {
     background-color: #350344 !important;
 }
-body.theme-purple .language-option{
+
+body.theme-purple .language-option {
     background-color: #b231e6 !important;
 }
 
@@ -170,51 +171,52 @@ body.theme-purple .setting-item span {
     color: #ffffff;
 }
 
-body.theme-purple .path-display{
+body.theme-purple .path-display {
     background-color: #46205f;
     color: #ffffff;
 }
 
 
 
- /* 紅色主題 */
+/* 紅色主題 */
 
- 
- body.theme-red {
-     background-color: #991b1b;
-     border-color: #b91c1c;
- }
- 
- body.theme-red .content {
-     background-color: #991b1b;
- }
- 
- body.theme-red .menu-item {
-     color: #ffffff;
- }
- 
- body.theme-red .menu-item:hover {
-     background-color: rgba(255, 255, 255, 0.1);
- }
- 
- body.theme-red .category-title {
-     color: rgba(255, 255, 255, 0.7);
- }
- 
- body.theme-red h2 {
-     color: #ffffff;
- }
- 
- body.theme-red .theme-grid {
-     background-color: #dc2626;
- }
- 
 
-  /*語言紅色相關配置*/
-  body.theme-red .settings-section {
+body.theme-red {
+    background-color: #991b1b;
+    border-color: #b91c1c;
+}
+
+body.theme-red .content {
+    background-color: #991b1b;
+}
+
+body.theme-red .menu-item {
+    color: #ffffff;
+}
+
+body.theme-red .menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-red .category-title {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.theme-red h2 {
+    color: #ffffff;
+}
+
+body.theme-red .theme-grid {
+    background-color: #dc2626;
+}
+
+
+/*語言紅色相關配置*/
+body.theme-red .settings-section {
     background-color: #5c0101;
 }
-body.theme-red .language-option{
+
+body.theme-red .language-option {
     background-color: #961e1e;
 }
 
@@ -229,49 +231,50 @@ body.theme-red .setting-item span {
     color: #ffffff;
 }
 
-body.theme-red .path-display{
+body.theme-red .path-display {
     background-color: #5f2020;
     color: #ffffff;
 }
 
 
 
- 
- /* 綠色主題 */
- body.theme-green {
-     background-color: #166534;
-     border-color: #15803d;
- }
- 
- body.theme-green .content {
-     background-color: #166534;
- }
- 
- body.theme-green .menu-item {
-     color: #ffffff;
- }
- 
- body.theme-green .menu-item:hover {
-     background-color: rgba(255, 255, 255, 0.1);
- }
- 
- body.theme-green .category-title {
-     color: rgba(255, 255, 255, 0.7);
- }
- 
- body.theme-green h2 {
-     color: #ffffff;
- }
- 
- body.theme-green .theme-grid {
-     background-color: #22c55e;
- }
 
-  /*語言綠色相關配置*/
-  body.theme-green .settings-section {
+/* 綠色主題 */
+body.theme-green {
+    background-color: #166534;
+    border-color: #15803d;
+}
+
+body.theme-green .content {
+    background-color: #166534;
+}
+
+body.theme-green .menu-item {
+    color: #ffffff;
+}
+
+body.theme-green .menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-green .category-title {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.theme-green h2 {
+    color: #ffffff;
+}
+
+body.theme-green .theme-grid {
+    background-color: #22c55e;
+}
+
+/*語言綠色相關配置*/
+body.theme-green .settings-section {
     background-color: #023502;
 }
-body.theme-green .language-option{
+
+body.theme-green .language-option {
     background-color: #1e961e;
 }
 
@@ -287,7 +290,7 @@ body.theme-green .setting-item span {
     color: #ffffff;
 }
 
-body.theme-green .path-display{
+body.theme-green .path-display {
     background-color: #255f20;
     color: #ffffff;
 }
@@ -316,26 +319,29 @@ body.theme-green .path-display{
 
 /*setting目錄通用*/
 body {
-     -webkit-app-region: drag;
-     margin: 0;
-     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-     background-color: #1a1a1a;
-     color: #e0e0e0;
- }
+    -webkit-app-region: drag;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
 * {
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
-     user-select: none;
- }
- .sidebar {
-     width: 250px;
-     border-right: 2px solid #333  ;
-     font-size: 20px;
-     background-color: black !important;
-     -webkit-app-region: drag;
- }
- .category-title {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.sidebar {
+    width: 250px;
+    border-right: 2px solid #333;
+    font-size: 20px;
+    background-color: black !important;
+    -webkit-app-region: drag;
+}
+
+.category-title {
     color: #ffffff !important;
     background-color: #333333;
     font-weight: bold;
@@ -346,22 +352,24 @@ body {
     justify-content: space-between;
     padding: 8px 12px;
 }
- .container {
-     display: flex;
-     min-height: 100vh;
-     overflow: hidden;
- }
- .content {
-    position: relative; 
-     flex: 1;
-     padding: 0px 20px 20px 20px;
-     background-color: #6d5a5a00;
-     -webkit-app-region: no-drag ; 
-     z-index: 1;
- }
 
- .header-text {
-    position: relative; 
+.container {
+    display: flex;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.content {
+    position: relative;
+    flex: 1;
+    padding: 0px 20px 20px 20px;
+    background-color: #6d5a5a00;
+    -webkit-app-region: no-drag;
+    z-index: 1;
+}
+
+.header-text {
+    position: relative;
     width: calc(100% - 220px);
     margin-bottom: 20px;
     color: #e0e0e0;
@@ -369,44 +377,52 @@ body {
     display: block;
     font-size: 24px;
     font-weight: 500;
-    line-height: 1.2; 
+    line-height: 1.2;
     padding: 30px 0px 0px 0px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: bold;
-    position: relative; /* 添加定位 */
-    z-index: 1; /* 較低的層級 */
+    position: relative;
+    /* 添加定位 */
+    z-index: 1;
+    /* 較低的層級 */
 }
+
 .window-controls {
-    position: fixed; /* 改為fixed定位 */
+    position: fixed;
+    /* 改為fixed定位 */
 
-    z-index: 9999; /* 使用更高的z-index確保在最上層 */
+    z-index: 9999;
+    /* 使用更高的z-index確保在最上層 */
     -webkit-app-region: no-drag;
-    background: transparent; /* 確保背景透明 */
+    background: transparent;
+    /* 確保背景透明 */
 }
- .menu-item {
-     display: flex;
-     align-items: center;
-     padding: 8px 12px;
-     margin: 4px;
-     border-radius: 4px;
-     cursor: pointer;
-     font-weight: bold;
-     -webkit-app-region: no-drag;
-     color: #aaaaaa !important;
-     text-decoration: none;
- }
 
- .menu-item:hover {
-     background-color: #333;
- }
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    margin: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    -webkit-app-region: no-drag;
+    color: #aaaaaa !important;
+    text-decoration: none;
+}
 
- .menu-item i {
+.menu-item:hover {
+    background-color: #333;
+}
 
-     margin-right: 8px;
- }
- .fade-in {
+.menu-item i {
+
+    margin-right: 8px;
+}
+
+.fade-in {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
@@ -427,10 +443,3 @@ body {
     margin-bottom: 16px;
     color: #e0e0e0;
 }
-
-
-
-
-
-
-

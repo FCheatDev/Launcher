@@ -28,10 +28,10 @@ class UpdateManager {
                 currentVersion: this.currentVersion,
                 updatePath: CONFIG.PATHS.UPDATES
             });
-            
+
             // 立即檢查一次更新
             await this.checkForUpdates();
-            
+
             // 設置定期檢查
             this.setupAutoCheck();
         } catch (error) {
@@ -86,100 +86,100 @@ class UpdateManager {
         logger.update('Auto update check scheduled');
     }
 
-        /**
-     * 檢查更新
+    /**
+ * 檢查更新
+ */
+    async checkForUpdates() {
+        if (this.updateInProgress) {
+            return;
+        }
+
+        try {
+            logger.update('Checking for updates...');
+
+            const response = await axios.get(
+                'https://api.github.com/repos/FCheatDev/Launcher/releases/latest',
+                {
+                    headers: {
+                        'Accept': 'application/vnd.github.v3+json',
+                        'User-Agent': 'FCheat-Launcher'
+                    }
+                }
+            );
+
+            const latestRelease = response.data;
+            this.latestVersion = latestRelease.tag_name.replace('v', '');
+
+            logger.update('Latest version found', {
+                currentVersion: this.currentVersion,
+                latestVersion: this.latestVersion
+            });
+
+            // 比較版本
+            if (this._compareVersions(this.latestVersion, this.currentVersion) > 0) {
+                this.isUpdateAvailable = true;
+                await this._notifyAndUpdate(latestRelease);
+            }
+        } catch (error) {
+            logger.error('Failed to check for updates:', { error });
+            this._showError('檢查更新失敗', error.message);
+            app.quit();
+        }
+    }
+
+    /**
+     * 通知並開始更新
      */
-        async checkForUpdates() {
-          if (this.updateInProgress) {
-              return;
-          }
-  
-          try {
-              logger.update('Checking for updates...');
-  
-              const response = await axios.get(
-                  'https://api.github.com/repos/FCheatDev/Launcher/releases/latest',
-                  {
-                      headers: {
-                          'Accept': 'application/vnd.github.v3+json',
-                          'User-Agent': 'FCheat-Launcher'
-                      }
-                  }
-              );
-  
-              const latestRelease = response.data;
-              this.latestVersion = latestRelease.tag_name.replace('v', '');
-  
-              logger.update('Latest version found', {
-                  currentVersion: this.currentVersion,
-                  latestVersion: this.latestVersion
-              });
-  
-              // 比較版本
-              if (this._compareVersions(this.latestVersion, this.currentVersion) > 0) {
-                  this.isUpdateAvailable = true;
-                  await this._notifyAndUpdate(latestRelease);
-              }
-          } catch (error) {
-              logger.error('Failed to check for updates:', { error });
-              this._showError('檢查更新失敗', error.message);
-              app.quit();
-          }
-      }
-  
-      /**
-       * 通知並開始更新
-       */
-      async _notifyAndUpdate(latestRelease) {
-          try {
-              // 先顯示更新提示
-              await dialog.showMessageBox(windowManager.mainWindowInstance, {
-                  type: 'info',
-                  title: '發現新版本',
-                  message: `當前版本: ${this.currentVersion}\n最新版本: ${this.latestVersion}`,
-                  detail: latestRelease.body || '版本更新提示',
-                  buttons: ['確定'],
-                  noLink: true,
-                  defaultId: 0
-              });
-  
-              // 顯示正在更新提示
-              await this._showUpdateProgress();
-              
-              // 開始更新
-              await this.downloadAndUpdate(latestRelease);
-          } catch (error) {
-              logger.error('Update process failed:', { error });
-              this._showError('更新過程失敗', error.message);
-              app.quit();
-          }
-      }
-  
-      /**
-       * 顯示更新進度
-       */
-      async _showUpdateProgress() {
-          return dialog.showMessageBox(windowManager.mainWindowInstance, {
-              type: 'info',
-              title: '系統更新',
-              message: '新版本正在下載安裝中\n安裝完成後程序將自動重啟\n請稍候...',
-              buttons: ['確定'],
-              noLink: true
-          });
-      }
-  
-      /**
-       * 顯示錯誤信息
-       */
-      async _showError(title, message) {
-          return dialog.showMessageBox(windowManager.mainWindowInstance, {
-              type: 'error',
-              title: title,
-              message: message,
-              buttons: ['確定'],
-              noLink: true
-          });
-      }
+    async _notifyAndUpdate(latestRelease) {
+        try {
+            // 先顯示更新提示
+            await dialog.showMessageBox(windowManager.mainWindowInstance, {
+                type: 'info',
+                title: '發現新版本',
+                message: `當前版本: ${this.currentVersion}\n最新版本: ${this.latestVersion}`,
+                detail: latestRelease.body || '版本更新提示',
+                buttons: ['確定'],
+                noLink: true,
+                defaultId: 0
+            });
+
+            // 顯示正在更新提示
+            await this._showUpdateProgress();
+
+            // 開始更新
+            await this.downloadAndUpdate(latestRelease);
+        } catch (error) {
+            logger.error('Update process failed:', { error });
+            this._showError('更新過程失敗', error.message);
+            app.quit();
+        }
+    }
+
+    /**
+     * 顯示更新進度
+     */
+    async _showUpdateProgress() {
+        return dialog.showMessageBox(windowManager.mainWindowInstance, {
+            type: 'info',
+            title: '系統更新',
+            message: '新版本正在下載安裝中\n安裝完成後程序將自動重啟\n請稍候...',
+            buttons: ['確定'],
+            noLink: true
+        });
+    }
+
+    /**
+     * 顯示錯誤信息
+     */
+    async _showError(title, message) {
+        return dialog.showMessageBox(windowManager.mainWindowInstance, {
+            type: 'error',
+            title: title,
+            message: message,
+            buttons: ['確定'],
+            noLink: true
+        });
+    }
 
     /**
      * 比較版本號
@@ -188,7 +188,7 @@ class UpdateManager {
         console.log('Comparing versions:', version1, version2); // 調試輸出
         const v1 = version1.split('.').map(Number);
         const v2 = version2.split('.').map(Number);
-        
+
         for (let i = 0; i < Math.max(v1.length, v2.length); i++) {
             const num1 = v1[i] || 0;
             const num2 = v2[i] || 0;
@@ -240,9 +240,9 @@ class UpdateManager {
      */
     async downloadAndUpdate(latestRelease) {
         this.updateInProgress = true;
-        
+
         try {
-            const asset = latestRelease.assets.find(asset => 
+            const asset = latestRelease.assets.find(asset =>
                 asset.name.endsWith('.exe')
             );
 
@@ -250,14 +250,14 @@ class UpdateManager {
                 throw new Error('找不到可執行文件');
             }
 
-            logger.update('Starting update download', { 
+            logger.update('Starting update download', {
                 assetName: asset.name,
-                downloadUrl: asset.browser_download_url 
+                downloadUrl: asset.browser_download_url
             });
-            
+
             const filePath = await this._downloadUpdate(asset);
             await this._executeUpdate(filePath);
-            
+
         } catch (error) {
             this.updateInProgress = false;
             logger.error('Update failed:', { error });
@@ -294,7 +294,7 @@ class UpdateManager {
             return filePath;
         } catch (error) {
             writer.end();
-            await fs.remove(filePath).catch(() => {});
+            await fs.remove(filePath).catch(() => { });
             throw error;
         }
     }
@@ -305,10 +305,10 @@ class UpdateManager {
     async _executeUpdate(filePath) {
         try {
             logger.update('Executing update process', { filePath });
-            
-            const updateProcess = spawn(filePath, { 
-                detached: true, 
-                shell: true 
+
+            const updateProcess = spawn(filePath, {
+                detached: true,
+                shell: true
             });
 
             updateProcess.on('error', (error) => {
@@ -317,7 +317,7 @@ class UpdateManager {
 
             // 分離更新進程
             updateProcess.unref();
-            
+
             // 退出當前應用
             app.quit();
         } catch (error) {
@@ -345,12 +345,12 @@ class UpdateManager {
     async cleanOldUpdates() {
         try {
             const files = await fs.readdir(CONFIG.PATHS.UPDATES);
-            
+
             for (const file of files) {
                 const filePath = path.join(CONFIG.PATHS.UPDATES, file);
                 await fs.remove(filePath);
             }
-            
+
             logger.update('Old update files cleaned');
         } catch (error) {
             logger.error('Failed to clean old updates:', { error });

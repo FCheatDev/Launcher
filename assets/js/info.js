@@ -41,7 +41,7 @@ async function showToast(status, filePath = '', messageInfo = '') {
     const toast = document.createElement('div');
     toast.classList.add('toast');
     toast.id = toastId;
-    
+
     if (filePath) {
         toast.classList.add('with-path');
     }
@@ -83,15 +83,15 @@ async function showToast(status, filePath = '', messageInfo = '') {
             }
             borderColor = '#5cb85c';
             break;
-            
+
         case 'error':
-            const error = typeof messageInfo === 'string' 
-                ? ERROR_TYPES[messageInfo] 
+            const error = typeof messageInfo === 'string'
+                ? ERROR_TYPES[messageInfo]
                 : {
                     message: messageInfo.title || '發生錯誤',
                     description: messageInfo.message || '請稍後重試或聯繫支援'
                 };
-            
+
             toastContent = `
                 <div class="error-1">
                     <i class="fas fa-exclamation-triangle"></i>
@@ -105,7 +105,7 @@ async function showToast(status, filePath = '', messageInfo = '') {
             `;
             borderColor = '#ff0000';
             break;
-            
+
         default:
             return;
     }

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
     <link rel="stylesheet" href="../css/settings.css">
     <link rel="stylesheet" href="../css/window-btn.css">
     <style>
@@ -90,6 +92,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="window-controls">
         <button id="minimize-btn" class="window-btn">
@@ -104,7 +107,7 @@
     </div>
     <div class="container">
         <div class="sidebar">
-            <div class="category-title"><a>一般</a> 
+            <div class="category-title"><a>一般</a>
             </div>
 
             <a href="settings.html" class="menu-item">
@@ -112,7 +115,8 @@
                 <span>FCheat Launcher</span>
             </a>
             <a href="games.html" class="menu-item">
-                <i><img src="../images/home.png" style="width: 25px; height: 25px; display: inline-block; vertical-align: middle;"></i>
+                <i><img src="../images/home.png"
+                        style="width: 25px; height: 25px; display: inline-block; vertical-align: middle;"></i>
                 <span>返回初始畫面</span>
             </a>
             <a href="language.html" class="menu-item">
@@ -126,11 +130,13 @@
             <br>
             <div class="category-title">FCheat自訂</div>
             <a href="fc_executorset.html" class="menu-item">
-                <i><img src="../images/roblox.jpg" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                <i><img src="../images/roblox.jpg"
+                        style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
                 <span>Executor</span>
             </a>
             <a href="fc_clientset.html" class="menu-item">
-                <i><img src="../images/minecraft2a.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                <i><img src="../images/minecraft2a.png"
+                        style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
                 <span>Client</span>
             </a>
         </div>
@@ -138,7 +144,7 @@
 
         <div class="content fade-in">
             <h2 class="header-text">啟動器設定</h2>
-            
+
             <div class="settings-section">
                 <div class="path-group">
                     <h3>啟動器安裝位置</h3>
@@ -169,7 +175,7 @@
                         </div>
                         <div class="path-display" id="minecraft-path"></div>
                     </div>
-                    
+
                     <div class="path-row">
                         <div class="path-header">
                             <label class="path-label">
@@ -218,11 +224,11 @@
 
         // Toggle switches functionality
         document.querySelectorAll('.toggle-switch input').forEach(toggle => {
-            toggle.addEventListener('change', function() {
+            toggle.addEventListener('change', function () {
                 const settingId = this.id;
                 const isEnabled = this.checked;
                 console.log(`Setting ${settingId} changed to: ${isEnabled}`);
-                
+
                 // Save to localStorage
                 localStorage.setItem(settingId, isEnabled);
             });
@@ -247,11 +253,11 @@
 
         // Select dropdowns functionality
         document.querySelectorAll('select').forEach(select => {
-            select.addEventListener('change', function() {
+            select.addEventListener('change', function () {
                 const settingId = this.id;
                 const selectedValue = this.value;
                 console.log(`${settingId} changed to: ${selectedValue}`);
-                
+
                 // Save to localStorage
                 localStorage.setItem(settingId, selectedValue);
             });
@@ -309,6 +315,7 @@
         });
     </script>
 </body>
+
 </html>
 <script src="../js/ThemeSave.js" defer></script>
 <script src="../js/openlnk.js" defer></script>

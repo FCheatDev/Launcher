@@ -17,7 +17,7 @@ const discordRPCManager = require('./assets/service/DiscordRPCManager');
  */
 function setupDevTools() {
     const { globalShortcut } = require('electron');
-    
+
     // 註冊 Ctrl+Shift+I 快捷鍵
     globalShortcut.register('CommandOrControl+Shift+I', () => {
         if (windowManager.mainWindowInstance) {
@@ -42,7 +42,7 @@ function setupDevTools() {
 async function initializeApp() {
     try {
         logger.system('Starting application initialization');
-        
+
         // 初始化文件夾結構
         await folderManager.initialize();
         logger.system('Folders initialized');
@@ -51,7 +51,7 @@ async function initializeApp() {
         await updateManager.initialize();
         logger.system('Update manager initialized');
 
-         // 初始化 Discord RPC
+        // 初始化 Discord RPC
         await discordRPCManager.initialize();
         logger.system('discordRPC manager initialized');
 
@@ -82,9 +82,9 @@ async function initializeApp() {
  */
 async function handleInitError(error) {
     const { dialog } = require('electron');
-    
+
     logger.error('Critical initialization error:', error);
-    
+
     await dialog.showMessageBox({
         type: 'error',
         title: '初始化錯誤',
@@ -159,12 +159,12 @@ function setupAppEvents() {
     if (process.env.NODE_ENV === 'development') {
         app.on('ready', () => {
             const { globalShortcut } = require('electron');
-            
+
             // 註冊開發者工具快捷鍵
             globalShortcut.register('Control+Shift+I', () => {
                 if (windowManager.mainWindowInstance) {
-                    windowManager.mainWindowInstance.webContents.openDevTools({ 
-                        mode: 'detach' 
+                    windowManager.mainWindowInstance.webContents.openDevTools({
+                        mode: 'detach'
                     });
                 }
             });

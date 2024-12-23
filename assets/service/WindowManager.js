@@ -16,7 +16,7 @@ class WindowManager {
      */
     createMainWindow() {
         logger.window('Creating main window');
-        
+
         this.mainWindow = new BrowserWindow({
             ...CONFIG.WINDOW.MAIN.DEFAULT_SIZE,
             frame: false,
@@ -39,7 +39,7 @@ class WindowManager {
 
         this._setupMainWindowEvents();
         logger.window('Main window created successfully');
-        
+
         return this.mainWindow;
     }
 
@@ -53,7 +53,7 @@ class WindowManager {
         }
 
         logger.window('Creating menu window');
-        
+
         this.menuWindow = new BrowserWindow({
             ...CONFIG.WINDOW.MENU.DEFAULT_SIZE,
             frame: false,
@@ -106,13 +106,13 @@ class WindowManager {
      * 設置菜單視窗事件
      */
     _setupMenuWindowEvents() {
-     this.menuWindow.on('closed', () => {
-         this.menuWindow = null;
-         logger.window('Menu window closed');
-     });
+        this.menuWindow.on('closed', () => {
+            this.menuWindow = null;
+            logger.window('Menu window closed');
+        });
 
-     // 不再添加 blur 事件，讓菜單保持打開狀態
- }
+        // 不再添加 blur 事件，讓菜單保持打開狀態
+    }
 
     /**
      * 監控菜單視窗位置
@@ -122,7 +122,7 @@ class WindowManager {
             if (this.menuWindow) {
                 const bounds = this.menuWindow.getBounds();
                 const display = screen.getPrimaryDisplay().workAreaSize;
-                
+
                 const newBounds = {
                     x: Math.min(Math.max(bounds.x, 0), display.width - bounds.width),
                     y: Math.min(Math.max(bounds.y, 0), display.height - bounds.height)
@@ -140,7 +140,7 @@ class WindowManager {
      */
     toggleFullscreen() {
         if (!this.mainWindow) return;
-        
+
         const isMaximized = this.mainWindow.isMaximized();
         if (!isMaximized) {
             this.mainWindow.setFullScreen(false);
@@ -199,7 +199,7 @@ class WindowManager {
     }
 
 
-    
+
     /**
      * 獲取所有活動的窗口
      * @returns {BrowserWindow[]} 所有活動窗口的數組

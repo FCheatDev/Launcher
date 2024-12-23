@@ -41,11 +41,11 @@ class Logger {
                 return `[${timestamp}] ${level.toUpperCase()} ${categoryStr}: ${message}`;
             })
         );
-    
+
         try {
             // 只使用一個時間戳命名的日誌文件
             const logFileName = `${this.timestamp}.log`;
-            
+
             this.logger = winston.createLogger({
                 level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
                 format: customFormat,
@@ -57,7 +57,7 @@ class Logger {
                     })
                 ]
             });
-    
+
             // 在開發環境添加控制台輸出
             if (process.env.NODE_ENV === 'development') {
                 this.logger.add(new winston.transports.Console({
@@ -67,7 +67,7 @@ class Logger {
                     )
                 }));
             }
-    
+
             // 記錄啟動信息
             this.system(`Logger initialized with timestamp: ${this.timestamp}`);
         } catch (error) {
@@ -81,7 +81,7 @@ class Logger {
         try {
             const files = await fs.readdir(logsDir);
             const logFiles = files.filter(file => file.endsWith('.log'));
-            
+
             if (logFiles.length > maxFiles) {
                 // 按修改時間排序
                 const fileStats = await Promise.all(
@@ -90,14 +90,14 @@ class Logger {
                         stat: await fs.stat(path.join(logsDir, file))
                     }))
                 );
-                
+
                 fileStats.sort((a, b) => b.stat.mtime - a.stat.mtime);
-                
+
                 // 刪除舊文件
                 for (let i = maxFiles; i < fileStats.length; i++) {
                     await fs.unlink(path.join(logsDir, fileStats[i].name));
                 }
-                
+
                 this.system(`Cleaned old log files, kept ${maxFiles} most recent files`);
             }
         } catch (error) {
@@ -108,10 +108,10 @@ class Logger {
     setupLogDirectory(logsDir) {
         try {
             fs.ensureDirSync(logsDir);
-            
+
             // 清理舊日誌
             this.cleanOldLogs(logsDir);
-            
+
             console.log('Log directory setup completed');
             return logsDir;
         } catch (error) {

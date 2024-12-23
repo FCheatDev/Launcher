@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
 <html lang="zh-Hant">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FCheat Launcher</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
     <link rel="stylesheet" href="../css/window-btn.css" />
     <link rel="stylesheet" href="../css/games.css" />
     <link rel="stylesheet" href="../css/my-fonts.css" />
@@ -15,396 +17,418 @@
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 </head>
 <style>
-  .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.5);
-      z-index: 10000;
-      -webkit-app-region: no-drag;
-  }
-
-  .modal-content {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 300px;
-      padding: 20px;
-      border-radius: 12px;
-      background: #1a1a1a;
-      color: white;
-      -webkit-app-region: drag;
-  }
-
-  .title {
-      text-align: center;
-      font-size: 18px;
-      margin-bottom: 20px;
-  }
-
-  .input-group {
-      margin: 15px 0;
-      position: relative;
-  }
-
-  .input-group input {
-      width: 100%;
-      padding: 8px 35px;
-      background: #2a2a2a;
-      border: 1px solid #3a3a3a;
-      border-radius: 8px;
-      color: white;
-      font-size: 14px;
-  }
-  .input-group, button, a, .show-password, input[type="checkbox"] {
-      -webkit-app-region: no-drag;
-  }
-  .icon {
-      position: absolute;
-      left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-  }
-
-  .show-password {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #4a9eff;
-      cursor: pointer;
-      font-size: 14px;
-      user-select: none;
-  }
-
-  .options {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 10px 0;
-      font-size: 14px;
-  }
-
-  .remember-me {
-      display: flex;
-      align-items: center;
-  }
-
-  .remember-me input[type="checkbox"] {
-      width: 14px;
-      height: 14px;
-      margin-right: 5px;
-  }
-
-  .forgot-password {
-      color: #4a9eff;
-      cursor: pointer;
-      text-decoration: none;
-  }
-
-  .auth-button {
-      width: 100%;
-      padding: 8px;
-      background: #4a9eff;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      cursor: pointer;
-      margin: 10px 0;
-  }
-
-  .auth-button:hover {
-      background: #3a8eef;
-  }
-
-  .auth-link {
-      text-align: center;
-      margin-top: 10px;
-      font-size: 14px;
-      -webkit-app-region: no-drag;
-  }
-
-  .auth-link a {
-      color: #4a9eff;
-      text-decoration: none;
-  }
-
-  @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-  }
-
-  @keyframes fadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; }
-  }
-
-  .fade-in {
-      animation: fadeIn 0.3s ease-out;
-  }
-
-  .fade-out {
-      animation: fadeOut 0.3s ease-out;
-  }
-</style>
-<body style="-webkit-app-region: drag;">
-  <div class="window-controls">
-    <button class="window-btn" id="minimize-btn">
-        <span>&#x2212;</span>
-    </button>
-    <button class="window-btn" id="fullscreen-btn">
-        <span>&#x26F6;</span>
-    </button>
-    <button class="window-btn" id="close-btn">
-        <span>&#x2716;</span>
-    </button>
-</div>
-<!-- Sidebar for navigation -->
-<div class="sidebar" style="-webkit-app-region: no-drag;">
-    <div class="logo-details">
-      <div class="logo_name nebula-futuristic">FCHEAT UI</div>
-      <i class='bx bx-menu' id="btn"></i> <!-- Menu button to toggle sidebar -->
-    </div>
-    <ul class="nav-list ">
-      <!-- Home items -->
-      <li>
-        <a href="games.html">
-          <i ><img src="../images/home.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
-          <span class="links_name">首頁</span>
-        </a>
-        <span class="tooltip">首頁</span>
-      </li>
-            <!-- Account items -->
-      <li>
-        <a href="../Account/login.html">
-          <i><img src="../images/account.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
-          <span class="links_name">帳號</span>
-        </a>
-        <span class="tooltip">帳號</span>
-      </li>
-           <!--Menu items -->
-      <li>
-        <a href="#" id="openMenu">
-          <i><img src="../images/menu-window.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
-          <span class="links_name">小菜單</span>
-        </a>
-        <span class="tooltip">小菜單</span>
-        <script>
-          // 使用 Electron 提供的 API 開啟選單
-          document.getElementById('openMenu').addEventListener('click', () => {
-              window.electronAPI.openMenuWindow();
-          });
-      </script>
-      </li>
-     <!-- Setting items -->
-      <li>
-        <a href="settings.html">
-          <i><img src="../images/setting.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
-          <span class="links_name">設置</span>
-        </a>
-        <span class="tooltip">設置</span>
-      </li>
-
-       <!-- Roblox Executor items -->
-       <li>
-        <a href="roblox-executor.html">
-          <i><img src="../images/roblox.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
-          <span class="links_name">Roblox Executor</span>
-        </a>
-        <span class="tooltip">Roblox Executor</span>
-      </li>
-      <!-- Roblox Script items -->
-      <li>
-        <a href="roblox-script.html">
-          <i><img src="../images/roblox-script.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
-          <span class="links_name">Roblox Script</span>
-        </a>
-        <span class="tooltip">Roblox Script</span>
-      </li> 
-      <!-- Minecraft items -->
-      <li>
-        <a href="minecraft.html">
-          <i><img src="../images/minecraft.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
-          <span class="links_name">Minecraft</span>
-        </a>
-        <span class="tooltip">Minecraft</span>
-      </li>
-      <li>
-        <a href="genshinimpact.html">
-          <i><img src="../images/genshinimpact.png" style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
-          <span class="links_name">Genshin Impact</span>
-        </a>
-        <span class="tooltip">Genshin Impact</span>
-      </li>
-
-    </ul>
-    <div id="authModal" class="modal">
-      <div class="modal-content">
-          <div id="loginBox">
-              <div class="title">登入帳號</div>
-              
-              <div class="input-group">
-                  <span class="icon">👤</span>
-                  <input type="text" placeholder="使用者名稱">
-              </div>
-  
-              <div class="input-group">
-                  <span class="icon">🔒</span>
-                  <input type="password" id="loginPassword" placeholder="密碼">
-                  <span id="toggleLoginPassword" class="show-password">顯示</span>
-              </div>
-  
-              <div class="options">
-                  <label class="remember-me">
-                      <input type="checkbox">
-                      <span>記住我</span>
-                  </label>
-                  <a href="#" class="forgot-password">忘記密碼?</a>
-              </div>
-  
-              <button class="auth-button" onclick="login()">登入</button>
-  
-              <div class="auth-link">
-                  沒有帳戶? <a href="#" onclick="switchToRegister()">註冊</a>
-              </div>
-          </div>
-  
-          <div id="registerBox" style="display: none;">
-              <div class="title">註冊帳號</div>
-              
-              <div class="input-group">
-                  <span class="icon">👤</span>
-                  <input type="text" placeholder="使用者名稱">
-              </div>
-  
-              <div class="input-group">
-                  <span class="icon">📧</span>
-                  <input type="email" placeholder="電子郵件">
-              </div>
-  
-              <div class="input-group">
-                  <span class="icon">🔒</span>
-                  <input type="password" id="registerPassword" placeholder="輸入密碼">
-                  <span id="toggleRegisterPassword" class="show-password">顯示</span>
-              </div>
-  
-              <div class="input-group">
-                  <span class="icon">🔒</span>
-                  <input type="password" id="confirmPassword" placeholder="再次輸入密碼">
-                  <span id="toggleConfirmPassword" class="show-password">顯示</span>
-              </div>
-  
-              <button class="auth-button" onclick="register()">註冊</button>
-  
-              <div class="auth-link">
-                  已擁有帳號? <a href="#" onclick="switchToLogin()">登入</a>
-              </div>
-          </div>
-      </div>
-  </div>
-  
-  <script>
-    function showModal() {
-        const modal = document.getElementById('authModal');
-        modal.style.display = 'block';
-        modal.querySelector('.modal-content').classList.add('fade-in');
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+        -webkit-app-region: no-drag;
     }
-    
-    function hideModal() {
-        const modal = document.getElementById('authModal');
-        const content = modal.querySelector('.modal-content');
-        content.classList.remove('fade-in');
-        content.classList.add('fade-out');
-        setTimeout(() => {
-            modal.style.display = 'none';
-            content.classList.remove('fade-out');
-        }, 300);
+
+    .modal-content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        padding: 20px;
+        border-radius: 12px;
+        background: #1a1a1a;
+        color: white;
+        -webkit-app-region: drag;
     }
-    
-    document.querySelector('[href="../Account/login.html"]').addEventListener('click', (e) => {
-        e.preventDefault();
-        showModal();
-    });
-    
-    document.getElementById('authModal').addEventListener('click', (e) => {
-        if (e.target.id === 'authModal') {
-            hideModal();
+
+    .title {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .input-group {
+        margin: 15px 0;
+        position: relative;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 8px 35px;
+        background: #2a2a2a;
+        border: 1px solid #3a3a3a;
+        border-radius: 8px;
+        color: white;
+        font-size: 14px;
+    }
+
+    .input-group,
+    button,
+    a,
+    .show-password,
+    input[type="checkbox"] {
+        -webkit-app-region: no-drag;
+    }
+
+    .icon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .show-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #4a9eff;
+        cursor: pointer;
+        font-size: 14px;
+        user-select: none;
+    }
+
+    .options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0;
+        font-size: 14px;
+    }
+
+    .remember-me {
+        display: flex;
+        align-items: center;
+    }
+
+    .remember-me input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin-right: 5px;
+    }
+
+    .forgot-password {
+        color: #4a9eff;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .auth-button {
+        width: 100%;
+        padding: 8px;
+        background: #4a9eff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        margin: 10px 0;
+    }
+
+    .auth-button:hover {
+        background: #3a8eef;
+    }
+
+    .auth-link {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 14px;
+        -webkit-app-region: no-drag;
+    }
+
+    .auth-link a {
+        color: #4a9eff;
+        text-decoration: none;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
         }
-    });
-    
-    function switchToRegister() {
-        document.getElementById('loginBox').style.display = 'none';  
-        document.getElementById('registerBox').style.display = 'block';
-    }
-    
-    function switchToLogin() {
-        document.getElementById('registerBox').style.display = 'none';
-        document.getElementById('loginBox').style.display = 'block';
-    }
-    
-    const togglePassword = (inputId, toggleId) => {
-        const input = document.getElementById(inputId);
-        const toggle = document.getElementById(toggleId);
-        
-        toggle.addEventListener('click', () => {
-            const type = input.type === 'password' ? 'text' : 'password';
-            input.type = type;
-            toggle.textContent = type === 'password' ? '顯示' : '隱藏';
-        });
-    };
-    
-    togglePassword('loginPassword', 'toggleLoginPassword');
-    togglePassword('registerPassword', 'toggleRegisterPassword');
-    togglePassword('confirmPassword', 'toggleConfirmPassword');
-  </script>
-  </div>
-  <!-- Main content area -->
-  <section class="roblox-section ">
-    <div class="top-m"></div>
-    <div class="rbc_container fade-text" style="-webkit-app-region: drag;">
-      <div class="rbc_games card" >
-          <img src="../images/scriptblox.jpg">
-          <h3>ScriptBlox</h3>
-          <button onclick="window.open('https://scriptblox.com/', '_blank');">前往</button>
-      </div>
-        <div class="rbc_games card" >
-            <img src="../images/rscript.png">
-            <h3>Rscript</h3>
-            <button onclick="window.open('https://rscripts.net/', '_blank');">前往</button>
-        </div>
-        <div class="rbc_games card" >
-          <img src="../images/sakopt.jpg">
-          <h3>Sakopt</h3>
-          <button onclick="window.open('https://sakpot.com/', '_blank');">前往</button>
-      </div>
-      <div class="rbc_games card" >
-        <img src="../images/roxploits.jpg">
-        <h3>RoXploits</h3>
-        <button onclick="window.open('https://robloxscripts.net/', '_blank');">前往</button>
-    </div>
-    </div>
-  </section>
-</div>
-<!-- Scripts -->
-<script src="../js/games.js" defer ></script>
-<script src="../js/openlnk.js" defer></script>
-<script>
-  let externalWindow; // 儲存外部窗口的引用
 
-  document.getElementById('openExternalButton').addEventListener('click', () => {
-      // 開啟外部連結並儲存窗口引用
-      externalWindow = window.open('https://rscripts.net/', '_blank');
-  });
-</script>
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    .fade-in {
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    .fade-out {
+        animation: fadeOut 0.3s ease-out;
+    }
+</style>
+
+<body style="-webkit-app-region: drag;">
+    <div class="window-controls">
+        <button class="window-btn" id="minimize-btn">
+            <span>&#x2212;</span>
+        </button>
+        <button class="window-btn" id="fullscreen-btn">
+            <span>&#x26F6;</span>
+        </button>
+        <button class="window-btn" id="close-btn">
+            <span>&#x2716;</span>
+        </button>
+    </div>
+    <!-- Sidebar for navigation -->
+    <div class="sidebar" style="-webkit-app-region: no-drag;">
+        <div class="logo-details">
+            <div class="logo_name nebula-futuristic">FCHEAT UI</div>
+            <i class='bx bx-menu' id="btn"></i> <!-- Menu button to toggle sidebar -->
+        </div>
+        <ul class="nav-list ">
+            <!-- Home items -->
+            <li>
+                <a href="games.html">
+                    <i><img src="../images/home.png"
+                            style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                    <span class="links_name">首頁</span>
+                </a>
+                <span class="tooltip">首頁</span>
+            </li>
+            <!-- Account items -->
+            <li>
+                <a href="../Account/login.html">
+                    <i><img src="../images/account.png"
+                            style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                    <span class="links_name">帳號</span>
+                </a>
+                <span class="tooltip">帳號</span>
+            </li>
+            <!--Menu items -->
+            <li>
+                <a href="#" id="openMenu">
+                    <i><img src="../images/menu-window.png"
+                            style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                    <span class="links_name">小菜單</span>
+                </a>
+                <span class="tooltip">小菜單</span>
+                <script>
+                    // 使用 Electron 提供的 API 開啟選單
+                    document.getElementById('openMenu').addEventListener('click', () => {
+                        window.electronAPI.openMenuWindow();
+                    });
+                </script>
+            </li>
+            <!-- Setting items -->
+            <li>
+                <a href="settings.html">
+                    <i><img src="../images/setting.png"
+                            style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                    <span class="links_name">設置</span>
+                </a>
+                <span class="tooltip">設置</span>
+            </li>
+
+            <!-- Roblox Executor items -->
+            <li>
+                <a href="roblox-executor.html">
+                    <i><img src="../images/roblox.png"
+                            style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                    <span class="links_name">Roblox Executor</span>
+                </a>
+                <span class="tooltip">Roblox Executor</span>
+            </li>
+            <!-- Roblox Script items -->
+            <li>
+                <a href="roblox-script.html">
+                    <i><img src="../images/roblox-script.png"
+                            style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                    <span class="links_name">Roblox Script</span>
+                </a>
+                <span class="tooltip">Roblox Script</span>
+            </li>
+            <!-- Minecraft items -->
+            <li>
+                <a href="minecraft.html">
+                    <i><img src="../images/minecraft.png"
+                            style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                    <span class="links_name">Minecraft</span>
+                </a>
+                <span class="tooltip">Minecraft</span>
+            </li>
+            <li>
+                <a href="genshinimpact.html">
+                    <i><img src="../images/genshinimpact.png"
+                            style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
+                    <span class="links_name">Genshin Impact</span>
+                </a>
+                <span class="tooltip">Genshin Impact</span>
+            </li>
+
+        </ul>
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <div id="loginBox">
+                    <div class="title">登入帳號</div>
+
+                    <div class="input-group">
+                        <span class="icon">👤</span>
+                        <input type="text" placeholder="使用者名稱">
+                    </div>
+
+                    <div class="input-group">
+                        <span class="icon">🔒</span>
+                        <input type="password" id="loginPassword" placeholder="密碼">
+                        <span id="toggleLoginPassword" class="show-password">顯示</span>
+                    </div>
+
+                    <div class="options">
+                        <label class="remember-me">
+                            <input type="checkbox">
+                            <span>記住我</span>
+                        </label>
+                        <a href="#" class="forgot-password">忘記密碼?</a>
+                    </div>
+
+                    <button class="auth-button" onclick="login()">登入</button>
+
+                    <div class="auth-link">
+                        沒有帳戶? <a href="#" onclick="switchToRegister()">註冊</a>
+                    </div>
+                </div>
+
+                <div id="registerBox" style="display: none;">
+                    <div class="title">註冊帳號</div>
+
+                    <div class="input-group">
+                        <span class="icon">👤</span>
+                        <input type="text" placeholder="使用者名稱">
+                    </div>
+
+                    <div class="input-group">
+                        <span class="icon">📧</span>
+                        <input type="email" placeholder="電子郵件">
+                    </div>
+
+                    <div class="input-group">
+                        <span class="icon">🔒</span>
+                        <input type="password" id="registerPassword" placeholder="輸入密碼">
+                        <span id="toggleRegisterPassword" class="show-password">顯示</span>
+                    </div>
+
+                    <div class="input-group">
+                        <span class="icon">🔒</span>
+                        <input type="password" id="confirmPassword" placeholder="再次輸入密碼">
+                        <span id="toggleConfirmPassword" class="show-password">顯示</span>
+                    </div>
+
+                    <button class="auth-button" onclick="register()">註冊</button>
+
+                    <div class="auth-link">
+                        已擁有帳號? <a href="#" onclick="switchToLogin()">登入</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function showModal() {
+                const modal = document.getElementById('authModal');
+                modal.style.display = 'block';
+                modal.querySelector('.modal-content').classList.add('fade-in');
+            }
+
+            function hideModal() {
+                const modal = document.getElementById('authModal');
+                const content = modal.querySelector('.modal-content');
+                content.classList.remove('fade-in');
+                content.classList.add('fade-out');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    content.classList.remove('fade-out');
+                }, 300);
+            }
+
+            document.querySelector('[href="../Account/login.html"]').addEventListener('click', (e) => {
+                e.preventDefault();
+                showModal();
+            });
+
+            document.getElementById('authModal').addEventListener('click', (e) => {
+                if (e.target.id === 'authModal') {
+                    hideModal();
+                }
+            });
+
+            function switchToRegister() {
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('registerBox').style.display = 'block';
+            }
+
+            function switchToLogin() {
+                document.getElementById('registerBox').style.display = 'none';
+                document.getElementById('loginBox').style.display = 'block';
+            }
+
+            const togglePassword = (inputId, toggleId) => {
+                const input = document.getElementById(inputId);
+                const toggle = document.getElementById(toggleId);
+
+                toggle.addEventListener('click', () => {
+                    const type = input.type === 'password' ? 'text' : 'password';
+                    input.type = type;
+                    toggle.textContent = type === 'password' ? '顯示' : '隱藏';
+                });
+            };
+
+            togglePassword('loginPassword', 'toggleLoginPassword');
+            togglePassword('registerPassword', 'toggleRegisterPassword');
+            togglePassword('confirmPassword', 'toggleConfirmPassword');
+        </script>
+    </div>
+    <!-- Main content area -->
+    <section class="roblox-section ">
+        <div class="top-m"></div>
+        <div class="rbc_container fade-text" style="-webkit-app-region: drag;">
+            <div class="rbc_games card">
+                <img src="../images/scriptblox.jpg">
+                <h3>ScriptBlox</h3>
+                <button onclick="window.open('https://scriptblox.com/', '_blank');">前往</button>
+            </div>
+            <div class="rbc_games card">
+                <img src="../images/rscript.png">
+                <h3>Rscript</h3>
+                <button onclick="window.open('https://rscripts.net/', '_blank');">前往</button>
+            </div>
+            <div class="rbc_games card">
+                <img src="../images/sakopt.jpg">
+                <h3>Sakopt</h3>
+                <button onclick="window.open('https://sakpot.com/', '_blank');">前往</button>
+            </div>
+            <div class="rbc_games card">
+                <img src="../images/roxploits.jpg">
+                <h3>RoXploits</h3>
+                <button onclick="window.open('https://robloxscripts.net/', '_blank');">前往</button>
+            </div>
+        </div>
+    </section>
+    </div>
+    <!-- Scripts -->
+    <script src="../js/games.js" defer></script>
+    <script src="../js/openlnk.js" defer></script>
+    <script>
+        let externalWindow; // 儲存外部窗口的引用
+
+        document.getElementById('openExternalButton').addEventListener('click', () => {
+            // 開啟外部連結並儲存窗口引用
+            externalWindow = window.open('https://rscripts.net/', '_blank');
+        });
+    </script>
 
 </body>
+
 </html>
-
-
-
-

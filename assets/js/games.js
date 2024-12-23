@@ -25,17 +25,17 @@ async function handleExecutorAction(type) {
         button.disabled = true;
         button.style.backgroundColor = "#70fff8";
         button.textContent = "檢查中...";
-        
+
         // 檢查安裝
         const result = await window.gameAPI.checkInstalled(type.toUpperCase());
-        
+
         if (result.exists) {
             // 如果已安裝，顯示檢驗信息並啟動
             showToast('success', '', {
                 title: '檔案檢驗',
                 message: '已安裝,正在啟動'
             });
-            
+
             try {
                 await window.gameAPI.launch(type.toUpperCase());
                 button.textContent = "啟動";
@@ -50,7 +50,7 @@ async function handleExecutorAction(type) {
             try {
                 const filePath = await window.gameAPI.downloadExecutor(type.toUpperCase());
                 await new Promise(resolve => setTimeout(resolve, 1000));
-                
+
                 await window.gameAPI.launch(type.toUpperCase());
                 showToast('success', filePath);
                 button.textContent = "啟動";
@@ -84,7 +84,7 @@ function setupExecutorCards() {
         if (title === 'FCheat Executor') return;
 
         const type = title.split(' ')[0].toLowerCase();
-        
+
         let button = card.querySelector('button');
         if (!button) {
             button = document.createElement('button');
@@ -107,7 +107,7 @@ function setupExecutorCards() {
 // 初始化所有執行器
 function initializeExecutors() {
     const executors = ['wave', 'solara', 'zorara', 'cloudy', 'luna'];
-    
+
     for (const type of executors) {
         const button = document.getElementById(`find-${type}`);
         if (button) {
