@@ -154,7 +154,9 @@ class IpcHandler {
                     detached: true,
                     stdio: 'ignore'
                 });
-                
+                 // 更新 Discord RPC 狀態
+                 await discordRPCManager.updateGamePresence('roblox', gameId);
+                 
                 return new Promise((resolve, reject) => {
                     process.on('error', (error) => {
                         logger.error(`Error launching ${gameId}:`, error);

@@ -10,6 +10,7 @@ const updateManager = require('./assets/service/UpdateManager');
 const adBlockManager = require('./assets/service/AdBlockManager');
 const ipcHandler = require('./assets/service/IpcHandler');
 const folderManager = require('./assets/service/FolderManager');
+const discordRPCManager = require('./assets/service/DiscordRPCManager');
 
 /**
  * 應用初始化
@@ -49,6 +50,10 @@ async function initializeApp() {
         // 檢查更新
         await updateManager.initialize();
         logger.system('Update manager initialized');
+
+         // 初始化 Discord RPC
+        await discordRPCManager.initialize();
+        logger.system('discordRPC manager initialized');
 
         if (!updateManager.isUpdateAvailable) {
             // 創建主窗口
@@ -124,6 +129,8 @@ function setupAppEvents() {
         logger.system('Application is quitting');
         // 清理資源
         updateManager.destroy();
+        // 清理 Discord RPC
+        discordRPCManager.destroy();
         // 強制結束所有渲染進程
         if (windowManager.mainWindowInstance) {
             windowManager.mainWindowInstance.webContents.forcefullyTerminateRenderer();
@@ -189,5 +196,6 @@ module.exports = {
     updateManager,
     adBlockManager,
     folderManager,
+    discordRPCManager,
     CONFIG
 };

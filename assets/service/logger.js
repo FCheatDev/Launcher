@@ -9,48 +9,115 @@ class Logger {
     constructor() {
         this.initialized = false;
         try {
-            // 使用 userData 路徑而不是 process.cwd()
             const logsDir = path.join(app.getPath('userData'), 'logs');
-            
-            // 確保日誌目錄存在並有正確權限
+            // 創建時間戳記格式的日誌文件名
+            this.timestamp = this.getFormattedTimestamp();
             this.setupLogDirectory(logsDir);
-            
-            // 初始化日誌系統
             this.initializeLogger(logsDir);
             this.initialized = true;
         } catch (error) {
             console.error('Failed to initialize logger:', error);
-            // 創建一個基本的 logger 代替 console
             this.createFallbackLogger();
         }
     }
 
-    /**
-     * 設置日誌目錄
-     */
+    // 新增：獲取格式化的時間戳
+    getFormattedTimestamp() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        return `[${year}-${month}-${day}_${hours}-${minutes}-${seconds}]`;
+    }
+
+    initializeLogger(logsDir) {
+        const customFormat = format.combine(
+            format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+            format.printf(({ timestamp, level, message, category }) => {
+                const categoryStr = category ? `[${category}]` : '';
+                return `[${timestamp}] ${level.toUpperCase()} ${categoryStr}: ${message}`;
+            })
+        );
+    
+        try {
+            // 只使用一個時間戳命名的日誌文件
+            const logFileName = `${this.timestamp}.log`;
+            
+            this.logger = winston.createLogger({
+                level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
+                format: customFormat,
+                transports: [
+                    // 單一日誌文件（包含所有級別的日誌）
+                    new winston.transports.File({
+                        filename: path.join(logsDir, logFileName),
+                        maxsize: 5 * 1024 * 1024, // 5MB
+                    })
+                ]
+            });
+    
+            // 在開發環境添加控制台輸出
+            if (process.env.NODE_ENV === 'development') {
+                this.logger.add(new winston.transports.Console({
+                    format: format.combine(
+                        format.colorize(),
+                        customFormat
+                    )
+                }));
+            }
+    
+            // 記錄啟動信息
+            this.system(`Logger initialized with timestamp: ${this.timestamp}`);
+        } catch (error) {
+            console.error('Failed to initialize winston logger:', error);
+            this.createFallbackLogger();
+        }
+    }
+
+    // 新增：日誌清理功能，保留最近的N個日誌文件
+    async cleanOldLogs(logsDir, maxFiles = 50) {
+        try {
+            const files = await fs.readdir(logsDir);
+            const logFiles = files.filter(file => file.endsWith('.log'));
+            
+            if (logFiles.length > maxFiles) {
+                // 按修改時間排序
+                const fileStats = await Promise.all(
+                    logFiles.map(async file => ({
+                        name: file,
+                        stat: await fs.stat(path.join(logsDir, file))
+                    }))
+                );
+                
+                fileStats.sort((a, b) => b.stat.mtime - a.stat.mtime);
+                
+                // 刪除舊文件
+                for (let i = maxFiles; i < fileStats.length; i++) {
+                    await fs.unlink(path.join(logsDir, fileStats[i].name));
+                }
+                
+                this.system(`Cleaned old log files, kept ${maxFiles} most recent files`);
+            }
+        } catch (error) {
+            console.error('Failed to clean old logs:', error);
+        }
+    }
+
     setupLogDirectory(logsDir) {
         try {
-            // 確保目錄存在
             fs.ensureDirSync(logsDir);
             
-            // 在開發環境時清空日誌
-            if (process.env.NODE_ENV === 'development') {
-                // 只清除檔案，不刪除目錄
-                const files = fs.readdirSync(logsDir);
-                for (const file of files) {
-                    if (file.endsWith('.log')) {
-                        fs.unlinkSync(path.join(logsDir, file));
-                    }
-                }
-            }
+            // 清理舊日誌
+            this.cleanOldLogs(logsDir);
             
             console.log('Log directory setup completed');
+            return logsDir;
         } catch (error) {
             console.error('Failed to setup log directory:', error);
-            // 如果無法設置，使用臨時目錄
             return path.join(app.getPath('temp'), 'FCheatlauncher-logs');
         }
-        return logsDir;
     }
 
     /**
@@ -66,58 +133,6 @@ class Logger {
         });
     }
 
-    initializeLogger(logsDir) {
-        // 創建自定義日誌格式
-        const customFormat = format.combine(
-            format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-            format.printf(({ timestamp, level, message, category }) => {
-                const categoryStr = category ? `[${category}]` : '';
-                return `[${timestamp}] ${level.toUpperCase()} ${categoryStr}: ${message}`;
-            })
-        );
-
-        try {
-            // 配置 Winston
-            this.logger = winston.createLogger({
-                level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
-                format: customFormat,
-                transports: [
-                    // 錯誤日誌
-                    new winston.transports.File({
-                        filename: path.join(logsDir, 'error.log'),
-                        level: 'error',
-                        maxsize: 5 * 1024 * 1024, // 5MB
-                        maxFiles: 5
-                    }),
-                    // 所有日誌
-                    new winston.transports.File({
-                        filename: path.join(logsDir, 'combined.log'),
-                        maxsize: 5 * 1024 * 1024,
-                        maxFiles: 5
-                    }),
-                    // 系統日誌
-                    new winston.transports.File({
-                        filename: path.join(logsDir, 'system.log'),
-                        maxsize: 5 * 1024 * 1024,
-                        maxFiles: 5
-                    })
-                ]
-            });
-
-            // 在開發環境添加控制台輸出
-            if (process.env.NODE_ENV === 'development') {
-                this.logger.add(new winston.transports.Console({
-                    format: format.combine(
-                        format.colorize(),
-                        customFormat
-                    )
-                }));
-            }
-        } catch (error) {
-            console.error('Failed to initialize winston logger:', error);
-            this.createFallbackLogger();
-        }
-    }
 
     // 確保消息是字符串
     formatMessage(message) {
