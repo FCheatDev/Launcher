@@ -106,13 +106,34 @@ async function showToast(status, filePath = '', messageInfo = '') {
             borderColor = '#ff0000';
             break;
 
+            case 'info':
+                const info = typeof messageInfo === 'string'
+                    ? INFO_TYPES[messageInfo]
+                    : {
+                        message: messageInfo.title || '0',
+                        description: messageInfo.message || '0'
+                    };
+    
+                toastContent = `
+                    <div class="info-1">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="info-2">
+                        <p>${info.message}</p>
+                        <div class="info-details">
+                            <p>${info.description}</p>
+                        </div>
+                    </div>
+                `;
+                borderColor = '#ff0000';
+                break;
         default:
             return;
     }
 
     toast.innerHTML = `
         ${toastContent}
-        <button class="close" onclick="closeToast('${toastId}')">×</button>
+        <button class="close" onclick="closeToast('${toastId}')"></button>
     `;
     toast.style.borderLeftColor = borderColor;
 

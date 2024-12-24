@@ -10,6 +10,8 @@ const logger = require('./logger');
 const windowManager = require('./WindowManager');
 const adBlockManager = require('./AdBlockManager');
 const gameManager = require('./GameManager');
+const discordRPCManager = require('./DiscordRPCManager');
+
 class IpcHandler {
     constructor() {
         this.executorInstances = {
@@ -42,9 +44,28 @@ class IpcHandler {
         // 主題處理器
         this._setupThemeHandlers();
 
-        logger.ipc('IPC handlers initialized');
-    }
+        // Discord RPC處理器
+        this._setupDiscordHandlers();
 
+    }
+    /**
+     * 設置所有 IPC 事件處理器
+     */
+    // Discord RPC 處理
+    _setupDiscordHandlers() {
+        ipcMain.on('toggle-discord-rpc', async (event, enabled) => {
+            try {
+                await discordRPCManager.toggle(enabled);
+                logger.system(`Discord RPC ${enabled ? 'enabled' : 'disabled'}`);
+            } catch (error) {
+                logger.error('Failed to toggle Discord RPC:', error);
+            }
+        });
+
+        ipcMain.handle('get-discord-rpc-status', () => {
+            return discordRPCManager.getStatus();
+        });
+    }
     /**
      * 設置窗口控制相關的處理器
      */
@@ -154,8 +175,6 @@ class IpcHandler {
                     detached: true,
                     stdio: 'ignore'
                 });
-                // 更新 Discord RPC 狀態
-                await discordRPCManager.updateGamePresence('roblox', gameId);
 
                 return new Promise((resolve, reject) => {
                     process.on('error', (error) => {

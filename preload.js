@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer } = window.require('electron');
 const { version } = require('./package.json');
 const path = require('path');
 
@@ -68,6 +68,12 @@ contextBridge.exposeInMainWorld('systemAPI', {
     onOptimizeMemory: (callback) => {
         ipcRenderer.on('optimize-memory', () => callback());
     }
+});
+
+// Discord RPC API
+contextBridge.exposeInMainWorld('discordAPI', {
+    toggleRPC: (enabled) => ipcRenderer.send('toggle-discord-rpc', enabled),
+    getStatus: () => ipcRenderer.invoke('get-discord-rpc-status')
 });
 
 // Log API

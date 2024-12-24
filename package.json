@@ -1,6 +1,6 @@
 {
   "name": "FCheatlauncher",
-  "version": "1.1.8.04-Typesetting_optimization",
+  "version": "1.1.8-05",
   "description": "FCheat Launcher",
   "main": "main.js",
   "icon": "assets/images/app-logo-nobg.ico",
@@ -37,8 +37,7 @@
     "discord-rpc": "^4.0.1",
     "dotenv": "^16.4.5",
     "electron-log": "^5.2.0",
-    "electron-store": "^10.0.0",
-    "electron-updater": "^6.3.9",
+    "electron-store": "^8.1.0",
     "fs-extra": "^11.2.0",
     "node-unrar-js": "^2.0.2",
     "python": "^0.0.4",

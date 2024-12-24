@@ -1,97 +1,102 @@
-// assets/service/DiscordRPCManager.js
 const DiscordRPC = require('discord-rpc');
 const logger = require('./logger');
+const Store = require('electron-store');
+const store = new Store();
 
 class DiscordRPCManager {
     constructor() {
-        this.clientId = '1320720408911024128'; // 替換為你的 Discord 應用 ID
-        this.client = new DiscordRPC.Client({ transport: 'ipc' });
+        this.clientId = '1320720408911024128';
+        this.client = null;
         this.isConnected = false;
         this.startTimestamp = Date.now();
+        this.enabled = store.get('discord-rpc-enabled', true);
+        this.lastToggleTime = 0;
+        this.reconnectAttempts = 0;
     }
 
     async initialize() {
+        if (!this.enabled) {
+            logger.system('Discord RPC is disabled by user settings');
+            return;
+        }
+
         try {
             logger.system('Initializing Discord RPC');
-            // 延遲 2 秒再連接，確保 Discord 客戶端已完全載入
+            if (!this.client) {
+                this.client = new DiscordRPC.Client({ transport: 'ipc' });
+            }
+
             setTimeout(async () => {
                 await this.connect();
-                this.setupPresence();
                 this.setupEventHandlers();
+                this.setupPresence();
             }, 2000);
         } catch (error) {
             logger.error('Failed to initialize Discord RPC:', error);
+            this.reconnectAttempts++;
+            if (this.reconnectAttempts < 3) {
+                setTimeout(() => this.initialize(), 5000);
+            }
         }
     }
 
     async connect() {
+        if (!this.enabled || !this.client) return;
+
         try {
             logger.system('Attempting to connect to Discord RPC...');
-            console.log('Checking Discord client status...');
-
-            // 檢查 Discord 客戶端是否運行
-            if (!this.client) {
-                throw new Error('Discord RPC client not initialized');
-            }
-
-            console.log('Attempting login with Client ID:', this.clientId);
             await this.client.login({ clientId: this.clientId });
-
-            // 成功連接後
+            
             this.isConnected = true;
+            this.reconnectAttempts = 0;
             logger.system('Discord RPC connected successfully');
-
-            // 立即設置初始活動
-            await this.updateActivity({
-                details: 'Just launched',
-                state: 'In main menu',
-                startTimestamp: Date.now()
-            });
-
+            
+            await this.updateActivity();
         } catch (error) {
-            logger.error('Discord RPC Connection Error:', {
-                error: error.message,
-                stack: error.stack
-            });
+            logger.error('Discord RPC Connection Error:', error);
             this.isConnected = false;
-
-            // 嘗試重新連接
-            setTimeout(() => {
-                if (!this.isConnected) {
-                    logger.system('Attempting to reconnect Discord RPC...');
-                    this.connect();
-                }
-            }, 10000); // 10 秒後重試
+            
+            if (this.enabled) {
+                setTimeout(() => {
+                    if (!this.isConnected && this.reconnectAttempts < 3) {
+                        this.reconnectAttempts++;
+                        this.connect();
+                    }
+                }, 5000);
+            }
         }
     }
 
     setupEventHandlers() {
+        if (!this.client) return;
+
         this.client.on('ready', () => {
             logger.system('Discord RPC is ready');
-            // 立即更新活動
-            this.updateActivity().catch(err => {
-                logger.error('Failed to update initial activity:', err);
-            });
+            this.updateActivity();
         });
 
         this.client.on('disconnected', () => {
             logger.system('Discord RPC disconnected');
             this.isConnected = false;
+            if (this.enabled && this.reconnectAttempts < 3) {
+                this.reconnectAttempts++;
+                setTimeout(() => this.connect(), 5000);
+            }
         });
     }
 
-    async updateActivity(activityData = {}) {
-        if (!this.isConnected) {
+    async updateActivity() {
+        if (!this.isConnected || !this.client) {
             logger.system('Discord RPC not connected, skipping activity update');
             return;
         }
 
         try {
             const activity = {
-                details: 'FCheat Launcher',           // 只顯示 FCheat Launcher
-                largeImageKey: 'app_logo',            // 主圖示
-                largeImageText: 'FCheat Launcher',    // 圖示提示文字
-                startTimestamp: this.startTimestamp,  // 保留時間顯示
+                details: 'FCheat Launcher',
+                largeImageKey: 'app_logo',
+                largeImageText: 'FCheat Launcher',
+                startTimestamp: this.startTimestamp,
                 instance: false
             };
 
@@ -102,29 +107,44 @@ class DiscordRPCManager {
         }
     }
 
-    setupPresence() {
-        logger.system('Setting up Discord RPC presence');
-        this.defaultActivity = {
-            details: 'Using FCheat Launcher',
-            state: 'Browsing Scripts',
-            startTimestamp: this.startTimestamp,
-            largeImageKey: 'app_logo',
-            largeImageText: 'FCheat Launcher',
-            smallImageKey: 'status_icon',
-            smallImageText: 'Online',
-            instance: false
-        };
-        logger.system('Default activity set:', JSON.stringify(this.defaultActivity));
+    async toggle(enabled) {
+        const now = Date.now();
+        if (now - this.lastToggleTime < 2000) {
+            logger.system('Toggle request ignored - cooldown active');
+            return;
+        }
+        this.lastToggleTime = now;
+
+        this.enabled = enabled;
+        store.set('discord-rpc-enabled', enabled);
+        
+        if (enabled) {
+            logger.system('Enabling Discord RPC');
+            this.destroy();
+            this.reconnectAttempts = 0;
+            await this.initialize();
+        } else {
+            logger.system('Disabling Discord RPC');
+            this.destroy();
+        }
     }
-
-
 
     destroy() {
         if (this.client) {
-            this.client.destroy();
+            this.client.destroy().catch(error => {
+                logger.error('Error destroying Discord RPC client:', error);
+            });
+            this.client = null;
             this.isConnected = false;
             logger.system('Discord RPC destroyed');
         }
+    }
+
+    getStatus() {
+        return {
+            enabled: this.enabled,
+            connected: this.isConnected
+        };
     }
 }
 

@@ -6,6 +6,8 @@
         content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
     <link rel="stylesheet" href="../css/settings.css">
     <link rel="stylesheet" href="../css/window-btn.css">
+    <link rel="stylesheet" href="../css/info.css" />
+    <script src="../js/info.js"></script>
     <style>
         .settings-section {
             background-color: #2a2a2a;
@@ -15,7 +17,7 @@
         }
 
         .path-group {
-            margin: 15px 0;
+            margin: 0px 0;
         }
 
         .path-row {
@@ -91,6 +93,90 @@
             vertical-align: text-bottom;
         }
     </style>
+    <style>
+        .setting-item {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .setting-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .setting-item select {
+            background: #333;
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            border: none;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .toggle-switch {
+            width: 40px;
+            height: 20px;
+        }
+
+        .slider {
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            height: 16px;
+            width: 16px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #f39821;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+    </style>
 </head>
 
 <body>
@@ -147,61 +233,115 @@
 
             <div class="settings-section">
                 <div class="path-group">
-                    <h3>啟動器安裝位置</h3>
-                    <div class="info-text">
-                        FCheat Launcher 主程式和相關檔案的安裝位置：
-                    </div>
-                    <div class="path-display" id="launcher-path"></div>
-                </div>
-
-                <div class="section-divider"></div>
-
-                <div class="path-group">
-                    <h3>遊戲檔案位置</h3>
-                    <div class="path-row">
-                        <div class="path-header">
-                            <label class="path-label">
-                                遊戲資料夾
+                    <h3>DiscordRPC</h3>
+                    <div class="setting-item">
+                        <div class="setting-group">
+                            <span>切換開啟與關閉DiscordRPC</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="discord-rpc-toggle">
+                                <span class="slider round"></span>
                             </label>
                         </div>
-                        <div class="path-display" id="games-path"></div>
                     </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', async () => {
+                            const toggle = document.getElementById('discord-rpc-toggle');
+                            const status = await window.discordAPI.getStatus();
+                            toggle.checked = status.enabled;
 
-                    <div class="path-row">
-                        <div class="path-header">
-                            <label class="path-label">
-                                Minecraft 模組資料夾
-                            </label>
-                        </div>
-                        <div class="path-display" id="minecraft-path"></div>
-                    </div>
+                            let lastToggleTime = 0;
+                            const THROTTLE_DELAY = 2000;
 
-                    <div class="path-row">
-                        <div class="path-header">
-                            <label class="path-label">
-                                Roblox Executor 資料夾
-                            </label>
-                        </div>
-                        <div class="path-display" id="roblox-path"></div>
-                    </div>
-                </div>
+                            toggle.addEventListener('change', async (e) => {
+                                const now = Date.now();
+                                if (now - lastToggleTime < THROTTLE_DELAY) {
+                                    showToast('error', '', {
+                                        title: 'Discord RPC 切換提示',
+                                        message: '切換太快可能會導致該功能失效,重新啟動FCheat Launcher得以修復'
+                                    });
+                                    e.preventDefault();
+                                    toggle.checked = !e.target.checked; // 回復原狀態
+                                    return;
+                                }
 
-                <div class="section-divider"></div>
-
-                <div class="path-group">
-                    <div class="path-header">
-                        <h3>日誌檔案位置</h3>
-                        <button class="open-folder-btn" onclick="openLogsFolder()">
-                            開啟日誌資料夾
-                        </button>
-                    </div>
-                    <div class="info-text">
-                        啟動器的日誌檔案儲存位置：
-                    </div>
-                    <div class="path-display" id="logs-path"></div>
+                                lastToggleTime = now;
+                                try {
+                                    await window.discordAPI.toggleRPC(e.target.checked);
+                                    showToast('success', '', {
+                                        title: 'Discord RPC',
+                                        message: e.target.checked ? 'Discord RPC 已啟用' : 'Discord RPC 已禁用'
+                                    });
+                                } catch (error) {
+                                    showToast('error', '', {
+                                        title: 'Discord RPC',
+                                        message: '切換失敗'
+                                    });
+                                    toggle.checked = !e.target.checked; // 切換失敗時回復狀態
+                                }
+                            });
+                        });
+                    </script>
                 </div>
             </div>
+            <div class="settings-section">
+                <h3>啟動器安裝位置</h3>
+                <div class="info-text">
+                    FCheat Launcher 主程式和相關檔案的安裝位置：
+                </div>
+                <div class="path-display" id="launcher-path"></div>
+
+
+            <div class="section-divider"></div>
+
+            <div class="path-group">
+                <h3>遊戲檔案位置</h3>
+                <div class="path-row">
+                    <div class="path-header">
+                        <label class="path-label">
+                            遊戲資料夾
+                        </label>
+                    </div>
+                    <div class="path-display" id="games-path"></div>
+                </div>
+
+                <div class="path-row">
+                    <div class="path-header">
+                        <label class="path-label">
+                            Minecraft 模組資料夾
+                        </label>
+                    </div>
+                    <div class="path-display" id="minecraft-path"></div>
+                </div>
+
+                <div class="path-row">
+                    <div class="path-header">
+                        <label class="path-label">
+                            Roblox Executor 資料夾
+                        </label>
+                    </div>
+                    <div class="path-display" id="roblox-path"></div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="path-group">
+                <div class="path-header">
+                    <h3>日誌檔案位置</h3>
+                    <button class="open-folder-btn" onclick="openLogsFolder()">
+                        開啟日誌資料夾
+                    </button>
+                </div>
+                <div class="info-text">
+                    啟動器的日誌檔案儲存位置：
+                </div>
+                <div class="path-display" id="logs-path"></div>
+            </div>
         </div>
+        <div class="info-wrapper" style="-webkit-app-region: no-drag;">
+            <div id="toast"></div>
+        </div>
+    </div>
     </div>
 
 
@@ -264,7 +404,7 @@
         });
     </script>
     <script>
-        const { ipcRenderer } = require('electron');
+
 
         function formatSize(bytes) {
             const sizes = ['Bytes', 'KB', 'MB', 'GB'];
@@ -314,6 +454,7 @@
             }
         });
     </script>
+
 </body>
 
 </html>

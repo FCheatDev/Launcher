@@ -99,10 +99,7 @@ const CONFIG = {
         ]
     },
 
-    UPDATE: {
-        REPO: 'FCheatDev/Launcher',
-        CHECK_INTERVAL: 1000 * 60 * 60 // 1 hour
-    },
+
 
     LOGGER: {
         // 日誌文件設置

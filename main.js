@@ -6,7 +6,6 @@ const path = require('path');
 const CONFIG = require('./assets/service/app-cfg');
 const logger = require('./assets/service/logger');
 const windowManager = require('./assets/service/WindowManager');
-const updateManager = require('./assets/service/UpdateManager');
 const adBlockManager = require('./assets/service/AdBlockManager');
 const ipcHandler = require('./assets/service/IpcHandler');
 const folderManager = require('./assets/service/FolderManager');
@@ -47,29 +46,23 @@ async function initializeApp() {
         await folderManager.initialize();
         logger.system('Folders initialized');
 
-        // 檢查更新
-        await updateManager.initialize();
-        logger.system('Update manager initialized');
 
         // 初始化 Discord RPC
         await discordRPCManager.initialize();
         logger.system('discordRPC manager initialized');
 
-        if (!updateManager.isUpdateAvailable) {
-            // 創建主窗口
-            windowManager.createMainWindow();
-            logger.system('Main window created');
+        // 創建主窗口
+        windowManager.createMainWindow();
+        logger.system('Main window created');
 
-            // 設置開發者工具快捷鍵
-            setupDevTools();
-            logger.system('DevTools shortcuts initialized');
+        // 設置開發者工具快捷鍵
+        setupDevTools();
+        logger.system('DevTools shortcuts initialized');
 
-            // 初始化廣告攔截
-            // IpcHandler 會在導入時自動初始化
-            logger.system('All systems initialized successfully');
-        } else {
-            logger.system('Update available, halting normal initialization');
-        }
+        // 初始化廣告攔截
+        // IpcHandler 會在導入時自動初始化
+        logger.system('All systems initialized successfully');
+
 
     } catch (error) {
         logger.error('Failed to initialize application:', error);
@@ -127,8 +120,7 @@ function setupAppEvents() {
     // 應用退出前
     app.on('before-quit', () => {
         logger.system('Application is quitting');
-        // 清理資源
-        updateManager.destroy();
+
         // 清理 Discord RPC
         discordRPCManager.destroy();
         // 強制結束所有渲染進程
@@ -193,7 +185,6 @@ module.exports.setupDevTools = setupDevTools;
 // 導出主要組件供其他模塊使用
 module.exports = {
     windowManager,
-    updateManager,
     adBlockManager,
     folderManager,
     discordRPCManager,
