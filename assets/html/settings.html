@@ -1,462 +1,479 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';">
-    <link rel="stylesheet" href="../css/settings.css">
-    <link rel="stylesheet" href="../css/window-btn.css">
+  <head>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline';"
+    />
+    <link rel="stylesheet" href="../css/settings.css" />
+    <link rel="stylesheet" href="../css/window-btn.css" />
     <link rel="stylesheet" href="../css/info.css" />
     <script src="../js/info.js"></script>
     <style>
-        .settings-section {
-            background-color: #2a2a2a;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
+      .settings-section {
+        background-color: #2a2a2a;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
 
-        .path-group {
-            margin: 0px 0;
-        }
+      .path-group {
+        margin: 0px 0;
+      }
 
-        .path-row {
-            margin-bottom: 20px;
-        }
+      .path-row {
+        margin-bottom: 20px;
+      }
 
-        .path-display {
-            background: #333;
-            padding: 12px;
-            border-radius: 6px;
-            color: #e0e0e0;
-            margin-bottom: 8px;
-            border: 1px solid #444;
-            word-break: break-all;
-            font-family: monospace;
-            font-size: 14px;
-        }
+      .path-display {
+        background: #333;
+        padding: 12px;
+        border-radius: 6px;
+        color: #e0e0e0;
+        margin-bottom: 8px;
+        border: 1px solid #444;
+        word-break: break-all;
+        font-family: monospace;
+        font-size: 14px;
+      }
 
-        .path-label {
-            color: #e0e0e0;
-            font-weight: 500;
-            margin-bottom: 8px;
-            display: block;
-        }
+      .path-label {
+        color: #e0e0e0;
+        font-weight: 500;
+        margin-bottom: 8px;
+        display: block;
+      }
 
-        .info-text {
-            font-size: 12px;
-            color: #888;
-            margin-top: 5px;
-            margin-bottom: 15px;
-        }
+      .info-text {
+        font-size: 12px;
+        color: #888;
+        margin-top: 5px;
+        margin-bottom: 15px;
+      }
 
-        .section-divider {
-            height: 1px;
-            background: #444;
-            margin: 20px 0;
-        }
+      .section-divider {
+        height: 1px;
+        background: #444;
+        margin: 20px 0;
+      }
 
-        .open-folder-btn {
-            background: #c5850e;
-            color: rgb(255, 255, 255);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: background-color 0.2s;
-            -webkit-app-region: no-drag;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
+      .open-folder-btn {
+        background: #c5850e;
+        color: rgb(255, 255, 255);
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: background-color 0.2s;
+        -webkit-app-region: no-drag;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
 
-        .open-folder-btn:hover {
-            background: #d8963f;
-        }
+      .open-folder-btn:hover {
+        background: #d8963f;
+      }
 
-        .open-folder-btn i {
-            font-size: 16px;
-        }
+      .open-folder-btn i {
+        font-size: 16px;
+      }
 
-        .path-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
+      .path-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
 
-        .folder-icon {
-            width: 16px;
-            height: 16px;
-            margin-right: 4px;
-            vertical-align: text-bottom;
-        }
+      .folder-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+        vertical-align: text-bottom;
+      }
     </style>
     <style>
-        .setting-item {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            padding: 15px 0;
-            border-bottom: 1px solid #333;
-        }
+      .setting-item {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 0;
+        border-bottom: 1px solid #333;
+      }
 
-        .setting-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      .setting-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .setting-item select {
-            background: #333;
-            color: white;
-            padding: 8px;
-            border-radius: 4px;
-            border: none;
-            width: 100%;
-            margin-top: 8px;
-        }
+      .setting-item select {
+        background: #333;
+        color: white;
+        padding: 8px;
+        border-radius: 4px;
+        border: none;
+        width: 100%;
+        margin-top: 8px;
+      }
 
-        .toggle-switch {
-            width: 40px;
-            height: 20px;
-        }
+      .toggle-switch {
+        width: 40px;
+        height: 20px;
+      }
 
-        .slider {
-            border-radius: 20px;
-        }
+      .slider {
+        border-radius: 20px;
+      }
 
-        .slider:before {
-            height: 16px;
-            width: 16px;
-        }
+      .slider:before {
+        height: 16px;
+        width: 16px;
+      }
 
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
 
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
 
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
 
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
 
-        input:checked+.slider {
-            background-color: #f39821;
-        }
+      input:checked + .slider {
+        background-color: #f39821;
+      }
 
-        input:checked+.slider:before {
-            transform: translateX(26px);
-        }
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="window-controls">
-        <button id="minimize-btn" class="window-btn">
-            <span>&#x2212;</span>
-        </button>
-        <button id="fullscreen-btn" class="window-btn">
-            <span>&#x26F6;</span>
-        </button>
-        <button id="close-btn" class="window-btn">
-            <span>&#x2716;</span>
-        </button>
+      <button id="minimize-btn" class="window-btn">
+        <span>&#x2212;</span>
+      </button>
+      <button id="fullscreen-btn" class="window-btn">
+        <span>&#x26F6;</span>
+      </button>
+      <button id="close-btn" class="window-btn">
+        <span>&#x2716;</span>
+      </button>
     </div>
     <div class="container">
-        <div class="sidebar">
-            <div class="category-title"><a>一般</a>
-            </div>
+      <div class="sidebar">
+        <div class="category-title"><a>一般</a></div>
 
-            <a href="settings.html" class="menu-item">
-                <i>⚙️</i>
-                <span>FCheat Launcher</span>
-            </a>
-            <a href="games.html" class="menu-item">
-                <i><img src="../images/home.png"
-                        style="width: 25px; height: 25px; display: inline-block; vertical-align: middle;"></i>
-                <span>返回初始畫面</span>
-            </a>
-            <a href="language.html" class="menu-item">
-                <i>🌐</i>
-                <span>語言</span>
-            </a>
-            <a href="theme.html" class="menu-item">
-                <i>🎨</i>
-                <span>介面主題</span>
-            </a>
-            <br>
-            <div class="category-title">FCheat自訂</div>
-            <a href="fc_executorset.html" class="menu-item">
-                <i><img src="../images/roblox.jpg"
-                        style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
-                <span>Executor</span>
-            </a>
-            <a href="fc_clientset.html" class="menu-item">
-                <i><img src="../images/minecraft2a.png"
-                        style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;"></i>
-                <span>Client</span>
-            </a>
+        <a href="settings.html" class="menu-item">
+          <i>⚙️</i>
+          <span>AzureaX Launcher</span>
+        </a>
+        <a href="games.html" class="menu-item">
+          <i
+            ><img
+              src="../images/home.png"
+              style="
+                width: 25px;
+                height: 25px;
+                display: inline-block;
+                vertical-align: middle;
+              "
+          /></i>
+          <span>返回初始畫面</span>
+        </a>
+        <a href="language.html" class="menu-item">
+          <i>🌐</i>
+          <span>語言</span>
+        </a>
+        <a href="theme.html" class="menu-item">
+          <i>🎨</i>
+          <span>介面主題</span>
+        </a>
+        <br />
+        <div class="category-title">AzureaX自訂</div>
+        <a href="fc_executorset.html" class="menu-item">
+          <i
+            ><img
+              src="../images/roblox.jpg"
+              style="
+                width: 30px;
+                height: 30px;
+                display: inline-block;
+                vertical-align: middle;
+              "
+          /></i>
+          <span>Executor</span>
+        </a>
+        <a href="fc_clientset.html" class="menu-item">
+          <i
+            ><img
+              src="../images/minecraft2a.png"
+              style="
+                width: 30px;
+                height: 30px;
+                display: inline-block;
+                vertical-align: middle;
+              "
+          /></i>
+          <span>Client</span>
+        </a>
+      </div>
+
+      <div class="content fade-in">
+        <h2 class="header-text">啟動器設定</h2>
+
+        <div class="settings-section">
+          <div class="path-group">
+            <h3>DiscordRPC</h3>
+            <div class="setting-item">
+              <div class="setting-group">
+                <span>切換開啟與關閉DiscordRPC</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="discord-rpc-toggle" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <script>
+              document.addEventListener("DOMContentLoaded", async () => {
+                const toggle = document.getElementById("discord-rpc-toggle");
+                const status = await window.discordAPI.getStatus();
+                toggle.checked = status.enabled;
+
+                let lastToggleTime = 0;
+                const THROTTLE_DELAY = 2000;
+
+                toggle.addEventListener("change", async (e) => {
+                  const now = Date.now();
+                  if (now - lastToggleTime < THROTTLE_DELAY) {
+                    showToast("error", "", {
+                      title: "Discord RPC 切換提示",
+                      message:
+                        "切換太快可能會導致該功能失效,重新啟動FCheat Launcher得以修復"
+                    });
+                    e.preventDefault();
+                    toggle.checked = !e.target.checked; // 回復原狀態
+                    return;
+                  }
+
+                  lastToggleTime = now;
+                  try {
+                    await window.discordAPI.toggleRPC(e.target.checked);
+                    showToast("success", "", {
+                      title: "Discord RPC",
+                      message: e.target.checked
+                        ? "Discord RPC 已啟用,需等待10秒才可切換完成"
+                        : "Discord RPC 已禁用,需等待10秒才可切換完成"
+                    });
+                  } catch (error) {
+                    showToast("error", "", {
+                      title: "Discord RPC",
+                      message: "切換失敗"
+                    });
+                    toggle.checked = !e.target.checked; // 切換失敗時回復狀態
+                  }
+                });
+              });
+            </script>
+          </div>
         </div>
+        <div class="settings-section">
+          <h3>啟動器安裝位置</h3>
+          <div class="info-text">
+            FCheat Launcher 主程式和相關檔案的安裝位置：
+          </div>
+          <div class="path-display" id="launcher-path"></div>
 
+          <div class="section-divider"></div>
 
-        <div class="content fade-in">
-            <h2 class="header-text">啟動器設定</h2>
-
-            <div class="settings-section">
-                <div class="path-group">
-                    <h3>DiscordRPC</h3>
-                    <div class="setting-item">
-                        <div class="setting-group">
-                            <span>切換開啟與關閉DiscordRPC</span>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="discord-rpc-toggle">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', async () => {
-                            const toggle = document.getElementById('discord-rpc-toggle');
-                            const status = await window.discordAPI.getStatus();
-                            toggle.checked = status.enabled;
-
-                            let lastToggleTime = 0;
-                            const THROTTLE_DELAY = 2000;
-
-                            toggle.addEventListener('change', async (e) => {
-                                const now = Date.now();
-                                if (now - lastToggleTime < THROTTLE_DELAY) {
-                                    showToast('error', '', {
-                                        title: 'Discord RPC 切換提示',
-                                        message: '切換太快可能會導致該功能失效,重新啟動FCheat Launcher得以修復'
-                                    });
-                                    e.preventDefault();
-                                    toggle.checked = !e.target.checked; // 回復原狀態
-                                    return;
-                                }
-
-                                lastToggleTime = now;
-                                try {
-                                    await window.discordAPI.toggleRPC(e.target.checked);
-                                    showToast('success', '', {
-                                        title: 'Discord RPC',
-                                        message: e.target.checked ? 'Discord RPC 已啟用' : 'Discord RPC 已禁用'
-                                    });
-                                } catch (error) {
-                                    showToast('error', '', {
-                                        title: 'Discord RPC',
-                                        message: '切換失敗'
-                                    });
-                                    toggle.checked = !e.target.checked; // 切換失敗時回復狀態
-                                }
-                            });
-                        });
-                    </script>
-                </div>
-            </div>
-            <div class="settings-section">
-                <h3>啟動器安裝位置</h3>
-                <div class="info-text">
-                    FCheat Launcher 主程式和相關檔案的安裝位置：
-                </div>
-                <div class="path-display" id="launcher-path"></div>
-
-
-            <div class="section-divider"></div>
-
-            <div class="path-group">
-                <h3>遊戲檔案位置</h3>
-                <div class="path-row">
-                    <div class="path-header">
-                        <label class="path-label">
-                            遊戲資料夾
-                        </label>
-                    </div>
-                    <div class="path-display" id="games-path"></div>
-                </div>
-
-                <div class="path-row">
-                    <div class="path-header">
-                        <label class="path-label">
-                            Minecraft 模組資料夾
-                        </label>
-                    </div>
-                    <div class="path-display" id="minecraft-path"></div>
-                </div>
-
-                <div class="path-row">
-                    <div class="path-header">
-                        <label class="path-label">
-                            Roblox Executor 資料夾
-                        </label>
-                    </div>
-                    <div class="path-display" id="roblox-path"></div>
-                </div>
+          <div class="path-group">
+            <h3>遊戲檔案位置</h3>
+            <div class="path-row">
+              <div class="path-header">
+                <label class="path-label"> 遊戲資料夾 </label>
+              </div>
+              <div class="path-display" id="games-path"></div>
             </div>
 
-            <div class="section-divider"></div>
-
-            <div class="path-group">
-                <div class="path-header">
-                    <h3>日誌檔案位置</h3>
-                    <button class="open-folder-btn" onclick="openLogsFolder()">
-                        開啟日誌資料夾
-                    </button>
-                </div>
-                <div class="info-text">
-                    啟動器的日誌檔案儲存位置：
-                </div>
-                <div class="path-display" id="logs-path"></div>
+            <div class="path-row">
+              <div class="path-header">
+                <label class="path-label"> Minecraft 模組資料夾 </label>
+              </div>
+              <div class="path-display" id="minecraft-path"></div>
             </div>
+
+            <div class="path-row">
+              <div class="path-header">
+                <label class="path-label"> Roblox Executor 資料夾 </label>
+              </div>
+              <div class="path-display" id="roblox-path"></div>
+            </div>
+          </div>
+
+          <div class="section-divider"></div>
+
+          <div class="path-group">
+            <div class="path-header">
+              <h3>日誌檔案位置</h3>
+              <button class="open-folder-btn" onclick="openLogsFolder()">
+                開啟日誌資料夾
+              </button>
+            </div>
+            <div class="info-text">啟動器的日誌檔案儲存位置：</div>
+            <div class="path-display" id="logs-path"></div>
+          </div>
         </div>
-        <div class="info-wrapper" style="-webkit-app-region: no-drag;">
-            <div id="toast"></div>
+        <div class="info-wrapper" style="-webkit-app-region: no-drag">
+          <div id="toast"></div>
         </div>
+      </div>
     </div>
-    </div>
-
 
     <script>
-        // Window control buttons functionality
-        document.getElementById('minimize-btn').addEventListener('click', () => {
-            // Add your minimize window logic here
-            console.log('Minimize window');
+      // Window control buttons functionality
+      document.getElementById("minimize-btn").addEventListener("click", () => {
+        // Add your minimize window logic here
+        console.log("Minimize window");
+      });
+
+      document
+        .getElementById("fullscreen-btn")
+        .addEventListener("click", () => {
+          // Add your fullscreen toggle logic here
+          console.log("Toggle fullscreen");
         });
 
-        document.getElementById('fullscreen-btn').addEventListener('click', () => {
-            // Add your fullscreen toggle logic here
-            console.log('Toggle fullscreen');
+      document.getElementById("close-btn").addEventListener("click", () => {
+        // Add your close window logic here
+        console.log("Close window");
+      });
+
+      // Toggle switches functionality
+      document.querySelectorAll(".toggle-switch input").forEach((toggle) => {
+        toggle.addEventListener("change", function () {
+          const settingId = this.id;
+          const isEnabled = this.checked;
+          console.log(`Setting ${settingId} changed to: ${isEnabled}`);
+
+          // Save to localStorage
+          localStorage.setItem(settingId, isEnabled);
         });
+      });
 
-        document.getElementById('close-btn').addEventListener('click', () => {
-            // Add your close window logic here
-            console.log('Close window');
+      // Load saved settings
+      window.addEventListener("load", () => {
+        const content = document.querySelector(".content");
+        if (content) {
+          // 使用 setTimeout 確保在 DOM 完全載入後再添加動畫
+          setTimeout(() => {
+            content.classList.add("visible");
+          }, 50);
+        }
+        document.querySelectorAll(".toggle-switch input").forEach((toggle) => {
+          const savedValue = localStorage.getItem(toggle.id);
+          if (savedValue !== null) {
+            toggle.checked = savedValue === "true";
+          }
         });
+      });
 
-        // Toggle switches functionality
-        document.querySelectorAll('.toggle-switch input').forEach(toggle => {
-            toggle.addEventListener('change', function () {
-                const settingId = this.id;
-                const isEnabled = this.checked;
-                console.log(`Setting ${settingId} changed to: ${isEnabled}`);
+      // Select dropdowns functionality
+      document.querySelectorAll("select").forEach((select) => {
+        select.addEventListener("change", function () {
+          const settingId = this.id;
+          const selectedValue = this.value;
+          console.log(`${settingId} changed to: ${selectedValue}`);
 
-                // Save to localStorage
-                localStorage.setItem(settingId, isEnabled);
-            });
+          // Save to localStorage
+          localStorage.setItem(settingId, selectedValue);
         });
-
-        // Load saved settings
-        window.addEventListener('load', () => {
-            const content = document.querySelector('.content');
-            if (content) {
-                // 使用 setTimeout 確保在 DOM 完全載入後再添加動畫
-                setTimeout(() => {
-                    content.classList.add('visible');
-                }, 50);
-            }
-            document.querySelectorAll('.toggle-switch input').forEach(toggle => {
-                const savedValue = localStorage.getItem(toggle.id);
-                if (savedValue !== null) {
-                    toggle.checked = savedValue === 'true';
-                }
-            });
-        });
-
-        // Select dropdowns functionality
-        document.querySelectorAll('select').forEach(select => {
-            select.addEventListener('change', function () {
-                const settingId = this.id;
-                const selectedValue = this.value;
-                console.log(`${settingId} changed to: ${selectedValue}`);
-
-                // Save to localStorage
-                localStorage.setItem(settingId, selectedValue);
-            });
-        });
+      });
     </script>
     <script>
+      function formatSize(bytes) {
+        const sizes = ["Bytes", "KB", "MB", "GB"];
+        if (bytes === 0) return "0 Byte";
+        const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+        return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
+      }
 
+      async function openLogsFolder() {
+        await ipcRenderer.invoke("open-logs-folder");
+      }
 
-        function formatSize(bytes) {
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            if (bytes === 0) return '0 Byte';
-            const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-            return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // 載入路徑資訊
+          const paths = await ipcRenderer.invoke("get-install-paths");
+          document.getElementById("launcher-path").textContent = paths.launcher;
+          document.getElementById("games-path").textContent = paths.games;
+          document.getElementById("minecraft-path").textContent =
+            paths.minecraft;
+          document.getElementById("roblox-path").textContent = paths.roblox;
+          document.getElementById("logs-path").textContent = paths.logs;
+
+          // 視窗控制按鈕事件
+          document
+            .getElementById("minimize-btn")
+            .addEventListener("click", () => {
+              ipcRenderer.send("minimize-window");
+            });
+
+          document
+            .getElementById("fullscreen-btn")
+            .addEventListener("click", () => {
+              ipcRenderer.send("toggle-fullscreen");
+            });
+
+          document.getElementById("close-btn").addEventListener("click", () => {
+            ipcRenderer.send("close-window");
+          });
+
+          // 淡入動畫
+          const content = document.querySelector(".content");
+          if (content) {
+            setTimeout(() => {
+              content.classList.add("visible");
+            }, 50);
+          }
+        } catch (error) {
+          console.error("Failed to initialize:", error);
         }
-
-        async function openLogsFolder() {
-            await ipcRenderer.invoke('open-logs-folder');
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                // 載入路徑資訊
-                const paths = await ipcRenderer.invoke('get-install-paths');
-                document.getElementById('launcher-path').textContent = paths.launcher;
-                document.getElementById('games-path').textContent = paths.games;
-                document.getElementById('minecraft-path').textContent = paths.minecraft;
-                document.getElementById('roblox-path').textContent = paths.roblox;
-                document.getElementById('logs-path').textContent = paths.logs;
-
-
-
-                // 視窗控制按鈕事件
-                document.getElementById('minimize-btn').addEventListener('click', () => {
-                    ipcRenderer.send('minimize-window');
-                });
-
-                document.getElementById('fullscreen-btn').addEventListener('click', () => {
-                    ipcRenderer.send('toggle-fullscreen');
-                });
-
-                document.getElementById('close-btn').addEventListener('click', () => {
-                    ipcRenderer.send('close-window');
-                });
-
-                // 淡入動畫
-                const content = document.querySelector('.content');
-                if (content) {
-                    setTimeout(() => {
-                        content.classList.add('visible');
-                    }, 50);
-                }
-            } catch (error) {
-                console.error('Failed to initialize:', error);
-            }
-        });
+      });
     </script>
-
-</body>
-
+  </body>
 </html>
 <script src="../js/ThemeSave.js" defer></script>
 <script src="../js/openlnk.js" defer></script>

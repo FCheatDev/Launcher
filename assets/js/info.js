@@ -147,7 +147,7 @@ async function showToast(status, filePath = '', messageInfo = '') {
 
     setTimeout(() => {
         closeToast(toastId);
-    }, 3000);
+    }, 5000);
 }
 
 window.closeToast = closeToast;

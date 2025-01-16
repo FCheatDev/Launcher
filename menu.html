@@ -1,174 +1,183 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MENU</title>
     <style>
-        /* 設置可拖動區域 */
-        body {
-            -webkit-app-region: drag;
-            /* 使空白區域可拖動 */
-            background-color: rgba(109, 109, 109, 0.8);
-            /* 設置半透明背景 */
-            color: white;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: row;
-            /* 讓按鈕水平排列 */
-            justify-content: center;
-            /* 水平居中 */
-            align-items: center;
-            /* 垂直居中 */
-            height: 100vh;
-            overflow: hidden;
-            /* 禁用滾動條 */
-        }
+      /* 設置可拖動區域 */
+      body {
+        -webkit-app-region: drag;
+        /* 使空白區域可拖動 */
+        background-color: rgba(109, 109, 109, 0.8);
+        /* 設置半透明背景 */
+        color: white;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        /* 讓按鈕水平排列 */
+        justify-content: center;
+        /* 水平居中 */
+        align-items: center;
+        /* 垂直居中 */
+        height: 100vh;
+        overflow: hidden;
+        /* 禁用滾動條 */
+      }
 
-        /* 菜單按鈕樣式 */
-        .menu-btn {
-            margin: 1px;
-            font-size: 20px;
-            padding: 0px 30px;
-            /* 調整 padding 讓按鈕變寬 */
-            background-color: #555;
-            border: none;
-            color: white;
-            cursor: pointer;
-            width: 100%;
-            height: 30px;
-            -webkit-app-region: no-drag;
-            /* 按鈕不應該可拖動 */
-        }
+      /* 菜單按鈕樣式 */
+      .menu-btn {
+        margin: 1px;
+        font-size: 20px;
+        padding: 0px 30px;
+        /* 調整 padding 讓按鈕變寬 */
+        background-color: #555;
+        border: none;
+        color: white;
+        cursor: pointer;
+        width: 100%;
+        height: 30px;
+        -webkit-app-region: no-drag;
+        /* 按鈕不應該可拖動 */
+      }
 
-        .menu-btn:hover {
-            background-color: #777;
-        }
+      .menu-btn:hover {
+        background-color: #777;
+      }
 
-        .back-home {
-            position: absolute;
-            left: 0px;
-            top: 40px;
-        }
+      .back-home {
+        position: absolute;
+        left: 0px;
+        top: 40px;
+      }
 
-        .ad-set {
-            white-space: nowrap;
-        }
+      .ad-set {
+        white-space: nowrap;
+      }
 
-        /*縮小視窗*/
-        #minimize-btn {
-            margin: 10px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            position: absolute;
-            /* 絕對定位，將關閉按鈕固定在右上角 */
-            right: 50px;
-            top: -13px;
-            -webkit-app-region: no-drag;
-            /* 關閉按鈕不應該可拖動 */
-        }
+      /*縮小視窗*/
+      #minimize-btn {
+        margin: 10px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        /* 絕對定位，將關閉按鈕固定在右上角 */
+        right: 50px;
+        top: -13px;
+        -webkit-app-region: no-drag;
+        /* 關閉按鈕不應該可拖動 */
+      }
 
-        #minimize-btn span {
-            font-size: 40px;
-            color: white;
-        }
+      #minimize-btn span {
+        font-size: 40px;
+        color: white;
+      }
 
-        /* 關閉按鈕樣式 */
-        #close-btn {
-            margin: 10px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            position: absolute;
-            /* 絕對定位，將關閉按鈕固定在右上角 */
-            right: 10px;
-            top: -8px;
-            -webkit-app-region: no-drag;
-            /* 關閉按鈕不應該可拖動 */
-        }
+      /* 關閉按鈕樣式 */
+      #close-btn {
+        margin: 10px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        /* 絕對定位，將關閉按鈕固定在右上角 */
+        right: 10px;
+        top: -8px;
+        -webkit-app-region: no-drag;
+        /* 關閉按鈕不應該可拖動 */
+      }
 
-        #close-btn span {
-            font-size: 24px;
-            color: white;
-        }
+      #close-btn span {
+        font-size: 24px;
+        color: white;
+      }
 
-        .transparent-button {
-            background-color: transparent;
-            /* 設定背景為透明 */
-            border: none;
-            /* 移除邊框 */
-            color: #fff;
-            /* 按鈕文字顏色 */
-            cursor: pointer;
-            /* 鼠標移上去顯示指針 */
-        }
+      .transparent-button {
+        background-color: transparent;
+        /* 設定背景為透明 */
+        border: none;
+        /* 移除邊框 */
+        color: #fff;
+        /* 按鈕文字顏色 */
+        cursor: pointer;
+        /* 鼠標移上去顯示指針 */
+      }
 
-        .transparent-button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            /* 滑過時略顯背景色 */
-        }
+      .transparent-button:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        /* 滑過時略顯背景色 */
+      }
 
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 35px;
-            background-color: rgba(58, 56, 56, 0.8);
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            color: white;
-            padding: 0 10px;
-        }
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 35px;
+        background-color: rgba(58, 56, 56, 0.8);
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        color: white;
+        padding: 0 10px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- 關閉按鈕 -->
     <div class="header">
-        <button id="minimize-btn">
-            <span>&#x2212;</span>
-        </button>
-        <button id="close-btn">
-            <span>&#x2716;</span>
-        </button>
+      <button id="minimize-btn">
+        <span>&#x2212;</span>
+      </button>
+      <button id="close-btn">
+        <span>&#x2716;</span>
+      </button>
     </div>
     <div>
-        <button class="menu-btn transparent-button back-home" id="back-home-btn">返回首頁</button>
-        <button class="menu-btn transparent-button ad-set" id="toggleAdBlockButton">廣告攔截</button>
+      <button class="menu-btn transparent-button back-home" id="back-home-btn">
+        返回首頁
+      </button>
+      <button
+        class="menu-btn transparent-button ad-set"
+        id="toggleAdBlockButton"
+      >
+        廣告攔截
+      </button>
     </div>
 
     <script>
-        const { ipcRenderer } = require('electron');
-        let adBlockEnabled = false; // 初始值
+      const { ipcRenderer } = require("electron");
+      let adBlockEnabled = false; // 初始值
 
-        document.getElementById('toggleAdBlockButton').addEventListener('click', () => {
-            adBlockEnabled = !adBlockEnabled; // 切換狀態
-            ipcRenderer.send('toggle-ad-blocking', adBlockEnabled); // 發送狀態到主進程
+      document
+        .getElementById("toggleAdBlockButton")
+        .addEventListener("click", () => {
+          adBlockEnabled = !adBlockEnabled; // 切換狀態
+          ipcRenderer.send("toggle-ad-blocking", adBlockEnabled); // 發送狀態到主進程
 
-            // 更新按鈕文本
-            document.getElementById('toggleAdBlockButton').innerText = adBlockEnabled ? "禁用廣告攔截" : "啟用廣告攔截";
+          // 更新按鈕文本
+          document.getElementById("toggleAdBlockButton").innerText =
+            adBlockEnabled ? "禁用廣告攔截" : "啟用廣告攔截";
         });
-        document.addEventListener('DOMContentLoaded', () => {
-            const backHomeBtn = document.getElementById('back-home-btn');
-            backHomeBtn.addEventListener('click', () => {
-                // 在這裡添加返回首頁的邏輯
-                ipcRenderer.send('return-home');
-            });
-            // 監聽關閉按鈕點擊事件
-            document.getElementById('minimize-btn').addEventListener('click', () => {
-                ipcRenderer.send('minimize-menu-window');
-
-            });
-            document.getElementById('close-btn').addEventListener('click', () => {
-                ipcRenderer.send('close-menu-window');
-            });
+      document.addEventListener("DOMContentLoaded", () => {
+        const backHomeBtn = document.getElementById("back-home-btn");
+        backHomeBtn.addEventListener("click", () => {
+          // 在這裡添加返回首頁的邏輯
+          ipcRenderer.send("return-home");
         });
+        // 監聽關閉按鈕點擊事件
+        document
+          .getElementById("minimize-btn")
+          .addEventListener("click", () => {
+            ipcRenderer.send("minimize-menu-window");
+          });
+        document.getElementById("close-btn").addEventListener("click", () => {
+          ipcRenderer.send("close-menu-window");
+        });
+      });
     </script>
-</body>
-
+  </body>
 </html>

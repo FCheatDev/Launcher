@@ -1,11 +1,11 @@
 {
-  "name": "FCheatlauncher",
-  "version": "1.1.8-05",
-  "description": "FCheat Launcher",
+  "name": "AzureaXlauncher",
+  "version": "1.1.9",
+  "description": "AzureaX Launcher",
   "main": "main.js",
   "icon": "assets/images/app-logo-nobg.ico",
   "scripts": {
-    "start": "electron .",
+    "start": "nodemon --exec electron .",
     "build": "electron-builder",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
@@ -40,6 +40,7 @@
     "electron-store": "^8.1.0",
     "fs-extra": "^11.2.0",
     "node-unrar-js": "^2.0.2",
+    "nodemon": "^3.1.9",
     "python": "^0.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

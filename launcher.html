@@ -1,153 +1,163 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <link rel="stylesheet" href="assets/css/my-fonts.css" />
     <style>
-        /* CSS 保持不變 */
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #1a1a1a;
-            overflow: hidden;
-            -webkit-app-region: drag;
-        }
+      /* CSS 保持不變 */
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #1a1a1a;
+        overflow: hidden;
+        -webkit-app-region: drag;
+      }
 
-        .container {
-            text-align: center;
-            opacity: 0;
-            transition: opacity 1s ease-in;
-            animation: fadeIn 1s ease-in forwards;
-        }
+      .container {
+        text-align: center;
+        opacity: 0;
+        transition: opacity 1s ease-in;
+        animation: fadeIn 1s ease-in forwards;
+      }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
         }
+        to {
+          opacity: 1;
+        }
+      }
 
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
         }
+        to {
+          opacity: 0;
+        }
+      }
 
-        .logo {
-            width: 120px;
-            height: 120px;
-            margin-bottom: 2rem;
-            border-radius: 8px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+      .logo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 2rem;
+        border-radius: 8px;
+        margin-left: auto;
+        margin-right: auto;
+      }
 
-        .content-wrapper {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            padding: 20px;
-        }
+      .content-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        padding: 20px;
+      }
 
-        .typewriter-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+      .typewriter-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        .typewriter {
-            color: #4ade80;
-            font-size: 3rem;
-            font-family: 'Horizon.ttf', sans-serif;
-        }
+      .typewriter {
+        color: #4ade80;
+        font-size: 3rem;
+        font-family: "Horizon.ttf", sans-serif;
+      }
 
-        .cursor {
-            display: inline-block;
-            width: 5px;
-            height: 2.5rem;
-            background-color: #4ade80;
-            margin-left: 2px;
-            animation: blink 0.7s infinite;
-            vertical-align: baseline;
-        }
+      .cursor {
+        display: inline-block;
+        width: 5px;
+        height: 2.5rem;
+        background-color: #4ade80;
+        margin-left: 2px;
+        animation: blink 0.7s infinite;
+        vertical-align: baseline;
+      }
 
-        @keyframes blink {
-            50% { opacity: 0; }
+      @keyframes blink {
+        50% {
+          opacity: 0;
         }
+      }
 
-        .fade-out {
-            animation: fadeOut 1s ease-out forwards;
-        }
-        /* 版本顯示 */
-        .version {
-            position: fixed;
-            left: 5px;
-            bottom: 5px;
-            font-size: 20px;
-            color: #aaaaaa;
-        }
+      .fade-out {
+        animation: fadeOut 1s ease-out forwards;
+      }
+      /* 版本顯示 */
+      .version {
+        position: fixed;
+        left: 5px;
+        bottom: 5px;
+        font-size: 20px;
+        color: #aaaaaa;
+      }
     </style>
-</head>
-<body>
-    <div class="content-wrapper" >
-        <div class="container">
-            <img src="assets/images/app-logo-nobg.png" alt="Logo" class="logo">
-            <div class="typewriter-container">
-                <div class="typewriter"></div>
-                <span class="cursor"></span>
-            </div>
+  </head>
+  <body>
+    <div class="content-wrapper">
+      <div class="container">
+        <img src="assets/images/app-logo-nobg.png" alt="Logo" class="logo" />
+        <div class="typewriter-container">
+          <div class="typewriter"></div>
+          <span class="cursor"></span>
         </div>
-
+      </div>
     </div>
-            <!-- 版本顯示 -->
-            <h1 id="app-version" class="version"></h1>
-            <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                    document.getElementById("app-version").innerText = `當前版本: ${window.appInfo.version}`;
-                });
-                 
-            </script>
+    <!-- 版本顯示 -->
+    <h1 id="app-version" class="version"></h1>
     <script>
-        const text = 'F C h e a t     L a u n c h e r ';
-        const typewriter = document.querySelector('.typewriter');
-        const container = document.querySelector('.container');
-        let index = 0;
-
-        // 等待淡入動畫完成後開始打字
-        setTimeout(() => {
-            type();
-        }, 1000); // 1秒後開始打字，配合淡入動畫時間
-
-        // 打字效果
-        function type() {
-            if (index < text.length) {
-                typewriter.textContent += text[index];
-                index++;
-                setTimeout(type, 70);
-            } else {
-                setTimeout(() => {
-                    deleteText();
-                }, 1000);
-            }
-        }
-
-        // 刪除效果
-        function deleteText() {
-            const currentText = typewriter.textContent;
-            if (currentText.length > 0) {
-                typewriter.textContent = currentText.slice(0, -1);
-                setTimeout(deleteText, 70);
-            } else {
-                setTimeout(() => {
-                    container.classList.add('fade-out');
-                    setTimeout(() => {
-                        window.location.href = 'assets/html/games.html';
-                    }, 1000);
-                }, 500);
-            }
-        }
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById(
+          "app-version"
+        ).innerText = `當前版本: ${window.appInfo.version}`;
+      });
     </script>
-</body>
+    <script>
+      const text = "A z u r e a X     L a u n c h e r ";
+      const typewriter = document.querySelector(".typewriter");
+      const container = document.querySelector(".container");
+      let index = 0;
+
+      // 等待淡入動畫完成後開始打字
+      setTimeout(() => {
+        type();
+      }, 1000); // 1秒後開始打字，配合淡入動畫時間
+
+      // 打字效果
+      function type() {
+        if (index < text.length) {
+          typewriter.textContent += text[index];
+          index++;
+          setTimeout(type, 70);
+        } else {
+          setTimeout(() => {
+            deleteText();
+          }, 1000);
+        }
+      }
+
+      // 刪除效果
+      function deleteText() {
+        const currentText = typewriter.textContent;
+        if (currentText.length > 0) {
+          typewriter.textContent = currentText.slice(0, -1);
+          setTimeout(deleteText, 70);
+        } else {
+          setTimeout(() => {
+            container.classList.add("fade-out");
+            setTimeout(() => {
+              window.location.href = "assets/html/games.html";
+            }, 1000);
+          }, 500);
+        }
+      }
+    </script>
+  </body>
 </html>
