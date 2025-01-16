@@ -11,7 +11,9 @@ const adBlockManager = require("./assets/service/AdBlockManager");
 const ipcHandler = require("./assets/service/IpcHandler");
 const folderManager = require("./assets/service/FolderManager");
 const discordRPCManager = require("./assets/service/DiscordRPCManager");
-
+console.log("chrome   v:", process.versions.chrome); //獲取chrome版本
+console.log("node     v:", process.versions.node); //獲取node版本
+console.log("electron v:", process.versions.electron); //獲取electron版本
 /**
  * 應用初始化
  */
